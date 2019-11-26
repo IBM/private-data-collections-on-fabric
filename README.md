@@ -13,7 +13,7 @@ This code pattern is for developers who want to learn how to use the private dat
 
 # Architecture flow
 
-![Architecture flow](docs/doc-images/arch-flow.png?raw=true)
+![Architecture flow](docs/doc-images/updated-arch-flow.png?raw=true)
 
 1. The blockchain operator creates a IBM Kubernetes Service cluster and an IBM Blockchain Platform 2.0 service.
 1. The IBM Blockchain Platform 2.0 creates a Hyperledger Fabric network on an IBM Kubernetes Service, and the operator installs and instantiates the smart contract on the network.
