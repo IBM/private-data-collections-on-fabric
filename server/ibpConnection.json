@@ -1,0 +1,9 @@
+{
+    "connection_file": "mychannel_xxxxx.json",
+    "appAdmin": "app-admin",
+    "appAdminSecret": "app-adminpw",
+    "orgMSPID": "org1msp",
+    "caName": "184.173.1.18:31317",
+    "userName": "user1",
+    "gatewayDiscovery": { "enabled": true, "asLocalhost": false }
+}

@@ -75,7 +75,6 @@ find the service in the `Catalog`.
   - Choose Worker nodes: <b>Dallas 10 only</b>
   - Choose Master service endpoint: <b>Both private & public endpoints</b>
   - Choose Default worker pool
-  - Choose Master service endpoint: <b>Both private & public endpoints</b>
   - Choose Flavor
   - Choose Encrypt local disk <b>Yes</b>
   - Choose Worker nodes <b>3</b>
@@ -83,9 +82,29 @@ find the service in the `Catalog`.
 <b>The cluster takes around 15-20
 minutes to provision, so please be patient!</b>
 
-* After your kubernetes cluster is up and running, you can deploy your IBM Blockchain Platform V2 Beta on the cluster.  The service walks through few steps and finds your cluster on the IBM Cloud to deploy the service on.
+<br>
+<p align="center">
+  <img src="docs/doc-gifs/createCluster.gif">
+</p>
+<br>
+
+* After your kubernetes cluster is up and running, you can deploy your IBM Blockchain Platform V2 Beta on the cluster. Again - wait for the Kubernetes service to indicate it was deployed. The service walks through few steps and finds your cluster on the IBM Cloud to deploy the service on.
+
+<br>
+<p align="center">
+  <img src="docs/doc-gifs/create-ibm-blockchain-2-service.gif">
+</p>
+<br>
+
+
 
 * Once the Blockchain Platform is deployed on the Kubernetes cluster, you can launch the console to start operating on your blockchain network.
+
+<br>
+<p align="center">
+  <img src="docs/doc-gifs/deploy-blockchain-on-cluster.gif">
+</p>
+<br>
 
 ## Step 2. Build a network - Certificate Authority
 
@@ -122,30 +141,40 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - Specify an <b>Admin ID</b> of `admin` and <b>Admin Secret</b> of `adminpw`.
 
 
-* #### Use your CA to register manufacturer identities
+* #### Use your CA to associate and register manufacturer identities
   - Select the <b>Manufacturer CA</b> Certificate Authority that we created.
-  - First, we will register an admin for our Organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `manufacturerAdmin`, and <b>Enroll Secret</b> of `manufacturerAdminpw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `client` and select `org1` from the affiliated organizations drop-down list. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank.
-  - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `manufacturerPeer`, and <b>Enroll Secret</b> of `manufacturerPeerpw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `peer` and select `org1` from the affiliated organizations drop-down list. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank.
+  - First you need to associate the CA, click <b>Associate identity</b>
+  - Give an <b>Enroll ID</b> of `admin`, and <b>Enroll Secret</b> of `adminpw`.  Note that this is the same as the id and secret you gave in the creation step. Then give the <b>Identity Display Name</b> of <b>Manufacturer CA Admin</b>  Click <b>Associate Identity</b>.
+  - Then, we will register an admin for our Organization. Again, select the <b>Manufacturer CA Certificate Authority</b>. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `manufacturerAdmin`, and <b>Enroll Secret</b> of `manufacturerAdminpw`.  Set the <b>Type</b> for this identity as `client`. We will leave the <b>root affliation</b> and <b>Add Attributes</b> alone. Click <b>Next</b> and then Click <b>Register User</b>
+  - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `manufacturerPeer`, and <b>Enroll Secret</b> of `manufacturerPeerpw`.  Set the <b>Type</b> for this identity as `peer`. We will leave everything else <b>Maximum enrollments</b> and <b>Add Attributes</b> fields alone. Click <b>Next</b> and then Click <b>Register User</b>.
 
-* #### Use your CA to register w1 identities
+* #### Use your CA to associate and register w1 identities
   - Select the <b>W1 CA</b> Certificate Authority that we created.
-  - First, we will register an admin for our W1 Organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `w1Admin`, and <b>Enroll Secret</b> of `w1Adminpw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `client` and select `org1` from the affiliated organizations drop-down list. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank.
-  - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `w1Peer`, and <b>Enroll Secret</b> of `w1Peerpw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `peer` and select `org1` from the affiliated organizations drop-down list. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank.
+  - First you need to associate the CA, click <b>Associate identity</b>
+  - Give an <b>Enroll ID</b> of `admin`, and <b>Enroll Secret</b> of `adminpw`.  Note that this is the same as the id and secret you gave in the creation step. Then give the <b>Identity Display Name</b> of <b>W1 CA Admin</b> Click <b>Associate Identity</b>.
+  - Then, we will register an admin for our W1 Organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `w1Admin`, and <b>Enroll Secret</b> of `w1Adminpw`.  Set the <b>Type</b> for this identity as `client`. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields alone. Click <b>Next</b> and then Click <b>Register User</b>.
+  - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `w1Peer`, and <b>Enroll Secret</b> of `w1Peerpw`. Set the <b>Type</b> for this identity as `peer`. We will leave everything else <b>Maximum enrollments</b> and <b>Add Attributes</b> fields alone. Click <b>Next</b> and then Click <b>Register User</b>.
   
-* #### Use your CA to register w2 identities
+* #### Use your CA to associate and register w2 identities
   - Select the <b>W2 CA</b> Certificate Authority that we created.
-  - First, we will register an admin for our W2 Organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `w2Admin`, and <b>Enroll Secret</b> of `w2Adminpw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `client` and select `org1` from the affiliated organizations drop-down list. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank.
-  - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `w2Peer`, and <b>Enroll Secret</b> of `w2Peerpw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `peer` and select `org1` from the affiliated organizations drop-down list. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank.
+  - First you need to associate the CA, click <b>Associate identity</b>
+  - Give an <b>Enroll ID</b> of `admin`, and <b>Enroll Secret</b> of `adminpw`.  Note that this is the same as the id and secret you gave in the creation step. Then give the <b>Identity Display Name</b> of <b>W2 CA Admin</b> Click <b>Associate Identity</b>.
+  - Next, we will register an admin for our W2 Organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `w2Admin`, and <b>Enroll Secret</b> of `w2Adminpw`.  Set the <b>Type</b> for this identity as `client`. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank. Click <b>Next</b> and then Click <b>Register User</b>.
+  - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `w2Peer`, and <b>Enroll Secret</b> of `w2Peerpw`.  Set the <b>Type</b> for this identity as `peer`.  We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank. Click <b>Next</b> and then Click <b>Register User</b>.
 
-* #### Use your CA to register pharmacy identities (process is same as shown in gif above)
+* #### Use your CA to associate and register pharmacy identities (process is same as shown in gif above)
   - Select the <b>Pharmacy CA</b> Certificate Authority that we created.
-  - First, we will register an admin for our Pharmacy Organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `pharmacyAdmin`, and <b>Enroll Secret</b> of `pharmacyAdminpw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `client` and select `org1` from the affiliated organizations drop-down list. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank.
-  - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `pharmacyPeer`, and <b>Enroll Secret</b> of `pharmacyPeerpw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `peer` and select `org1` from the affiliated organizations drop-down list. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank.
+  - First you need to associate the CA, click <b>Associate identity</b>
+  - Give an <b>Enroll ID</b> of `admin`, and <b>Enroll Secret</b> of `adminpw`.  Note that this is the same as the id and secret you gave in the creation step. Then give the <b>Identity Display Name</b> of <b>Pharmacy CA Admin</b> Click <b>Associate Identity</b>.
+  - Next, we will register an admin for our Pharmacy Organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `pharmacyAdmin`, and <b>Enroll Secret</b> of `pharmacyAdminpw`. Set the <b>Type</b> for this identity as `client`. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields alone. Click <b>Next</b> and then Click <b>Register User</b>.
+  - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `pharmacyPeer`, and <b>Enroll Secret</b> of `pharmacyPeerpw`.  Set the <b>Type</b> for this identity as `peer` We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank. Click <b>Next</b> and then Click <b>Register User</b>.
 
-* #### Use your CA to register patient identities (process is same as shown in gif above)
+* #### Use your CA to assoociate and register patient identities (process is same as shown in gif above)
   - Select the <b>Patient CA</b> Certificate Authority that we created.
-  - First, we will register an admin for our Patient Organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `patientAdmin`, and <b>Enroll Secret</b> of `patientAdminpw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `client` and select `org1` from the affiliated organizations drop-down list. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank.
-  - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `patientPeer`, and <b>Enroll Secret</b> of `patientPeerpw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `peer` and select `org1` from the affiliated organizations drop-down list. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank.
+  First you need to associate the CA, click <b>Associate identity</b>
+  - Give an <b>Enroll ID</b> of `admin`, and <b>Enroll Secret</b> of `adminpw`.  Note that this is the same as the id and secret you gave in the creation step. Then give the <b>Identity Display Name</b> of <b>Patient CA Admin</b> Click <b>Associate Identity</b>.
+  - First, we will register an admin for our Patient Organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `patientAdmin`, and <b>Enroll Secret</b> of `patientAdminpw`. Set the <b>Type</b> for this identity as `client` We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields alone. Click <b>Next</b> and then Click <b>Register User</b>.
+  - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `patientPeer`, and <b>Enroll Secret</b> of `patientPeerpw`.   Set the <b>Type</b> for this identity as `peer` We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank. Click <b>Next</b> and then Click <b>Register User</b>.
 
 
 ## Step 3. Build a network - Create MSP Definitions
@@ -154,28 +183,35 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - Navigate to the <b>Organizations</b> tab in the left navigation and click <b>Create MSP definition</b>.
   - Enter the <b>MSP Display name</b> as `Manufacturer MSP` and an <b>MSP ID</b> of `manufacturermsp`.
   - Under <b>Root Certificate Authority</b> details, specify the peer CA that we created `Manufacturer CA` as the root CA for the organization.
-  - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `manufacturerAdmin` and `manufacturerAdminpw`. Then, give the Identity name, `Manufacturer Admin`.
+  - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `manufacturerAdmin` and `manufacturerAdminpw`. Then, give the Identity name, `Manufacturer MSP Admin`.
   - Click the <b>Generate</b> button to enroll this identity as the admin of your organization and export the identity to the wallet. Click <b>Export</b> to export the admin certificates to your file system. Finally click <b>Create MSP definition</b>.
 
-* #### Create the shop MSP definition (same process as shown in gif above)
+* #### Create the W1 MSP definition
   - Navigate to the <b>Organizations</b> tab in the left navigation and click <b>Create MSP definition</b>.
-  - Enter the <b>MSP Display name</b> as `Shop MSP` and an <b>MSP ID</b> of `shopmsp`.
-  - Under <b>Root Certificate Authority</b> details, specify the peer CA that we created `Shop CA` as the root CA for the organization.
-  - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `shopAdmin` and `shopAdminpw`. Then, give the Identity name, `Shop Admin`.
+  - Enter the <b>MSP Display name</b> as `W1 MSP` and an <b>MSP ID</b> of `w1msp`.
+  - Under <b>Root Certificate Authority</b> details, specify the peer CA that we created `W1 CA` as the root CA for the organization.
+  - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `w1Admin` and `w1Adminpw`. Then, give the Identity name, `W1 MSP Admin`.
   - Click the <b>Generate</b> button to enroll this identity as the admin of your organization and export the identity to the wallet. Click <b>Export</b> to export the admin certificates to your file system. Finally click <b>Create MSP definition</b>.
 
-* #### Create the repair shop MSP definition (same process as shown in gif above)
+* #### Create the W2 MSP definition
   - Navigate to the <b>Organizations</b> tab in the left navigation and click <b>Create MSP definition</b>.
-  - Enter the <b>MSP Display name</b> as `Repair Shop MSP` and an <b>MSP ID</b> of `repairshopmsp`.
-  - Under <b>Root Certificate Authority</b> details, specify the peer CA that we created `Repair Shop CA` as the root CA for the organization.
-  - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `repairShopAdmin` and `repairShopAdminpw`. Then, give the Identity name, `Repair Shop Admin`.
+  - Enter the <b>MSP Display name</b> as `W2 MSP` and an <b>MSP ID</b> of `w2msp`.
+  - Under <b>Root Certificate Authority</b> details, specify the peer CA that we created `W2 CA` as the root CA for the organization.
+  - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `w2Admin` and `w2Adminpw`. Then, give the Identity name, `W1 MSP Admin`.
   - Click the <b>Generate</b> button to enroll this identity as the admin of your organization and export the identity to the wallet. Click <b>Export</b> to export the admin certificates to your file system. Finally click <b>Create MSP definition</b>.
 
-* #### Create the police MSP definition (same process as shown in gif above)
+* #### Create the Pharmacy MSP definition
   - Navigate to the <b>Organizations</b> tab in the left navigation and click <b>Create MSP definition</b>.
-  - Enter the <b>MSP Display name</b> as `Police MSP` and an <b>MSP ID</b> of `policemsp`.
-  - Under <b>Root Certificate Authority</b> details, specify the peer CA that we created `Police CA` as the root CA for the organization.
-  - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `policeAdmin` and `policeAdminpw`. Then, give the Identity name, `Police Admin`.
+  - Enter the <b>MSP Display name</b> as `Pharmacy MSP` and an <b>MSP ID</b> of `pharmacymsp`.
+  - Under <b>Root Certificate Authority</b> details, specify the peer CA that we created `Pharmacy CA` as the root CA for the organization.
+  - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `pharmacyAdmin` and `pharmacyAdminpw`. Then, give the Identity name, `Pharmacy MSP Admin`.
+  - Click the <b>Generate</b> button to enroll this identity as the admin of your organization and export the identity to the wallet. Click <b>Export</b> to export the admin certificates to your file system. Finally click <b>Create MSP definition</b>.
+
+  * #### Create the Patient MSP definition
+  - Navigate to the <b>Organizations</b> tab in the left navigation and click <b>Create MSP definition</b>.
+  - Enter the <b>MSP Display name</b> as `Patient MSP` and an <b>MSP ID</b> of `patientmsp`.
+  - Under <b>Root Certificate Authority</b> details, specify the peer CA that we created `Patient CA` as the root CA for the organization.
+  - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `patientAdmin` and `patientAdminpw`. Then, give the Identity name, `Patientß MSP Admin`.
   - Click the <b>Generate</b> button to enroll this identity as the admin of your organization and export the identity to the wallet. Click <b>Export</b> to export the admin certificates to your file system. Finally click <b>Create MSP definition</b>.
 
 
@@ -186,38 +222,44 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - Click <b>IBM Cloud</b> under Create a new peer and <b>Next</b>.
   - Give your peer a <b>Display name</b> of `Manufacturer Peer`.
   - On the next screen, select `Manufacturer CA` as your <b>Certificate Authority</b>. Then, give the <b>Enroll ID</b> and <b>Enroll secret</b> for the peer identity that you created for your peer, `manufacturerPeer`, and `manufacturerPeerpw`. Then, select the <b>Administrator Certificate (from MSP)</b>, `Manufacturer MSP`, from the drop-down list and click <b>Next</b>.
-  - Give the <b>TLS Enroll ID</b>, `admin`, and <b>TLS Enroll secret</b>, `adminpw`, the same values are the Enroll ID and Enroll secret that you gave when creating the CA.  Leave the <b>TLS CSR hostname</b> blank.
-  - The last side panel will ask you to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `Manufacturer Admin`.
-  - Review the summary and click <b>Submit</b>.
+  - The last side panel will ask you to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `Manufacturer MSP Admin`. Click <b>Next</b>.
+  - Review the summary and click <b>Add Peer</b>.
  
-* Create a shop peer (same process as shown in gif above)
+* Create an W1 peer
   - On the <b>Nodes</b> page, click <b>Add peer</b>.
   - Click <b>IBM Cloud</b> under Create a new peer and <b>Next</b>.
-  - Give your peer a <b>Display name</b> of `Shop Peer`.
-  - On the next screen, select `Shop CA` as your <b>Certificate Authority</b>. Then, give the <b>Enroll ID</b> and <b>Enroll secret</b> for the peer identity that you created for your peer, `shopPeer`, and `shopPeerpw`. Then, select the <b>Administrator Certificate (from MSP)</b>, `Shop MSP`, from the drop-down list and click <b>Next</b>.
-  - Give the <b>TLS Enroll ID</b>, `admin`, and <b>TLS Enroll secret</b>, `adminpw`, the same values are the Enroll ID and Enroll secret that you gave when creating the CA.  Leave the <b>TLS CSR hostname</b> blank.
-  - The last side panel will ask you to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `Shop Admin`.
-  - Review the summary and click <b>Submit</b>.
+  - Give your peer a <b>Display name</b> of `W1 Peer`.
+  - On the next screen, select `W1 CA` as your <b>Certificate Authority</b>. Then, give the <b>Enroll ID</b> and <b>Enroll secret</b> for the peer identity that you created for your peer, `W1Peer`, and `W1Peerpw`. Then, select the <b>Administrator Certificate (from MSP)</b>, `W1 MSP`, from the drop-down list and click <b>Next</b>.
+  - The last side panel will ask you to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `W1 MSP Admin`. Click <b>Next</b>.
+  - Review the summary and click <b>Add Peer</b>.
 
-* Create a repair shop peer (same process as shown in gif above)
+* Create an W2 peer
   - On the <b>Nodes</b> page, click <b>Add peer</b>.
   - Click <b>IBM Cloud</b> under Create a new peer and <b>Next</b>.
-  - Give your peer a <b>Display name</b> of `Repair Shop Peer`.
-  - On the next screen, select `Repair Shop CA` as your <b>Certificate Authority</b>. Then, give the <b>Enroll ID</b> and <b>Enroll secret</b> for the peer identity that you created for your peer, `repairShopPeer`, and `repairShopPeerpw`. Then, select the <b>Administrator Certificate (from MSP)</b>, `Repair Shop MSP`, from the drop-down list and click <b>Next</b>.
-  - Give the <b>TLS Enroll ID</b>, `admin`, and <b>TLS Enroll secret</b>, `adminpw`, the same values are the Enroll ID and Enroll secret that you gave when creating the CA.  Leave the <b>TLS CSR hostname</b> blank.
-  - The last side panel will ask you to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `Repair Shop Admin`.
-  - Review the summary and click <b>Submit</b>.
+  - Give your peer a <b>Display name</b> of `W2 Peer`.
+  - On the next screen, select `W2 CA` as your <b>Certificate Authority</b>. Then, give the <b>Enroll ID</b> and <b>Enroll secret</b> for the peer identity that you created for your peer, `W2Peer`, and `W2Peerpw`. Then, select the <b>Administrator Certificate (from MSP)</b>, `W2 MSP`, from the drop-down list and click <b>Next</b>.
+  - The last side panel will ask you to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `W2 MSP Admin`. Click <b>Next</b>.
+  - Review the summary and click <b>Add Peer</b>.
 
-* Create a police peer (same process as shown in gif above)
+* Create an Pharmacy peer
   - On the <b>Nodes</b> page, click <b>Add peer</b>.
   - Click <b>IBM Cloud</b> under Create a new peer and <b>Next</b>.
-  - Give your peer a <b>Display name</b> of `Police Peer`.
-  - On the next screen, select `Police CA` as your <b>Certificate Authority</b>. Then, give the <b>Enroll ID</b> and <b>Enroll secret</b> for the peer identity that you created for your peer, `policePeer`, and `policePeerpw`. Then, select the <b>Administrator Certificate (from MSP)</b>, `Police MSP`, from the drop-down list and click <b>Next</b>.
-  - Give the <b>TLS Enroll ID</b>, `admin`, and <b>TLS Enroll secret</b>, `adminpw`, the same values are the Enroll ID and Enroll secret that you gave when creating the CA.  Leave the <b>TLS CSR hostname</b> blank.
-  - The last side panel will ask you to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `Police Admin`.
-  - Review the summary and click <b>Submit</b>.
+  - Give your peer a <b>Display name</b> of `Pharmacy Peer`.
+  - On the next screen, select `Pharmacy CA` as your <b>Certificate Authority</b>. Then, give the <b>Enroll ID</b> and <b>Enroll secret</b> for the peer identity that you created for your peer, `PharmacyPeer`, and `pharmacyPeerpw`. Then, select the <b>Administrator Certificate (from MSP)</b>, `Pharmacy MSP`, from the drop-down list and click <b>Next</b>.
+  - The last side panel will ask you to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `Pharmacy MSP Admin`. Click <b>Next</b>.
+  - Review the summary and click <b>Add Peer</b>.
+
+  * Create an Patient peer
+  - On the <b>Nodes</b> page, click <b>Add peer</b>.
+  - Click <b>IBM Cloud</b> under Create a new peer and <b>Next</b>.
+  - Give your peer a <b>Display name</b> of `Patient Peer`.
+  - On the next screen, select `Patient CA` as your <b>Certificate Authority</b>. Then, give the <b>Enroll ID</b> and <b>Enroll secret</b> for the peer identity that you created for your peer, `patientPeer`, and `patientPeerpw`. Then, select the <b>Administrator Certificate (from MSP)</b>, `Patient MSP`, from the drop-down list and click <b>Next</b>.
+  - The last side panel will ask you to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `Patient MSP Admin`. Click <b>Next</b>.
+  - Review the summary and click <b>Add Peer</b>.
 
 ## Step 5. Build a network - Create Orderer
+
+Go to the Nodes tab.
 
 * #### Create your orderer organization CA
   - Click <b>Add Certificate Authority</b>.
@@ -227,8 +269,10 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
 * #### Use your CA to register orderer and orderer admin identities (shown in gif above)
   - In the <b>Nodes</b> tab, select the <b>Orderer CA</b> Certificate Authority that we created.
-  - First, we will register an admin for our organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `ordereradmin`, and <b>Enroll Secret</b> of `ordereradminpw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `client` and select `org1` from the affiliated organizations drop-down list. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank.
-  - We will repeat the process to create an identity of the orderer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `orderer1`, and <b>Enroll Secret</b> of `orderer1pw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `peer` and select `org1` from the affiliated organizations drop-down list. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank.
+  - First you need to associate the CA, click <b>Associate identity</b>
+  - Give an <b>Enroll ID</b> of `admin`, and <b>Enroll Secret</b> of `adminpw`.  Note that this is the same as the id and secret you gave in the creation step. Then give the <b>Identity Display Name</b> of <b>Orderer CA Admin</b> Click <b>Associate Identity</b>.
+  - First, we will register an admin for our organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `ordereradmin`, and <b>Enroll Secret</b> of `ordereradminpw`.  Set the <b>Type</b> for this identity as `client`. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields alone. Click <b>Next</b> and then Click <b>Register User</b>.
+  - We will repeat the process to create an identity of the orderer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `orderer1`, and <b>Enroll Secret</b> of `orderer1pw`.  Set the <b>Type</b> for this identity as `peer`. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields alone. Click <b>Next</b> and then Click <b>Register User</b>.
 
 * #### Create the orderer organization MSP definition
   - Navigate to the <b>Organizations</b> tab in the left navigation and click <b>Create MSP definition</b>.
@@ -238,7 +282,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - Click the <b>Generate</b> button to enroll this identity as the admin of your organization and export the identity to the wallet. Click <b>Export</b> to export the admin certificates to your file system. Finally click <b>Create MSP definition</b>.
 
 * #### Create an orderer
-  - On the <b>Nodes</b> page, click <b>Add orderer</b>.
+  - On the <b>Nodes</b> page, click <b>Add orderering service</b>.
   - Click <b>IBM Cloud</b> and proceed with <b>Next</b>.
   - Give your peer a <b>Display name</b> of `Orderer`.
   - On the next screen, select `Orderer CA` as your <b>Certificate Authority</b>. Then, give the <b>Enroll ID</b> and <b>Enroll secret</b> for the peer identity that you created for your orderer, `orderer1`, and `orderer1pw`. Then, select the <b>Administrator Certificate (from MSP)</b>, `Orderer MSP`, from the drop-down list and click <b>Next</b>.
@@ -250,7 +294,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - Navigate to the <b>Nodes</b> tab, and click on the <b>Orderer</b> that we created.
   - Under <b>Consortium Members</b>, click <b>Add organization</b>.
   - From the drop-down list, select `Manufacturer MSP`.
-  - Click <b>Submit</b>.
+  - Click <b>Add Organization</b>.
   - Repeat the same steps, but add `W1 MSP`, `W2 MSP`, `Pharmacy MSP` and `Patient MSP` as well.
 
 ## Step 6. Build a network - Create and Join Channel
@@ -260,49 +304,43 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - Click <b>Create channel</b>.
   - Give the channel a name, `mychannel`.
   - Select the orderer you created, `Orderer` from the orderers drop-down list.
+  - Select the channel member. This should be `Manufacturer MSP (manufacturermsp)`. 
   - Select the MSP identifying the organization of the channel creator from the drop-down list. This should be `Manufacturer MSP (manufacturermsp)`.
-  - Associate available identity as `Manufacturer Admin`.
   - Click <b>Add</b> next to the manufacturer organization. Make the organization an <b>Operator</b>.
+  - Do the same foor the other organizations:
   - Click <b>Add</b> next to the w1 organization. Make the organization an <b>Operator</b>.
   - Click <b>Add</b> next to the w2 organization. Make the organization an <b>Operator</b>.
   - Click <b>Add</b> next to the pharmacy organization. Make the organization an <b>Operator</b>.
   - Click <b>Add</b> next to the patient organization. Make the organization an <b>Operator</b>.
-  - Click <b>Create</b>.
+  - Under <b>Channel update policy</b>, Select <b>1 out of 5</b>.
+  - Under <b>Creator organization</b> Select <b>Manufacturer MSP</b> underr Channel creator MSP. And then select Associate available identity as `Manufacturer MSP Admin`.
+  - Click <b>Create channel</b>.
 
 * #### Join your peer to the channel
   - Click <b>Join channel</b> to launch the side panels.
   - Select your `Orderer` and click <b>Next</b>.
   - Enter the name of the channel you just created. `mychannel` and click <b>Next</b>.
   - Select which peers you want to join the channel, click all peers.
-  - Click <b>Submit</b>.
+  - Click <b>Join channel</b>.
 
-* #### Add anchor peers to the channel
-  - In order to communicate between organizations, we need to enroll anchor peers.
-  - From the channels tab, click on the channel you have created, `mychannel`.
-  - From the channel overview page, click on `channel details`. Scroll all the way down until you see `Anchor peers`.
-  - Click `Add anchor peer` and add the Insurance, Police, Repair Shop,
-    and Shop peers.
-  - Select which peers you want to join the channel.
-  - Click <b>Add anchor peer</b>.
-  - If all went well, your channel Anchor peers should look like below:
 
 ## Step 7. Deploy Smart Contract on the network
 
 * #### Install a smart contract
 * Clone the repository:
   ```bash
-  git clone https://github.com/IBM/build-blockchain-insurance-app
+  git clone https://github.com/IBM/private-data-collections-on-fabric
   ```
   - Click the <b>Smart contracts</b> tab to install the smart contract.
-  - Click <b>Install smart contract</b> to upload the insurance smart contract package file.
-  - Click on <b>Add file</b> and find your packaged smart contract. It is the file in the `build-blockchain-insurance-app/chaincodePackage` directory. 
+  - Click <b>Install smart contract</b> to upload the medrec smart contract package file.
+  - Click on <b>Add file</b> and find your packaged smart contract <b>medrec.cds</b> . It is the file in the `private-data-collections-on-fabric/chaincodePackage` directory. 
   - Select all peers - we need to install the contract on each peer.
-  - Once the contract is uploaded, click <b>Install</b>.
+  - Once the contract is uploaded, click <b>Install smart contract</b>.
 
 * #### Instantiate smart contract
   - On the smart contracts tab, find the smart contract from the list installed on your peers and click <b>Instantiate</b> from the overflow menu on the right side of the row.
   - On the side panel that opens, select the channel, `mychannel` to instantiate the smart contract on. Click <b>Next</b>.
-  - Select the organization members to be included in the policy, `insurancemsp`, `shopmsp`, `repairshopmsp`, `policemsp`.  Click <b>Next</b>.
+  - Select the organization members to be included in the policy, `manufacturermsp`, `w1msp`, `w2msp`, `pharmacymsp, patientmsp`.  Click <b>Next</b>.
   - Give <b>Function name</b> of `Init` and leave <b>Arguments</b> blank.
   - Click <b>Instantiate</b>.
 
@@ -310,65 +348,74 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
 * #### Connect with sdk through connection profile
   - Under the Instantiated Smart Contract, click on `Connect with SDK` from the overflow menu on the right side of the row.
-  - Choose from the dropdown for <b>MSP for connection</b>, `insurancemsp`.
-  - Choose from <b>Certificate Authority</b> dropdown, `Insurance CA`.
+  - Choose from the dropdown for <b>MSP for connection</b>, `manufacturermsp`.
+  - Choose from <b>Certificate Authority</b> dropdown, `Manufacturer CA`.
   - Download the connection profile by scrolling down and clicking <b>Download Connection Profile</b>.  This will download the connection json which we will use soon to establish connection.
   - You can click <b>Close</b> once the download completes.
 
-* #### Create insurance application admin
-  - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>Insurance CA</b>.
+* #### Create manufacturer application admin
+  - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>Manufacturer CA</b>.
   - Click on <b>Register user</b>.
-  - Give an <b>Enroll ID</b> and <b>Enroll Secret</b> to administer your application users, `insuranceApp-admin` and `insuranceApp-adminpw`.
+  - Give an <b>Enroll ID</b> and <b>Enroll Secret</b> to administer your application users, `manufacturerApp-admin` and `manufacturerApp-adminpw`.
   - Choose `client` as <b>Type</b>.
   - You can leave the <b>Use root affiliation</b> box checked.
   - You can leave the <b>Maximum enrollments</b> blank.
   - Under <b>Attributes</b>, click on <b>Add attribute</b>.  Give attribute as `hf.Registrar.Roles` = `*`.  This will allow this identity to act as registrar and issues identities for our app.  Click <b>Add-attribute</b>.
-  - Click <b>Register</b>.
+  - Click <b>Register User</b>.
 
-* #### Create shop application admin (same process as shown above in the gif)
-  - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>Shop CA</b>.
+* #### Create w1 application admin
+  - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>W1 CA</b>.
   - Click on <b>Register user</b>.
-  - Give an <b>Enroll ID</b> and <b>Enroll Secret</b> to administer your application users, `shopApp-admin` and `shopApp-adminpw`.
+  - Give an <b>Enroll ID</b> and <b>Enroll Secret</b> to administer your application users, `w1App-admin` and `w1App-adminpw`.
   - Choose `client` as <b>Type</b>.
   - You can leave the <b>Use root affiliation</b> box checked.
   - You can leave the <b>Maximum enrollments</b> blank.
   - Under <b>Attributes</b>, click on <b>Add attribute</b>.  Give attribute as `hf.Registrar.Roles` = `*`.  This will allow this identity to act as registrar and issues identities for our app.  Click <b>Add-attribute</b>.
-  - Click <b>Register</b>.
+  - Click <b>Register User</b>.
 
-* #### Create repair shop application admin (same process as shown above in the gif)
-  - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>Repair Shop CA</b>.
+* #### Create w2 application admin 
+  - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>w2 CA</b>.
   - Click on <b>Register user</b>.
-  - Give an <b>Enroll ID</b> and <b>Enroll Secret</b> to administer your application users, `repairShopApp-admin` and `repairShopApp-adminpw`.
+  - Give an <b>Enroll ID</b> and <b>Enroll Secret</b> to administer your application users, `w2App-admin` and `w2App-adminpw`.
   - Choose `client` as <b>Type</b>.
   - You can leave the <b>Use root affiliation</b> box checked.
   - You can leave the <b>Maximum enrollments</b> blank.
   - Under <b>Attributes</b>, click on <b>Add attribute</b>.  Give attribute as `hf.Registrar.Roles` = `*`.  This will allow this identity to act as registrar and issues identities for our app.  Click <b>Add-attribute</b>.
-  - Click <b>Register</b>.
+  - Click <b>Register User</b>.
 
-* #### Create police application admin (same process as shown above in the gif)
-  - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>Police CA</b>.
+* #### Create pharmacy application admin
+  - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>Pharmacy CA</b>.
   - Click on <b>Register user</b>.
-  - Give an <b>Enroll ID</b> and <b>Enroll Secret</b> to administer your application users, `policeApp-admin` and `policeApp-adminpw`.
+  - Give an <b>Enroll ID</b> and <b>Enroll Secret</b> to administer your application users, `pharmacyApp-admin` and `pharmacyApp-adminpw`.
   - Choose `client` as <b>Type</b>.
   - You can leave the <b>Use root affiliation</b> box checked.
   - You can leave the <b>Maximum enrollments</b> blank.
   - Under <b>Attributes</b>, click on <b>Add attribute</b>.  Give attribute as `hf.Registrar.Roles` = `*`.  This will allow this identity to act as registrar and issues identities for our app.  Click <b>Add-attribute</b>.
-  - Click <b>Register</b>.
+  - Click <b>Register User</b>.
+
+  * #### Create patient application admin
+  - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>Patient CA</b>.
+  - Click on <b>Register user</b>.
+  - Give an <b>Enroll ID</b> and <b>Enroll Secret</b> to administer your application users, `patientApp-admin` and `patientApp-adminpw`.
+  - Choose `client` as <b>Type</b>.
+  - You can leave the <b>Use root affiliation</b> box checked.
+  - You can leave the <b>Maximum enrollments</b> blank.
+  - Under <b>Attributes</b>, click on <b>Add attribute</b>.  Give attribute as `hf.Registrar.Roles` = `*`.  This will allow this identity to act as registrar and issues identities for our app.  Click <b>Add-attribute</b>.
+  - Click <b>Register User</b>.
+
 
  #### Update application connection
-  - Copy the connection profile you downloaded into the `web/www/blockchain` directory.
-  - Copy and paste everything in the connection profile, and overwrite
-  the **ibpConnection.json**. 
+  - Copy the connection profile (connection.json) file into the <b>private-data-coollectins-on-fabric/server</b> directory. This is going to tell our client app which identities are submitting transactions, and where our nodes are physically hosted 
 
 ## Step 9. Enroll App Admin Identities
 
-* #### Enroll insurnaceApp-admin
-  - First, navigate to the `web/www/blockchain` directory.
+* #### Enroll manufacturerApp-admin
+  - First, navigate to the `server` directory.
     ```bash
-    cd web/www/blockchain/
+    cd server/
     ```
   - Open the `config.json` file, and update the caName with the URL 
-    of the <b>insurance</b> certificate authority from your `ibpConnection.json` file. Save the file.  
+    of the <b>manufacturer</b> certificate authority from your `ibpConnection.json` file. Save the file.  
   
   - Run the `enrollAdmin.js` script
     ```bash
@@ -377,25 +424,25 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
   - You should see the following in the terminal:
     ```bash
-    msg: Successfully enrolled admin user insuranceApp-admin and imported it into the wallet
+    msg: Successfully enrolled admin user manufacturerApp-admin and imported it into the wallet
 
-* Enroll shopApp-admin
+* Enroll w1App-admin
   - First, change the appAdmin, appAdminSecret, and caName properties in your `config.json` file, 
   so that it looks something like this (your caName should be different than mine):
 
     ```js
     {
         "connection_file": "ibpConnection.json",
-        "appAdmin": "shopApp-admin",
-        "appAdminSecret": "shopApp-adminpw",
-        "orgMSPID": "shopmsp",
-        "caName": "https://fa707c454921423c80ec3c3c38d7545c-caf2e287.horeainsurancetest.us-south.containers.appdomain.cloud:7054",
-        "userName": "shopUser",
+        "appAdmin": "w1App-admin",
+        "appAdminSecret": "w1App-adminpw",
+        "orgMSPID": "w1msp",
+        "caName": "https://fa707c454921423c80ec3c3c38d7545c-caf2e287.horeamanprivate-datatest.us-south.containers.appdomain.cloud:7054",
+        "userName": "w1User",
         "gatewayDiscovery": { "enabled": true, "asLocalhost": false }
     }
     ```
   - To find the other CA urls, you will need to click on the `Nodes` tab in IBM Blockchain Platform, then on 
-    the Shop CA, and on the settings cog icon at the top of the page. That will take you to the certificate 
+    the W1 CA, and on the settings cog icon at the top of the page. That will take you to the certificate 
     authority settings, as shown in the picture below, and you can copy that endpoint URL into your `config.json` **caName**
     field. 
 
@@ -408,65 +455,110 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - You should see the following in the terminal:
 
     ```bash
-    msg: Successfully enrolled admin user shopApp-admin and imported it into the wallet
+    msg: Successfully enrolled admin user w1App-admin and imported it into the wallet
     ```
 
-* #### Enroll repairShopApp-admin (same process as shown in gif above)
+* Enroll w2App-admin
+  - Follow the same process you did for W1. 
   - First, change the appAdmin, appAdminSecret, and caName properties in your `config.json` file, 
-  so that it looks something like this (your caName should be different than mine):
+  so that it looks something like this:
 
     ```js
     {
         "connection_file": "ibpConnection.json",
-        "appAdmin": "repairShopApp-admin",
-        "appAdminSecret": "repairShopApp-adminpw",
-        "orgMSPID": "repairshopmsp",
-        "caName": "https://fa707c454921423c80ec3c3c38d7545c-caf2e287.horeainsurancetest.us-south.containers.appdomain.cloud:7054",
-        "userName": "repairUser",
+        "appAdmin": "w2App-admin",
+        "appAdminSecret": "w2App-adminpw",
+        "orgMSPID": "w2msp",
+        "caName": "https://fa707c454921423c80ec3c3c38d7545c-caf2e287.horeamanprivate-datatest.us-south.containers.appdomain.cloud:7054",
+        "userName": "w2User",
         "gatewayDiscovery": { "enabled": true, "asLocalhost": false }
     }
     ```
-  - Run the `enrollAdmin.js` script
-      ```bash
-      node enrollAdmin.js
-      ```
 
-  - You should see the following in the terminal:
+
+  - Run the `enrollAdmin.js` script
+    
     ```bash
-    msg: Successfully enrolled admin user repairShopApp-admin and imported it into the wallet
+    node enrollAdmin.js
     ```
 
-* #### Enroll policeApp-admin (same process as shown in gif above)
+  - You should see the following in the terminal:
+
+    ```bash
+    msg: Successfully enrolled admin user w2App-admin and imported it into the wallet
+    ```
+
+* Enroll PharmacyApp-admin
   - First, change the appAdmin, appAdminSecret, and caName properties in your `config.json` file, 
-  so that it looks something like this (your caName should be different than mine):
+  so that it looks something like this:
 
     ```js
     {
         "connection_file": "ibpConnection.json",
-        "appAdmin": "policeApp-admin",
-        "appAdminSecret": "policeApp-adminpw",
-        "orgMSPID": "policemsp",
-        "caName": "https://fa707c454921423c80ec3c3c38d7545c-caf2e287.horeainsurancetest.us-south.containers.appdomain.cloud:7054",
-        "userName": "policeUser",
+        "appAdmin": "pharmacyApp-admin",
+        "appAdminSecret": "pharmacyApp-adminpw",
+        "orgMSPID": "pharmacymsp",
+        "caName": "https://fa707c454921423c80ec3c3c38d7545c-caf2e287.horeamanprivate-datatest.us-south.containers.appdomain.cloud:7054",
+        "userName": "pharmacyUser",
+        "gatewayDiscovery": { "enabled": true, "asLocalhost": false }
+    }
+    ```
+
+
+  - Run the `enrollAdmin.js` script
+    
+    ```bash
+    node enrollAdmin.js
+    ```
+
+  - You should see the following in the terminal:
+
+    ```bash
+    msg: Successfully enrolled admin user pharmacyApp-admin and imported it into the wallet
+
+
+* Enroll PatientApp-admin
+  - First, change the appAdmin, appAdminSecret, and caName properties in your `config.json` file, 
+  so that it looks something like this:
+
+    ```js
+    {
+        "connection_file": "ibpConnection.json",
+        "appAdmin": "patientApp-admin",
+        "appAdminSecret": "patientApp-adminpw",
+        "orgMSPID": "patientmsp",
+        "caName": "https://fa707c454921423c80ec3c3c38d7545c-caf2e287.horeamanprivate-datatest.us-south.containers.appdomain.cloud:7054",
+        "userName": "patientUser",
         "gatewayDiscovery": { "enabled": true, "asLocalhost": false }
     }
     ```
 
   - Run the `enrollAdmin.js` script
-      ```bash
-      node enrollAdmin.js
-      ```
+    
+    ```bash
+    node enrollAdmin.js
+    ```
 
   - You should see the following in the terminal:
-      ```bash
-      msg: Successfully enrolled admin user policeApp-admin and imported it into the wallet
-      ```
+
+    ```bash
+    msg: Successfully enrolled admin user patientApp-admin and imported it into the wallet
   
 ## Step 10. Run the application
 
-Navigate to the directory blockchain directory which contains the [config.js file](https://github.com/IBM/build-blockchain-insurance-app/blob/ubuntu/local-fix/web/www/blockchain/config.js):
+- In a terminal window, navigate to the directory private-data-collections-on-fabric
+
+- Install the dependencies 
+
   ```bash
-  cd build-blockchain-insurance-app/web/www/blockchain/
+  cd server
+  npm install
+  ```
+
+  - Start the application
+
+  ```bash
+  npm start
   ```
   
 # License
