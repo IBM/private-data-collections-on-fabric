@@ -82,6 +82,7 @@ find the service in the `Catalog`.
 <b>The cluster takes around 15-20
 minutes to provision, so please be patient!</b>
 
+
 <br>
 <p align="center">
   <img src="docs/doc-gifs/createCluster.gif">
@@ -267,7 +268,7 @@ Go to the Nodes tab.
   - Give it a unique <b>Display name</b> of `Orderer CA`.  
   - Specify an <b>Admin ID</b> of `admin` and <b>Admin Secret</b> of `adminpw`.
 
-* #### Use your CA to register orderer and orderer admin identities (shown in gif above)
+* #### Use your CA to register orderer and orderer admin identities
   - In the <b>Nodes</b> tab, select the <b>Orderer CA</b> Certificate Authority that we created.
   - First you need to associate the CA, click <b>Associate identity</b>
   - Give an <b>Enroll ID</b> of `admin`, and <b>Enroll Secret</b> of `adminpw`.  Note that this is the same as the id and secret you gave in the creation step. Then give the <b>Identity Display Name</b> of <b>Orderer CA Admin</b> Click <b>Associate Identity</b>.
@@ -278,7 +279,7 @@ Go to the Nodes tab.
   - Navigate to the <b>Organizations</b> tab in the left navigation and click <b>Create MSP definition</b>.
   - Enter the <b>MSP Display name</b> as `Orderer MSP` and an <b>MSP ID</b> of `orderermsp`.
   - Under <b>Root Certificate Authority</b> details, specify the peer CA that we created `Orderer CA` as the root CA for the organization.
-  - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `ordereradmin` and `ordereradminpw`. Then, give the <b>Identity name</b>, `Orderer Admin`.
+  - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `ordereradmin` and `ordereradminpw`. Then, give the <b>Identity name</b>, `Orderer MSP Admin`.
   - Click the <b>Generate</b> button to enroll this identity as the admin of your organization and export the identity to the wallet. Click <b>Export</b> to export the admin certificates to your file system. Finally click <b>Create MSP definition</b>.
 
 * #### Create an orderer
@@ -287,8 +288,8 @@ Go to the Nodes tab.
   - Give your peer a <b>Display name</b> of `Orderer`.
   - On the next screen, select `Orderer CA` as your <b>Certificate Authority</b>. Then, give the <b>Enroll ID</b> and <b>Enroll secret</b> for the peer identity that you created for your orderer, `orderer1`, and `orderer1pw`. Then, select the <b>Administrator Certificate (from MSP)</b>, `Orderer MSP`, from the drop-down list and click <b>Next</b>.
   - Give the <b>TLS Enroll ID</b>, `admin`, and <b>TLS Enroll secret</b>, `adminpw`, the same values are the Enroll ID and Enroll secret that you gave when creating the CA.  Leave the <b>TLS CSR hostname</b> blank.
-  - The last side panel will ask to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `Orderer Admin`.
-  - Review the summary and click <b>Submit</b>.
+  - The last side panel will ask to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `Orderer MSP Admin`.
+  - Click <b>Next</b>, Review the summary and click <b>Add Ordering Service</b>.
 
 * #### Add organizations as Consortium Member on the orderer to transact
   - Navigate to the <b>Nodes</b> tab, and click on the <b>Orderer</b> that we created.
@@ -307,13 +308,13 @@ Go to the Nodes tab.
   - Select the channel member. This should be `Manufacturer MSP (manufacturermsp)`. 
   - Select the MSP identifying the organization of the channel creator from the drop-down list. This should be `Manufacturer MSP (manufacturermsp)`.
   - Click <b>Add</b> next to the manufacturer organization. Make the organization an <b>Operator</b>.
-  - Do the same foor the other organizations:
+  - Do the same for the other organizations:
   - Click <b>Add</b> next to the w1 organization. Make the organization an <b>Operator</b>.
   - Click <b>Add</b> next to the w2 organization. Make the organization an <b>Operator</b>.
   - Click <b>Add</b> next to the pharmacy organization. Make the organization an <b>Operator</b>.
   - Click <b>Add</b> next to the patient organization. Make the organization an <b>Operator</b>.
   - Under <b>Channel update policy</b>, Select <b>1 out of 5</b>.
-  - Under <b>Creator organization</b> Select <b>Manufacturer MSP</b> underr Channel creator MSP. And then select Associate available identity as `Manufacturer MSP Admin`.
+  - Under <b>Creator organization</b> Select <b>Manufacturer MSP</b> under Channel creator MSP. And then select Associate available identity as `Manufacturer MSP Admin`.
   - Click <b>Create channel</b>.
 
 * #### Join your peer to the channel
@@ -333,7 +334,7 @@ Go to the Nodes tab.
   ```
   - Click the <b>Smart contracts</b> tab to install the smart contract.
   - Click <b>Install smart contract</b> to upload the medrec smart contract package file.
-  - Click on <b>Add file</b> and find your packaged smart contract <b>medrec.cds</b> . It is the file in the `private-data-collections-on-fabric/chaincodePackage` directory. 
+  - Click on <b>Add file</b> and find your packaged smart contract <b>private-data-collection.cds</b> . It is the file in the `private-data-collections-on-fabric/chaincodePackage` directory. 
   - Select all peers - we need to install the contract on each peer.
   - Once the contract is uploaded, click <b>Install smart contract</b>.
 
@@ -341,6 +342,8 @@ Go to the Nodes tab.
   - On the smart contracts tab, find the smart contract from the list installed on your peers and click <b>Instantiate</b> from the overflow menu on the right side of the row.
   - On the side panel that opens, select the channel, `mychannel` to instantiate the smart contract on. Click <b>Next</b>.
   - Select the organization members to be included in the policy, `manufacturermsp`, `w1msp`, `w2msp`, `pharmacymsp, patientmsp`.  Click <b>Next</b>.
+  - Select the peer to approve proposals for instantiating the smart contract. Select <b>Manufacturer Peer</b> from the drop down.
+  - Setup private data collection. Click on <b>Add file</b> and find your private data `.json` file <b>. To learn more about private data collection go to the following site [ibp-console-smart-contracts-private-data](https://cloud.ibm.com/docs/services/blockchain?topic=blockchain-ibp-console-smart-contracts#ibp-console-smart-contracts-private-data).private-data-collection.cds</b>. It is the file called `collections_config.json` in the `private-data-collections-on-fabric/private-data-collections-on-fabric/server` directory. 
   - Give <b>Function name</b> of `Init` and leave <b>Arguments</b> blank.
   - Click <b>Instantiate</b>.
 

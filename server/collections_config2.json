@@ -1,0 +1,19 @@
+[
+  {
+       "name": "collectionPills",
+       "policy": "OR('manufacturemsp.member', 'w1msp.member', 'w2msp.member', 'pharmacymsp.member', 'patientmsp.member')",
+       "requiredPeerCount": 0,
+       "maxPeerCount": 3,
+       "blockToLive":1000000,
+       "memberOnlyRead": true
+  },
+
+  {
+       "name": "collectionPillPrivateDetails",
+       "policy": "OR('manufacturermsp.member', 'patientmsp.member')",
+       "requiredPeerCount": 0,
+       "maxPeerCount": 3,
+       "blockToLive":3,
+       "memberOnlyRead": true
+  }
+]
