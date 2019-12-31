@@ -111,19 +111,27 @@ minutes to provision, so please be patient!</b>
 
 We will build a network as provided by the IBM Blockchain Platform [documentation](https://console.bluemix.net/docs/services/blockchain/howto/ibp-console-build-network.html#ibp-console-build-network).  This will include creating a channel with a single peer organization with its own MSP and CA (Certificate Authority), and an orderer organization with its own MSP and CA. We will create the respective identities to deploy peers and operate nodes.
 
-* #### Create your manufacturer organization CA 
+![patientCA](https://user-images.githubusercontent.com/10428517/71632119-99f6eb00-2bc1-11ea-83ff-e725c47a2d86.gif)
+
+* #### Create your patient organization CA 
+  - Click <b>Add Certificate Authority</b>.
+  - Click <b>IBM Cloud</b> under <b>Create Certificate Authority</b> and <b>Next</b>.
+  - Give it a <b>Display name</b> of `Patient CA`.  
+  - Specify an <b>Admin ID</b> of `admin` and <b>Admin Secret</b> of `adminpw`.
+
+* #### Create your manufacturer organization CA (process is same as shown in gif above)
   - Click <b>Add Certificate Authority</b>.
   - Click <b>IBM Cloud</b> under <b>Create Certificate Authority</b> and <b>Next</b>.
   - Give it a <b>Display name</b> of `Manufacturer CA`.  
   - Specify an <b>Admin ID</b> of `admin` and <b>Admin Secret</b> of `adminpw`.
 
-* #### Create your wholesaler1 organization CA
+* #### Create your wholesaler1 organization CA (process is same as shown in gif above)
   - Click <b>Add Certificate Authority</b>.
   - Click <b>IBM Cloud</b> under <b>Create Certificate Authority</b> and <b>Next</b>.
   - Give it a <b>Display name</b> of `W1 CA`.  
   - Specify an <b>Admin ID</b> of `admin` and <b>Admin Secret</b> of `adminpw`.
 
-* #### Create your wholesaler2 organization CA
+* #### Create your wholesaler2 organization CA (process is same as shown in gif above)
   - Click <b>Add Certificate Authority</b>.
   - Click <b>IBM Cloud</b> under <b>Create Certificate Authority</b> and <b>Next</b>.
   - Give it a <b>Display name</b> of `W2 CA`.  
@@ -135,28 +143,31 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - Give it a <b>Display name</b> of `Pharmacy CA`.  
   - Specify an <b>Admin ID</b> of `admin` and <b>Admin Secret</b> of `adminpw`.
 
-* #### Create your patient organization CA (process is same as shown in gif above)
-  - Click <b>Add Certificate Authority</b>.
-  - Click <b>IBM Cloud</b> under <b>Create Certificate Authority</b> and <b>Next</b>.
-  - Give it a <b>Display name</b> of `Patient CA`.  
-  - Specify an <b>Admin ID</b> of `admin` and <b>Admin Secret</b> of `adminpw`.
+![registerUserPatientCA](https://user-images.githubusercontent.com/10428517/71632197-1689c980-2bc2-11ea-9c44-fa5a472b6cc2.gif)
+
+* #### Use your CA to associate and register patient identities 
+  - Select the <b>Patient CA</b> Certificate Authority that we created.
+  First you need to associate the CA, click <b>Associate identity</b>
+  - Give an <b>Enroll ID</b> of `admin`, and <b>Enroll Secret</b> of `adminpw`.  Note that this is the same as the id and secret you gave in the creation step. Then give the <b>Identity Display Name</b> of <b>Patient CA Admin</b> Click <b>Associate Identity</b>.
+  - First, we will register an admin for our Patient Organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `patientAdmin`, and <b>Enroll Secret</b> of `patientAdminpw`. Set the <b>Type</b> for this identity as `client` We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields alone. Click <b>Next</b> and then Click <b>Register User</b>.
+  - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `patientPeer`, and <b>Enroll Secret</b> of `patientPeerpw`.   Set the <b>Type</b> for this identity as `peer` We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank. Click <b>Next</b> and then Click <b>Register User</b>.
 
 
-* #### Use your CA to associate and register manufacturer identities
+* #### Use your CA to associate and register manufacturer identities (process is same as shown in gif above)
   - Select the <b>Manufacturer CA</b> Certificate Authority that we created.
   - First you need to associate the CA, click <b>Associate identity</b>
   - Give an <b>Enroll ID</b> of `admin`, and <b>Enroll Secret</b> of `adminpw`.  Note that this is the same as the id and secret you gave in the creation step. Then give the <b>Identity Display Name</b> of <b>Manufacturer CA Admin</b>  Click <b>Associate Identity</b>.
   - Then, we will register an admin for our Organization. Again, select the <b>Manufacturer CA Certificate Authority</b>. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `manufacturerAdmin`, and <b>Enroll Secret</b> of `manufacturerAdminpw`.  Set the <b>Type</b> for this identity as `client`. We will leave the <b>root affliation</b> and <b>Add Attributes</b> alone. Click <b>Next</b> and then Click <b>Register User</b>
   - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `manufacturerPeer`, and <b>Enroll Secret</b> of `manufacturerPeerpw`.  Set the <b>Type</b> for this identity as `peer`. We will leave everything else <b>Maximum enrollments</b> and <b>Add Attributes</b> fields alone. Click <b>Next</b> and then Click <b>Register User</b>.
 
-* #### Use your CA to associate and register w1 identities
+* #### Use your CA to associate and register w1 identities (process is same as shown in gif above)
   - Select the <b>W1 CA</b> Certificate Authority that we created.
   - First you need to associate the CA, click <b>Associate identity</b>
   - Give an <b>Enroll ID</b> of `admin`, and <b>Enroll Secret</b> of `adminpw`.  Note that this is the same as the id and secret you gave in the creation step. Then give the <b>Identity Display Name</b> of <b>W1 CA Admin</b> Click <b>Associate Identity</b>.
   - Then, we will register an admin for our W1 Organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `w1Admin`, and <b>Enroll Secret</b> of `w1Adminpw`.  Set the <b>Type</b> for this identity as `client`. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields alone. Click <b>Next</b> and then Click <b>Register User</b>.
   - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `w1Peer`, and <b>Enroll Secret</b> of `w1Peerpw`. Set the <b>Type</b> for this identity as `peer`. We will leave everything else <b>Maximum enrollments</b> and <b>Add Attributes</b> fields alone. Click <b>Next</b> and then Click <b>Register User</b>.
   
-* #### Use your CA to associate and register w2 identities
+* #### Use your CA to associate and register w2 identities (process is same as shown in gif above)
   - Select the <b>W2 CA</b> Certificate Authority that we created.
   - First you need to associate the CA, click <b>Associate identity</b>
   - Give an <b>Enroll ID</b> of `admin`, and <b>Enroll Secret</b> of `adminpw`.  Note that this is the same as the id and secret you gave in the creation step. Then give the <b>Identity Display Name</b> of <b>W2 CA Admin</b> Click <b>Associate Identity</b>.
@@ -169,14 +180,6 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - Give an <b>Enroll ID</b> of `admin`, and <b>Enroll Secret</b> of `adminpw`.  Note that this is the same as the id and secret you gave in the creation step. Then give the <b>Identity Display Name</b> of <b>Pharmacy CA Admin</b> Click <b>Associate Identity</b>.
   - Next, we will register an admin for our Pharmacy Organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `pharmacyAdmin`, and <b>Enroll Secret</b> of `pharmacyAdminpw`. Set the <b>Type</b> for this identity as `client`. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields alone. Click <b>Next</b> and then Click <b>Register User</b>.
   - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `pharmacyPeer`, and <b>Enroll Secret</b> of `pharmacyPeerpw`.  Set the <b>Type</b> for this identity as `peer` We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank. Click <b>Next</b> and then Click <b>Register User</b>.
-
-* #### Use your CA to assoociate and register patient identities (process is same as shown in gif above)
-  - Select the <b>Patient CA</b> Certificate Authority that we created.
-  First you need to associate the CA, click <b>Associate identity</b>
-  - Give an <b>Enroll ID</b> of `admin`, and <b>Enroll Secret</b> of `adminpw`.  Note that this is the same as the id and secret you gave in the creation step. Then give the <b>Identity Display Name</b> of <b>Patient CA Admin</b> Click <b>Associate Identity</b>.
-  - First, we will register an admin for our Patient Organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `patientAdmin`, and <b>Enroll Secret</b> of `patientAdminpw`. Set the <b>Type</b> for this identity as `client` We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields alone. Click <b>Next</b> and then Click <b>Register User</b>.
-  - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `patientPeer`, and <b>Enroll Secret</b> of `patientPeerpw`.   Set the <b>Type</b> for this identity as `peer` We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank. Click <b>Next</b> and then Click <b>Register User</b>.
-
 
 ## Step 3. Build a network - Create MSP Definitions
 
