@@ -201,7 +201,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - Navigate to the <b>Organizations</b> tab in the left navigation and click <b>Create MSP definition</b>.
   - Enter the <b>MSP Display name</b> as `W2 MSP` and an <b>MSP ID</b> of `w2msp`.
   - Under <b>Root Certificate Authority</b> details, specify the peer CA that we created `W2 CA` as the root CA for the organization.
-  - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `w2Admin` and `w2Adminpw`. Then, give the Identity name, `W1 MSP Admin`.
+  - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `w2Admin` and `w2Adminpw`. Then, give the Identity name, `W2 MSP Admin`.
   - Click the <b>Generate</b> button to enroll this identity as the admin of your organization and export the identity to the wallet. Click <b>Export</b> to export the admin certificates to your file system. Finally click <b>Create MSP definition</b>.
 
 * #### Create the Pharmacy MSP definition
