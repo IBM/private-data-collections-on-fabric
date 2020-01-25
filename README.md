@@ -253,7 +253,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - The last side panel will ask you to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `Pharmacy MSP Admin`. Click <b>Next</b>.
   - Review the summary and click <b>Add Peer</b>.
 
-  * Create an Patient peer
+* Create an Patient peer
   - On the <b>Nodes</b> page, click <b>Add peer</b>.
   - Click <b>IBM Cloud</b> under Create a new peer and <b>Next</b>.
   - Give your peer a <b>Display name</b> of `Patient Peer`.
@@ -325,6 +325,7 @@ Go to the Nodes tab.
   - Select your `Orderer` and click <b>Next</b>.
   - Enter the name of the channel you just created. `mychannel` and click <b>Next</b>.
   - Select which peers you want to join the channel, click all peers.
+  - Ensure all peers are anchor peers.
   - Click <b>Join channel</b>.
 
 
