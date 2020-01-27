@@ -13,6 +13,9 @@ on the channel, and ensure that the `CORE_PEER_GOSSIP_EXTERNALENDPOINT` is confi
 so that it can be used as evidence that the transaction did occur. The hash of the data is displayed in the
 diagram below.
 
+![privDataDiagram](https://user-images.githubusercontent.com/10428517/73143942-92a5ee80-4054-11ea-9902-a544c0c82329.png)
+
+
 To learn more about when private data collections, see the Fabric documentation [here](https://hyperledger-fabric.readthedocs.io/en/release-1.4/private-data/private-data.html#private-data). To learn a bit more about when
 to use a collection within a channel vs. a separate channel, go [here](https://hyperledger-fabric.readthedocs.io/en/release-1.4/private-data/private-data.html#when-to-use-a-collection-within-a-channel-vs-a-separate-channel). 
 
@@ -117,6 +120,8 @@ databases on the peers. This is done by using the [putPrivateData](https://fabri
 
 The method is similar to the [putState](https://fabric-shim.github.io/master/fabric-shim.ChaincodeStub.html#putState__anchor) method that is commonly used in Fabric chaincode, except that stores 
 the key-value pair on the transactions private write-set. 
+
+Similarly, for querying the state of a private data collection, you can use the [getPrivateData](https://fabric-shim.github.io/master/fabric-shim.ChaincodeStub.html#getPrivateData__anchor) method. 
 
 
 ## Private data in healthcare
