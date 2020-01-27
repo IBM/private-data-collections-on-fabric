@@ -2,6 +2,125 @@
 
 In the Medical Supply Chain, there are multiple entities such as the drug manufacturers, wholesellers, pharmacies and patients. These entities share data about the pill as it moves through the chain. However, there are cases where entities want to keep some data about the pill hidden from the other entities. Consider the instance where a manufacturer have negotiated different price rates with the wholesellers. They wouldn't want the different wholesellers to be able to see the various drug rates negotiated. Having all entities on the same channel of the blockchain would inherently make every transaction between any two entities, visible to every other entity. With the introduction of private data collections, certain data parts associated with a given transaction, can be kept private from other entities.
 
+## Intro to private data collections
+A transaction with private data is different than a typical Fabric transaction in three main ways.
+* The data is stored on a private database on the authorized peers (the peers which are listed in the 
+collection definition). If you want to learn more about defining a private data collection, see the 
+collection definition section below.
+* The data is sent peer-to-peer, via the [gossip protocol](https://hyperledger-fabric.readthedocs.io/en/release-1.4/gossip.html). Note that because the gossip protocol is involved, this means that you must set up anchor peers 
+on the channel, and ensure that the `CORE_PEER_GOSSIP_EXTERNALENDPOINT` is configured on each peer. 
+* The hash of the data is sent to all peers, whether they are authorized to see the actual private data, 
+so that it can be used as evidence that the transaction did occur. The hash of the data is displayed in the
+diagram below.
+
+To learn more about when private data collections, see the Fabric documentation [here](https://hyperledger-fabric.readthedocs.io/en/release-1.4/private-data/private-data.html#private-data). To learn a bit more about when
+to use a collection within a channel vs. a separate channel, go [here](https://hyperledger-fabric.readthedocs.io/en/release-1.4/private-data/private-data.html#when-to-use-a-collection-within-a-channel-vs-a-separate-channel). 
+
+## Using private data collections
+
+To use a private data collection within your Hyperledger Fabric application, you must define a private data 
+[collection definition](https://hyperledger-fabric.readthedocs.io/en/release-1.4/private-data-arch.html#private-data-collection-definition). The collection contains one or more private data
+collections and properties such as which organizations are allowed to access the collection, and how many 
+peers the private data must be disseminated to. 
+
+Note that the syntax for the collection definition is slightly different if you are using the Fabric SDK 
+versus the Fabric CLI. We will be using the Fabric SDK syntax. Take, for example, the collection definition 
+below:
+
+```
+[
+    {
+        "name": "collectionMarbles",
+        "policy": {
+            "identities": [
+                {
+                    "role": {
+                        "name": "member",
+                        "mspId": "Org1MSP"
+                    }
+                },
+                {
+                    "role": {
+                        "name": "member",
+                        "mspId": "Org2MSP"
+                    }
+                }
+            ],
+            "policy": {
+                "1-of": [
+                    {
+                        "signed-by": 0
+                    },
+                    {
+                        "signed-by": 1
+                    }
+                ]
+            }
+        },
+        "requiredPeerCount": 1,
+        "maxPeerCount": 2,
+        "blockToLive": 100
+    },
+    {
+        "name": "collectionMarblePrivateDetails",
+        "policy": {
+            "identities": [
+                {
+                    "role": {
+                        "name": "member",
+                        "mspId": "Org1MSP"
+                    }
+                }
+            ],
+            "policy": {
+                "1-of": [
+                    {
+                        "signed-by": 0
+                    }
+                ]
+            }
+        },
+        "requiredPeerCount": 1,
+        "maxPeerCount": 1,
+        "blockToLive": 100
+    }
+]
+```
+
+In the above example, `collectionMarbles` allows **all** members of the channel to have this private data in their
+private database. This is because all of the MSPs in the channel are listed in the policy property. 
+
+```
+"policy": {
+    "1-of": [
+        {
+            "signed-by": 0
+        },
+        {
+            "signed-by": 1
+        }
+    ]
+}
+```
+
+The nested 
+policy property in above specifies the `minimum peers required` to disseminate the private data as part of endorsement of 
+the chaincode.  This means that if the minimum number of peers are not met, the chaincode will not be endorsed. In the  
+example above, this means that only 1 peer is required, and it shows signed-by 0 and 1, this means that either org1 or
+org2 can disseminate the data, and the chaincode will be endorsed.
+`CollectionMarblesPrivateDetails` on the other hand, allows only members of Org1 to have the private data 
+in their private database. 
+
+## Writing chaincode with private data collections
+The last piece of using private data in Hyperledger Fabric is writing chaincode that will write data to the private 
+databases on the peers. This is done by using the [putPrivateData](https://fabric-shim.github.io/master/fabric-shim.ChaincodeStub.html#putPrivateData__anchor) method from the Hyperledger Fabric Node SDK. 
+
+The method is similar to the [putState](https://fabric-shim.github.io/master/fabric-shim.ChaincodeStub.html#putState__anchor) method that is commonly used in Fabric chaincode, except that stores 
+the key-value pair on the transactions private write-set. 
+
+
+## Private data in healthcare
+
 In this pattern, we showcase 1 manufacturer, 2 wholesalers, 1 pharmacy and 1 patient connected on the same channel on a blockchain ledger. The manufacturer generates a new drug pill, and sells it at different prices to the two wholesellers. Only the manufacturer and the patient have visibility to the two negotiated prices for this example.
 
 This code pattern is for developers who want to learn how to use the private data collections feature introduced into Hyperledger Fabric. When you have completed it, you will understand how to:
