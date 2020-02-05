@@ -1,175 +1,221 @@
-
+//Import Hyperledger Fabric 1.4 programming model - fabric-network
 'use strict';
 
 const { FileSystemWallet, Gateway, X509WalletMixin } = require('fabric-network');
-const fs = require('fs');
 const path = require('path');
-const yaml = require('js-yaml')
+const fs = require('fs');
 
-// capture network variables from config.json
-const configPath = path.join(process.cwd(), '/config.json');
+//connect to the config file
+const configPath = path.join(process.cwd(), './config.json');
 const configJSON = fs.readFileSync(configPath, 'utf8');
 const config = JSON.parse(configJSON);
-var connection_file = config.connection_file;
-var userName = config.userName;
-var gatewayDiscovery = config.gatewayDiscovery;
+let connection_file = config.connection_file;
+// let userName = config.userName;
+let gatewayDiscovery = config.gatewayDiscovery;
+let appAdmin = config.appAdmin;
+let orgMSPID = config.orgMSPID;
 
 // connect to the connection file
 const ccpPath = path.join(process.cwd(), connection_file);
 const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
-const connectionFile = JSON.parse(ccpJSON);
-// let fileContents = fs.readFileSync(filePath, 'utf8');
-// let connectionFile = yaml.safeLoad(fileContents);
+const ccp = JSON.parse(ccpJSON);
 
-// create car transaction
-exports.createCar = async function(key, make, model, color, owner) {
-    try {
 
-        var response = {};
+const util = require('util');
 
-        // Create a new file system based wallet for managing identities.
-        const walletPath = path.join(process.cwd(), '/wallet');
-        const wallet = new FileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
+exports.connectToNetwork = async function (userName) {
+  
+  const gateway = new Gateway();
 
-        // Check to see if we've already enrolled the user.
-        const userExists = await wallet.exists(userName);
-        if (!userExists) {
-            console.log('An identity for the user ' + userName + ' does not exist in the wallet');
-            console.log('Run the registerUser.js application before retrying');
-            response.error = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
-            return response;
-        }
+  try {
+    const walletPath = path.join(process.cwd(), 'wallet');
+    const wallet = new FileSystemWallet(walletPath);
+    console.log(`Wallet path: ${walletPath}`);
+    console.log('userName: ');
+    console.log(userName);
 
-        // Create a new gateway for connecting to our peer node.
-        console.log('we here in createCar')
-
-        const gateway = new Gateway();
-        await gateway.connect(connectionFile, { wallet, identity: userName, discovery: gatewayDiscovery });
-
-        // Get the network (channel) our contract is deployed to.
-        const network = await gateway.getNetwork('mychannel');
-
-        // Get the contract from the network.
-        const contract = network.getContract('Jan21TestContract');
-
-        // Submit the specified transaction.
-        // createCar transaction - requires 5 argument, ex: ('createCar', 'CAR12', 'Honda', 'Accord', 'Black', 'Tom')
-
-        await contract.submitTransaction('createCar', key, make, model, color, owner);
-        console.log('Transaction has been submitted');
-
-        // Disconnect from the gateway.
-        await gateway.disconnect();
-
-        response.msg = 'createCar Transaction has been submitted';
-        return response;        
-
-    } catch (error) {
-        console.error(`Failed to submit transaction: ${error}`);
-        response.error = error.message;
-        return response; 
+    console.log('wallet: ');
+    console.log(util.inspect(wallet));
+    console.log('ccp: ');
+    console.log(util.inspect(ccp));
+    // userName = 'V123412';
+    const userExists = await wallet.exists(userName);
+    if (!userExists) {
+      console.log('An identity for the user ' + userName + ' does not exist in the wallet');
+      console.log('Run the registerUser.js application before retrying');
+      let response = {};
+      response.error = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
+      return response;
     }
-}
 
-// change car owner transaction
-exports.changeCarOwner = async function(key, newOwner) {
-    try {
+    console.log('before gateway.connect: ');
 
-        var response = {};
+    await gateway.connect(ccp, { wallet, identity: userName, discovery: gatewayDiscovery });
 
-        // Create a new file system based wallet for managing identities.
-        const walletPath = path.join(process.cwd(), '/wallet');
-        const wallet = new FileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
+    // Connect to our local fabric
+    const network = await gateway.getNetwork('mychannel');
 
-        // Check to see if we've already enrolled the user.
-        const userExists = await wallet.exists(userName);
-        if (!userExists) {
-            console.log('An identity for the user ' + userName + ' does not exist in the wallet');
-            console.log('Run the registerUser.js application before retrying');
-            response.error = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
-            return response;
-        }
+    console.log('Connected to mychannel. ');
+    // Get the contract we have installed on the peer
+    const contract = await network.getContract('drugContract');
 
-        // Create a new gateway for connecting to our peer node.
-        const gateway = new Gateway();
-   
-        await gateway.connect(connectionFile, { wallet, identity: userName, discovery: gatewayDiscovery });
 
-        // Get the network (channel) our contract is deployed to.
-        const network = await gateway.getNetwork('mychannel');
+    let networkObj = {
+      contract: contract,
+      network: network,
+      gateway: gateway,
+      currentUser: userName
+    };
 
-        // Get the contract from the network.
-        const contract = network.getContract('fabcar');
+    return networkObj;
 
-        // Submit the specified transaction.
-        // changeCarOwner transaction - requires 2 args , ex: ('changeCarOwner', 'CAR10', 'Dave')
-        await contract.submitTransaction('changeCarOwner', key, newOwner);
-        console.log('Transaction has been submitted');
+  } catch (error) {
+    console.log(`Error processing transaction. ${error}`);
+    console.log(error.stack);
+    let response = {};
+    response.error = error;
+    return response;
+  } finally {
+    console.log('Done connecting to network.');
+    // gateway.disconnect();
+  }
+};
 
-        // Disconnect from the gateway.
-        await gateway.disconnect();
+exports.invoke = async function (networkObj, isQuery, func, args) {
+  try {
+    console.log('inside invoke');
+    console.log(`isQuery: ${isQuery}, func: ${func}, args: ${args}`);
+    console.log(util.inspect(networkObj));
 
-        response.msg = 'changeCarOwner Transaction has been submitted';
-        return response;        
 
-    } catch (error) {
-        console.error(`Failed to submit transaction: ${error}`);
-        response.error = error.message;
-        return response; 
+    // console.log(util.inspect(JSON.parse(args[0])));
+
+    if (isQuery === true) {
+      console.log('inside isQuery');
+
+      if (args) {
+        console.log('inside isQuery, args');
+        console.log(args);
+        let response = await networkObj.contract.evaluateTransaction(func, args);
+        console.log(response.toString());
+        console.log(`Transaction ${func} with args ${args} has been evaluated`);
+  
+        await networkObj.gateway.disconnect();
+  
+        return response.toString();
+        
+      } else {
+
+        let response = await networkObj.contract.evaluateTransaction(func);
+        console.log(response);
+        console.log(`Transaction ${func} without args has been evaluated`);
+  
+        await networkObj.gateway.disconnect();
+  
+        return response;
+      }
+    } else {
+      console.log('notQuery');
+      if (args) {
+        console.log('notQuery, args');
+        console.log('$$$$$$$$$$$$$ args: ');
+        console.log(args);
+        console.log(func);
+        console.log(typeof args);
+
+        args = JSON.parse(args[0]);
+
+        console.log(util.inspect(args));
+        args = JSON.stringify(args);
+        console.log(util.inspect(args));
+
+        console.log('before submit');
+        console.log(util.inspect(networkObj));
+        let response = await networkObj.contract.submitTransaction(func, args);
+        console.log('after submit');
+
+        console.log(response);
+        console.log(`Transaction ${func} with args ${args} has been submitted`);
+  
+        await networkObj.gateway.disconnect();
+  
+        return response;
+
+
+      } else {
+        let response = await networkObj.contract.submitTransaction(func);
+        console.log(response);
+        console.log(`Transaction ${func} with args has been submitted`);
+  
+        await networkObj.gateway.disconnect();
+  
+        return response;
+      }
     }
-}
 
-// query all cars transaction
-exports.queryAllCars = async function() {
-    try {
-        console.log('starting to queryAllCars')
+  } catch (error) {
+    console.error(`Failed to submit transaction: ${error}`);
+    return error;
+  }
+};
 
-        var response = {};
+exports.registerUser = async function (email, pass, confirmPass, orgMSPID) {
 
-        // Create a new file system based wallet for managing identities.
-        const walletPath = path.join(process.cwd(), '/wallet');
-        const wallet = new FileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
+  if (!email || !pass || !confirmPass || !orgMSPID) {
+    let response = {};
+    response.error = 'Error! You need to fill all fields before you can register!';
+    return response;
+  }
 
-        // Check to see if we've already enrolled the user.
-        const userExists = await wallet.exists(userName);
-        if (!userExists) {
-            console.log('An identity for the user ' + userName + ' does not exist in the wallet');
-            console.log('Run the registerUser.js application before retrying');
-            response.error = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
-            return response;            
-        }
+  try {
 
-        // Create a new gateway for connecting to our peer node.
-        const gateway = new Gateway();
+    // Create a new file system based wallet for managing identities.
+    const walletPath = path.join(process.cwd(), 'wallet');
+    const wallet = new FileSystemWallet(walletPath);
+    console.log(`Wallet path: ${walletPath}`);
+    console.log(wallet);
 
-        await gateway.connect(connectionFile, { wallet, identity: userName, discovery: gatewayDiscovery });
-        console.log('after gateway connect')
-        // Get the network (channel) our contract is deployed to.
-        const network = await gateway.getNetwork('mychannel');
-        console.log('after network connect')
-
-        // Get the contract from the network.
-        const contract = network.getContract('drugContract');
-        console.log('aftafter contrer gateway connect')
-
-        // Evaluate the specified transaction.
-        // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
-        let createPrivCarResponse = await contract.submitTransaction('createMyDrug', 'D1', 'adderall', 'somethingCrazy', 'pill', 'testCompany', '56');
-        console.log('after createPrivCarResponse')
-        let queryResponse = await contract.evaluateTransaction('readMyDrugPublic', 'D1');
-        console.log('after readMyAssetPublic')
-        let queryResponse2 = await contract.evaluateTransaction('readMyDrugPrivate', 'D1');
-        console.log('this is the response from evaluate transaction, readMyAssetPrivate ')
-        console.log(queryResponse2.toString());
-        console.log('this is the response from evaluate transaction, readMyAssetPublic ')
-        console.log(queryResponse.toString());
-        return queryResponse2;
-
-    } catch (error) {
-        console.error(`Failed to evaluate transaction: ${error}`);
-        return error;
+    // Check to see if we've already enrolled the user.
+    const userExists = await wallet.exists(email);
+    if (userExists) {
+      let response = {};
+      console.log(`An identity for the user ${email} already exists in the wallet`);
+      response.error = `Error! An identity for the user ${email} already exists. Please enter
+        a different email.`;
+      return response;
     }
-}
+
+    // Create a new gateway for connecting to our peer node.
+    const gateway = new Gateway();
+    await gateway.connect(ccp, { wallet, identity: appAdmin, discovery: gatewayDiscovery });
+
+    // Get the CA client object from the gateway for interacting with the CA.
+    const ca = gateway.getClient().getCertificateAuthority();
+    const adminIdentity = gateway.getCurrentIdentity();
+    console.log(`AdminIdentity: + ${adminIdentity}`);
+
+    let user = {};
+    user.email = email;
+    user.pass = pass;
+    user.confirmPass = confirmPass;
+    user.orgMSPID = orgMSPID;
+
+    // await ctx.stub.putState(email, Buffer.from(JSON.stringify(user)));
+    console.log(`updated state with key: ${email} and user: ${user}`);
+
+    // Register the user, enroll the user, and import the new identity into the wallet.
+    const secret = await ca.register({ affiliation: '', enrollmentID: email, role: 'client' }, adminIdentity);
+
+    const enrollment = await ca.enroll({ enrollmentID: email, enrollmentSecret: secret });
+    const userIdentity = await X509WalletMixin.createIdentity(orgMSPID, enrollment.certificate, enrollment.key.toBytes());
+    await wallet.import(email, userIdentity);
+    console.log(`Successfully registered user ${email} from ${orgMSPID}. Use your email, ${email} and associated password to login above.`);
+    let response = `Successfully registered user ${email} from ${orgMSPID}. Use your email, ${email} and associated password to login above.`;
+    return response;
+  } catch (error) {
+    console.error(`Failed to register user + ${email} + : ${error}`);
+    let response = {};
+    response.error = error;
+    return response;
+  }
+};
