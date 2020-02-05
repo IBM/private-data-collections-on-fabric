@@ -89,8 +89,9 @@ below:
 ]
 ```
 
-In the above example, `collectionMarbles` allows **all** members of the channel to have this private data in their
-private database. This is because all of the MSPs in the channel are listed in the policy property. 
+In the above example, `collectionMarbles` allows **both Org1 and Org2** members of the channel to have this private data in their
+private database. 
+This is because the mspId of both Org1 and Org2 are listed in the policy property. 
 
 ```
 "policy": {
@@ -106,21 +107,22 @@ private database. This is because all of the MSPs in the channel are listed in t
 ```
 
 The nested 
-policy property in above specifies the `minimum peers required` to disseminate the private data as part of endorsement of 
-the chaincode.  This means that if the minimum number of peers are not met, the chaincode will not be endorsed. In the  
-example above, this means that only 1 peer is required, and it shows signed-by 0 and 1, this means that either org1 or
-org2 can disseminate the data, and the chaincode will be endorsed.
+policy property in the above code specifies the `minimum peers required` to disseminate the private data as part of endorsement of 
+the chaincode.  This means unless the minimum number of peers are met, only then the chaincode will be endorsed. In the  
+example above, this means that only 1 peer is required, and it shows signed-by 0 and 1, this means that either Org1 or
+Org2 can disseminate the data, and the chaincode will be endorsed.
 `CollectionMarblesPrivateDetails` on the other hand, allows only members of Org1 to have the private data 
 in their private database. 
 
 ## Writing chaincode with private data collections
 The last piece of using private data in Hyperledger Fabric is writing chaincode that will write data to the private 
-databases on the peers. This is done by using the [putPrivateData](https://fabric-shim.github.io/master/fabric-shim.ChaincodeStub.html#putPrivateData__anchor) method from the Hyperledger Fabric Node SDK. 
+databases on the peers. This is done by using the [putPrivateData](https://hyperledger.github.io/fabric-chaincode-node/release-2.0/api/fabric-shim.ChaincodeStub.html#putPrivateData__anchor) method from the Hyperledger Fabric Node SDK. 
 
-The method is similar to the [putState](https://fabric-shim.github.io/master/fabric-shim.ChaincodeStub.html#putState__anchor) method that is commonly used in Fabric chaincode, except that stores 
-the key-value pair on the transactions private write-set. 
+The method is similar to the [putState]https://hyperledger.github.io/fabric-chaincode-node/release-2.0/api/fabric-shim.ChaincodeStub.html#putState__anchor) method that is commonly used in Fabric chaincode, except that 
+this method expects an argument which specifies which private collection to write  
+the key-value pair to.
 
-Similarly, for querying the state of a private data collection, you can use the [getPrivateData](https://fabric-shim.github.io/master/fabric-shim.ChaincodeStub.html#getPrivateData__anchor) method. 
+Similarly, for querying the state of a private data collection, you can use the [getPrivateData](https://hyperledger.github.io/fabric-chaincode-node/release-2.0/api/fabric-shim.ChaincodeStub.html#getPrivateData__anchor) method. 
 
 
 ## Private data in healthcare
