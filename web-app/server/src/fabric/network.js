@@ -10,11 +10,10 @@ const configPath = path.join(process.cwd(), './config.json');
 const configJSON = fs.readFileSync(configPath, 'utf8');
 const config = JSON.parse(configJSON);
 let connection_file = config.connection_file;
-// let userName = config.userName;
+let configUserName = config.userName;
 let gatewayDiscovery = config.gatewayDiscovery;
 let appAdmin = config.appAdmin;
 let orgMSPID = config.orgMSPID;
-
 // connect to the connection file
 const ccpPath = path.join(process.cwd(), connection_file);
 const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
@@ -33,13 +32,8 @@ exports.connectToNetwork = async function (userName) {
     console.log(`Wallet path: ${walletPath}`);
     console.log('userName: ');
     console.log(userName);
-
-    console.log('wallet: ');
-    console.log(util.inspect(wallet));
-    console.log('ccp: ');
-    console.log(util.inspect(ccp));
-    // userName = 'V123412';
     const userExists = await wallet.exists(userName);
+
     if (!userExists) {
       console.log('An identity for the user ' + userName + ' does not exist in the wallet');
       console.log('Run the registerUser.js application before retrying');
@@ -50,7 +44,7 @@ exports.connectToNetwork = async function (userName) {
 
     console.log('before gateway.connect: ');
 
-    await gateway.connect(ccp, { wallet, identity: userName, discovery: gatewayDiscovery });
+    await gateway.connect(ccp, { wallet, identity: configUserName, discovery: gatewayDiscovery });
 
     // Connect to our local fabric
     const network = await gateway.getNetwork('mychannel');
@@ -85,21 +79,13 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
   try {
     console.log('inside invoke');
     console.log(`isQuery: ${isQuery}, func: ${func}, args: ${args}`);
-    console.log(util.inspect(networkObj));
-
-
-    // console.log(util.inspect(JSON.parse(args[0])));
 
     if (isQuery === true) {
       console.log('inside isQuery');
 
       if (args) {
-        console.log('inside isQuery, args');
-        console.log(args);
         let response = await networkObj.contract.evaluateTransaction(func, args);
-        console.log(response.toString());
-        console.log(`Transaction ${func} with args ${args} has been evaluated`);
-  
+
         await networkObj.gateway.disconnect();
   
         return response.toString();
@@ -115,26 +101,16 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
         return response;
       }
     } else {
-      console.log('notQuery');
       if (args) {
-        console.log('notQuery, args');
-        console.log('$$$$$$$$$$$$$ args: ');
-        console.log(args);
-        console.log(func);
-        console.log(typeof args);
 
         args = JSON.parse(args[0]);
 
-        console.log(util.inspect(args));
         args = JSON.stringify(args);
-        console.log(util.inspect(args));
 
         console.log('before submit');
-        console.log(util.inspect(networkObj));
         let response = await networkObj.contract.submitTransaction(func, args);
         console.log('after submit');
 
-        console.log(response);
         console.log(`Transaction ${func} with args ${args} has been submitted`);
   
         await networkObj.gateway.disconnect();
@@ -143,6 +119,7 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
 
 
       } else {
+        console.log('notQuery no args');
         let response = await networkObj.contract.submitTransaction(func);
         console.log(response);
         console.log(`Transaction ${func} with args has been submitted`);
@@ -173,7 +150,6 @@ exports.registerUser = async function (email, pass, confirmPass, orgMSPID) {
     const walletPath = path.join(process.cwd(), 'wallet');
     const wallet = new FileSystemWallet(walletPath);
     console.log(`Wallet path: ${walletPath}`);
-    console.log(wallet);
 
     // Check to see if we've already enrolled the user.
     const userExists = await wallet.exists(email);
@@ -185,9 +161,10 @@ exports.registerUser = async function (email, pass, confirmPass, orgMSPID) {
       return response;
     }
 
+    console.log(configUserName)
     // Create a new gateway for connecting to our peer node.
     const gateway = new Gateway();
-    await gateway.connect(ccp, { wallet, identity: appAdmin, discovery: gatewayDiscovery });
+    await gateway.connect(ccp, { wallet, identity: configUserName, discovery: gatewayDiscovery });
 
     // Get the CA client object from the gateway for interacting with the CA.
     const ca = gateway.getClient().getCertificateAuthority();
@@ -201,10 +178,10 @@ exports.registerUser = async function (email, pass, confirmPass, orgMSPID) {
     user.orgMSPID = orgMSPID;
 
     // await ctx.stub.putState(email, Buffer.from(JSON.stringify(user)));
-    console.log(`updated state with key: ${email} and user: ${user}`);
+    // console.log(`updated state with key: ${email} and user: ${user}`);
 
     // Register the user, enroll the user, and import the new identity into the wallet.
-    const secret = await ca.register({ affiliation: '', enrollmentID: email, role: 'client' }, adminIdentity);
+    const secret = await ca.register({ enrollmentID: email, role: 'client' }, adminIdentity);
 
     const enrollment = await ca.enroll({ enrollmentID: email, enrollmentSecret: secret });
     const userIdentity = await X509WalletMixin.createIdentity(orgMSPID, enrollment.certificate, enrollment.key.toBytes());

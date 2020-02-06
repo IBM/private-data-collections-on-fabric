@@ -80,43 +80,37 @@ app.post('/queryWithQueryString', async (req, res) => {
 app.post('/registerUser', async (req, res) => {
   console.log('req.body: ');
   console.log(req.body);
-  let voterId = req.body.voterId;
 
   //first create the identity for the voter and add to wallet
-  let response = await network.registerUser(voterId, req.body.registrarId, req.body.firstName, req.body.lastName);
-  console.log('response from registerVoter: ');
+  let response = await network.registerUser(req.body.email, req.body.confirmPass, req.body.lastName, req.body.mspid);
+  console.log('response from registerUser: ');
   console.log(response);
   if (response.error) {
     res.send(response.error);
   } else {
-    console.log('req.body.voterId');
-    console.log(req.body.voterId);
-    let networkObj = await network.connectToNetwork(voterId);
-    console.log('networkobj: ');
-    console.log(networkObj);
+    console.log('response from registerUser in app.js: ');
+    console.log(response);
+    let networkObj = await network.connectToNetwork(req.body.email);
 
     if (networkObj.error) {
       res.send(networkObj.error);
     }
-    console.log('network obj');
-    console.log(util.inspect(networkObj));
+    // console.log('network obj');
+    // console.log(util.inspect(networkObj));
 
 
     req.body = JSON.stringify(req.body);
     let args = [req.body];
     //connect to network and update the state with voterId  
-    let invokeResponse = await network.invoke(networkObj, false, 'createVoter', args);
-
-    // let invokeResponse = await network.invoke(networkObj, false, 'createVoter', args);
+    let invokeResponse = await network.invoke(networkObj, false, 'createUser', args);
     
     if (invokeResponse.error) {
       res.send(invokeResponse.error);
     } else {
 
       console.log('after network.invoke ');
-      let parsedResponse = JSON.parse(invokeResponse);
-      parsedResponse += '. Use voterId to login above.';
-      res.send(parsedResponse);
+      console.log(invokeResponse.toString());
+      res.send(invokeResponse);
 
     }
 

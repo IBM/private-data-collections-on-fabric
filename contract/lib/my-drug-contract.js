@@ -17,6 +17,24 @@ class MyDrugContract extends Contract {
 
   }
 
+  async createUser(ctx, args) {
+    console.info('============= START : createUser ===========');
+    console.log(args);
+    args = JSON.parse(args);
+
+    const user = {
+      email: args.email,
+      confirmPass: args.confirmPass,
+      lastName: args.lastName,
+      mspid: args.mspid,
+    };
+    console.info('============= End : createUser ===========');
+    const buffer = await ctx.stub.putState(user.email, Buffer.from(JSON.stringify(user)));
+    let response = `successfully created user account for ${user.email}. Use your email 
+    and password log in to the Healthcare Network above.`
+    return response;
+  }
+
   async createMyDrug(ctx, drugNumber, drugName, activeIngredients, dosableForm, owner, price) {
     console.info('============= START : createMyDrug ===========');
 

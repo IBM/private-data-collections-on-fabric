@@ -2,7 +2,6 @@
   <div class="posts">
     <h1>Healthcare Network</h1>
     <h3>Log in with your healthcare account</h3>
-    <!--span><b>{{ response }}</b></span><br /-->
     <form v-on:submit="validateUser">
       <p>Email</p><input type="text" v-model="loginData.email" placeholder="Enter email">
       <p>Password</p><input type="text" v-model="loginData.pass" placeholder="Enter password">
@@ -21,13 +20,12 @@
     <br>
     <h3>Don't have a healthcare account? Sign up below</h3>
     <form v-on:submit="registerUser">
-      <input type="text" v-model="registerData.email" placeholder="Enter email address">
+      <input type="text" v-model="registerData.email"><br>
+      <input type="text" v-model="registerData.password">
       <br>
-      <input type="text" v-model="registerData.password" placeholder="Enter password">
+      <input type="text" v-model="registerData.confirmPass" >
       <br>
-      <input type="text" v-model="registerData.confirmPass" placeholder="Confirm password">
-      <br>
-      <input type="text" v-model="registerData.lastName" placeholder="Enter last name">
+      <input type="text" v-model="registerData.lastName" >
       <br>
       <select v-model="registerData.mspid" name="mspid">
         <option value="patient">Patient</option>
