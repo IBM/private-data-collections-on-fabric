@@ -28,9 +28,9 @@ let connectionFile = yaml.safeLoad(fileContents);
 async function main() {
     try {
         // Create a new CA client for interacting with the CA.
-        // const caURL = connectionFile.certificateAuthorities[caName].url;
+        const caURL = connectionFile.certificateAuthorities[caName].url;
         
-        const caURL = 'https://n434fde-manufacturerca.myclusterdeletejan24-37a53622c16dc09e3d369194be33ca3e-0000.us-south.containers.appdomain.cloud:7054';
+        // const caURL = 'https://n434fde-patientca.myclusterdeletejan24-37a53622c16dc09e3d369194be33ca3e-0000.us-south.containers.appdomain.cloud:7054';
 
         const ca = new FabricCAServices(caURL);
         // Create a new file system based wallet for managing identities.
