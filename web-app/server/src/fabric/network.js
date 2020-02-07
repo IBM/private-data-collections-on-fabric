@@ -81,7 +81,6 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
     console.log(`isQuery: ${isQuery}, func: ${func}, args: ${args}`);
 
     if (isQuery === true) {
-      console.log('inside isQuery');
 
       if (args) {
         let response = await networkObj.contract.evaluateTransaction(func, args);

@@ -124,8 +124,6 @@ app.post('/validateUser', async (req, res) => {
   console.log('req.body: ');
   console.log(req.body);
   let networkObj = await network.connectToNetwork(req.body.email);
-  console.log('networkobj: ');
-  console.log(util.inspect(networkObj));
 
   if (networkObj.error) {
     res.send(networkObj);
@@ -134,17 +132,27 @@ app.post('/validateUser', async (req, res) => {
   let invokeResponse = await network.invoke(networkObj, true, 'readMyAsset', req.body.email);
   console.log(invokeResponse);
   if (invokeResponse.error) {
-    res.send(invokeResponse);
+    res.send(invokeResponse.error);
   } else {
-    console.log('after network.invoke ');
+    console.log('response from readMyAsset ');
+    console.log(invokeResponse);
     let parsedResponse = await JSON.parse(invokeResponse);
-    if (parsedResponse.ballotCast) {
+    console.log(parsedResponse)
+    console.log(parsedResponse)
+
+    console.log(parsedResponse.confirmPass)
+    console.log(req.body.pass)
+
+    if (parsedResponse.confirmPass != req.body.pass) {
+      console.log('errreoreoroeo')
       let response = {};
-      response.error = 'This voter has already cast a ballot, we cannot allow double-voting!';
-      res.send(response);
+      response.error = `error - username and password is incorrect. Please try again.`;
+      res.send(response)
+    } else {
+      console.log('successfully validated user ');
+      res.send(parsedResponse);
     }
-    // let response = `Voter with voterId ${parsedResponse.voterId} is ready to cast a ballot.`  
-    res.send(parsedResponse);
+
   }
 
 });

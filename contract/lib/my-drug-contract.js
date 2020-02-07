@@ -9,9 +9,9 @@ const { Contract } = require('fabric-contract-api');
 
 class MyDrugContract extends Contract {
 
-  async myDrugExists(ctx, drugNumber) {
+  async myAssetExists(ctx, assetId) {
     console.info('============= START : myDrugExists ===========');
-    const buffer = await ctx.stub.getState(drugNumber);
+    const buffer = await ctx.stub.getState(assetI);
     console.info('============= END : myDrugExists ===========');
     return (!!buffer && buffer.length > 0);
 
@@ -104,6 +104,31 @@ class MyDrugContract extends Contract {
 
     await ctx.stub.putState(drugNumber, Buffer.from(JSON.stringify(drug)));
     console.info('============= END : changeDrugOwner ===========');
+  }
+
+  /**
+   *
+   * readMyAsset
+   *
+   * Reads a key-value pair from the world state, based on the key given.
+   *  
+   * @param myAssetId - the key of the asset to read
+   * @returns - nothing - but reads the value in the world state
+   */
+  async readMyAsset(ctx, myAssetId) {
+
+    const exists = await this.myAssetExists(ctx, myAssetId);
+
+    if (!exists) {
+      // throw new Error(`The my asset ${myAssetId} does not exist`);
+      let response = {};
+      response.error = `The my asset ${myAssetId} does not exist`;
+      return response;
+    }
+
+    const buffer = await ctx.stub.getState(myAssetId);
+    const asset = JSON.parse(buffer.toString());
+    return asset;
   }
 }
 
