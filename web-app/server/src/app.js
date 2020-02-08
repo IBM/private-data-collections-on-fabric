@@ -77,83 +77,60 @@ app.post('/queryWithQueryString', async (req, res) => {
 });
 
 //get voter info, create voter object, and update state with their voterId
-app.post('/registerUser', async (req, res) => {
+app.post('/RegisterUser', async (req, res) => {
   console.log('req.body: ');
   console.log(req.body);
 
-  //first create the identity for the voter and add to wallet
-  let response = await network.registerUser(req.body.email, req.body.confirmPass, req.body.lastName, req.body.mspid);
-  console.log('response from registerUser: ');
-  console.log(response);
-  if (response.error) {
-    res.send(response.error);
-  } else {
+  try {
+
+    let response = await network.RegisterUser(req.body.email, req.body.confirmPass, req.body.lastName, req.body.mspid);
+ 
     console.log('response from registerUser in app.js: ');
     console.log(response);
     let networkObj = await network.connectToNetwork(req.body.email);
-
-    if (networkObj.error) {
-      res.send(networkObj.error);
-    }
-    // console.log('network obj');
-    // console.log(util.inspect(networkObj));
-
 
     req.body = JSON.stringify(req.body);
     let args = [req.body];
     //connect to network and update the state with voterId  
     let invokeResponse = await network.invoke(networkObj, false, 'createUser', args);
     
-    if (invokeResponse.error) {
-      res.send(invokeResponse.error);
-    } else {
 
       console.log('after network.invoke ');
       console.log(invokeResponse.toString());
       res.send(invokeResponse);
 
-    }
-
+  } catch (error) {
+    res.send(error)
   }
-
 
 });
 
 //used as a way to login the voter to the app and make sure they haven't voted before 
 app.post('/validateUser', async (req, res) => {
+
+  try {
+
   console.log('req.body: ');
   console.log(req.body);
   let networkObj = await network.connectToNetwork(req.body.email);
 
-  if (networkObj.error) {
-    res.send(networkObj);
-  }
-
   let invokeResponse = await network.invoke(networkObj, true, 'readMyAsset', req.body.email);
-  console.log(invokeResponse);
-  if (invokeResponse.error) {
-    res.send(invokeResponse.error);
-  } else {
-    console.log('response from readMyAsset ');
-    console.log(invokeResponse);
-    let parsedResponse = await JSON.parse(invokeResponse);
-    console.log(parsedResponse)
-    console.log(parsedResponse)
-
-    console.log(parsedResponse.confirmPass)
-    console.log(req.body.pass)
+  let parsedResponse = await JSON.parse(invokeResponse);
 
     if (parsedResponse.confirmPass != req.body.pass) {
-      console.log('errreoreoroeo')
       let response = {};
       response.error = `error - username and password is incorrect. Please try again.`;
       res.send(response)
     } else {
       console.log('successfully validated user ');
+      console.log(parsedResponse);
       res.send(parsedResponse);
     }
 
+  } catch (error) {
+    res.send(error)
   }
+  
 
 });
 

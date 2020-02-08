@@ -2,12 +2,12 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">    
       
-        <p><router-link to="/">Home</router-link>&nbsp;          
+        <!-- <p><router-link to="/">Home</router-link>&nbsp;</p> -->
         <!-- <router-link to="/castBallot">Cast Ballot</router-link>&nbsp; -->
-        <router-link to="/QueryAll">QueryAll</router-link></p>
+        <!-- <router-link to="/QueryAll">QueryAll</router-link></p>
         <router-link to="/queryWithQueryString">Query by Type</router-link>&nbsp;
         <router-link to="/queryByKey">Query by Key</router-link>&nbsp;
-        <router-link to="/getCurrentStanding">Get Poll Standings</router-link>&nbsp;
+        <router-link to="/getCurrentStanding">Get Poll Standings</router-link>&nbsp; -->
       
       <router-view></router-view>
     </div>

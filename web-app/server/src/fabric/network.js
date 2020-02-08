@@ -35,11 +35,12 @@ exports.connectToNetwork = async function (userName) {
     const userExists = await wallet.exists(userName);
 
     if (!userExists) {
-      console.log('An identity for the user ' + userName + ' does not exist in the wallet');
-      console.log('Run the registerUser.js application before retrying');
-      let response = {};
-      response.error = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
-      return response;
+      // console.log('An identity for the user ' + userName + ' does not exist in the wallet');
+      // console.log('Run the registerUser.js application before retrying');
+      // let response = {};
+      // response.error = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
+      // return response;
+      throw Error(`Failed to register user + ${email} + : ${error}`);
     }
 
     console.log('before gateway.connect: ');
@@ -64,11 +65,12 @@ exports.connectToNetwork = async function (userName) {
     return networkObj;
 
   } catch (error) {
-    console.log(`Error processing transaction. ${error}`);
-    console.log(error.stack);
-    let response = {};
-    response.error = error;
-    return response;
+    throw Error (error)
+    // console.log(`Error processing transaction. ${error}`);
+    // console.log(error.stack);
+    // let response = {};
+    // response.error = error;
+    // return response;
   } finally {
     console.log('Done connecting to network.');
     // gateway.disconnect();
@@ -130,17 +132,19 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
     }
 
   } catch (error) {
-    console.error(`Failed to submit transaction: ${error}`);
-    return error;
+    throw Error(error)
+    // console.error(`Failed to submit transaction: ${error}`);
+    // return error;
   }
 };
 
-exports.registerUser = async function (email, pass, confirmPass, orgMSPID) {
+exports.RegisterUser = async function (email, pass, confirmPass, orgMSPID) {
 
   if (!email || !pass || !confirmPass || !orgMSPID) {
-    let response = {};
-    response.error = 'Error! You need to fill all fields before you can register!';
-    return response;
+    // let response = {};
+    // response.error = ;
+    // return response;
+    throw Error('Error! You need to fill all fields before you can register!');
   }
 
   try {
@@ -148,16 +152,17 @@ exports.registerUser = async function (email, pass, confirmPass, orgMSPID) {
     // Create a new file system based wallet for managing identities.
     const walletPath = path.join(process.cwd(), 'wallet');
     const wallet = new FileSystemWallet(walletPath);
-    console.log(`Wallet path: ${walletPath}`);
+    // console.log(`Wallet path: ${walletPath}`);
 
     // Check to see if we've already enrolled the user.
     const userExists = await wallet.exists(email);
     if (userExists) {
-      let response = {};
-      console.log(`An identity for the user ${email} already exists in the wallet`);
-      response.error = `Error! An identity for the user ${email} already exists. Please enter
-        a different email.`;
-      return response;
+      // let response = {};
+      // console.log(`An identity for the user ${email} already exists in the wallet`);
+      // response.error = ;
+      // return response;
+      throw Error(`Error! An identity for the user ${email} already exists. Please enter
+      a different email.`)
     }
 
     console.log(configUserName)
@@ -189,9 +194,9 @@ exports.registerUser = async function (email, pass, confirmPass, orgMSPID) {
     let response = `Successfully registered user ${email} from ${orgMSPID}. Use your email, ${email} and associated password to login above.`;
     return response;
   } catch (error) {
-    console.error(`Failed to register user + ${email} + : ${error}`);
-    let response = {};
-    response.error = error;
-    return response;
+    throw Error (`Failed to register user + ${email} + : ${error}`)
+    // let response = {};
+    // response.error = error;
+    // return response;
   }
 };

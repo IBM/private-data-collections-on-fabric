@@ -1,6 +1,19 @@
+
 <template>
   <div class="posts">
+        <p><router-link to="/">Log Out</router-link>&nbsp;</p>
+        <!-- <p>Logged in as {{  }}</p> -->
     <h1>Cast Ballot</h1>
+        <!-- <Child :stringProp="stringMessage"></Child> -->
+<!-- <span v-if="validatedUserEmail">
+      <b>logged in as {{ validatedUserEmail }}</b>
+    </span>
+      
+          <home v-bind:validatedUserEmail="validatedUserEmail">
+
+          </home> -->
+
+
     <input type="radio" id="one" value="Republican" v-model="picked">
     <label for="one">Donald Trump (Republican)</label>
     <br>
@@ -17,16 +30,16 @@
     <label for="two">TBA (Libertarian)</label>
     <br>
     <br>
-    <span v-if="picked">
+    
+    <span v-if="validatedUserEmail">
       Picked:
-      <b>{{ picked }}</b>
+      <b>{{ validatedUserEmail }}</b>
     </span>
     <br>
     <br>
     <!--span><b>{{ response }}</b></span><br /-->
     <form v-on:submit="castBallot">
-      <!-- <input type="text" value="2sww593dc034wb2twdk91r" v-model="input.electionId"  >
-      <br>-->
+      <br>
       <input type="text" v-model="input.voterId" placeholder="Enter VoterId">
       <br>
       <input type="submit" value="Cast Vote">
@@ -45,9 +58,11 @@
 <script>
 import PostsService from "@/services/apiService";
 import VueInstantLoadingSpinner from "vue-instant-loading-spinner/src/components/VueInstantLoadingSpinner.vue";
+import Home from "./Home.vue";
 
 export default {
   name: "response",
+  props: ['validatedUserEmail'],
   data() {
     return {
       input: {},
@@ -56,7 +71,11 @@ export default {
     };
   },
   components: {
-    VueInstantLoadingSpinner
+    VueInstantLoadingSpinner,
+    Home
+  },
+  mounted: function() {
+    this.getCurrentUser();
   },
   methods: {
     async castBallot() {
@@ -120,6 +139,12 @@ export default {
           await this.hideSpinner();
         }
       }
+    },
+    async getCurrentUser() {
+      console.log('hello');
+      console.log(this.validatedUserEmail);
+      
+      
     },
     async runSpinner() {
       this.$refs.Spinner.show();

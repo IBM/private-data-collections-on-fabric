@@ -19,7 +19,7 @@ export default {
       selected: selected
     }) 
   },
-  registerUser(email, pass, confirmPass, lastName, mspid) {
+  RegisterUser(email, pass, confirmPass, lastName, mspid) {
     return Api().post('registerUser', {
       email: email,
       pass: pass,
@@ -28,7 +28,7 @@ export default {
       mspid: mspid
     }) 
   },
-  validateUser(voterId) {
+  validateUser(email, pass) {
     return Api().post('validateUser', {
       email: email,
       pass: pass
