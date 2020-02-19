@@ -21,12 +21,16 @@ const config = JSON.parse(configJSON);
 
 //use this identity to query
 const appAdmin = config.appAdmin;
+const currUser = '';
 
 //get all assets in world state
-app.get('/queryAll', async (req, res) => {
+app.post('/queryAll', async (req, res) => {
 
-  let networkObj = await network.connectToNetwork(appAdmin);
-  let response = await network.invoke(networkObj, true, 'readMyDrugPublic', 'D1');
+  console.log('req.body')
+  console.log(req.body)
+  console.log(req.body.emailaddress);
+  let networkObj = await network.connectToNetwork(emailaddress);
+  let response = await network.invoke(networkObj, true, 'queryAll');
   console.log('before app.get /queryAll reponse')
   console.log(response);
   let parsedResponse = await JSON.parse(response);
@@ -122,7 +126,7 @@ app.post('/validateUser', async (req, res) => {
       response.error = `error - username and password is incorrect. Please try again.`;
       res.send(response)
     } else {
-      console.log('successfully validated user ');
+      console.log('successfully validated userasdf ');
       console.log(parsedResponse);
       res.send(parsedResponse);
     }

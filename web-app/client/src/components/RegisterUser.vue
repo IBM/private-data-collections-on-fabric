@@ -5,15 +5,18 @@
     <br>
     <h3>Don't have a healthcare account? Sign up below</h3>
     <form v-on:submit="RegisterUser">
-      <input type="text" v-model="registerData.email"><br>
-      <input type="text" v-model="registerData.password">
+      <input type="text" v-model="registerData.email" placeholder="email"><br>
+      <input type="text" v-model="registerData.password" placeholder="password">
       <br>
-      <input type="text" v-model="registerData.confirmPass" >
+      <input type="text" v-model="registerData.confirmPass" placeholder="confirmPassword" >
       <br>
-      <input type="text" v-model="registerData.lastName" >
+      <input type="text" v-model="registerData.lastName" placeholder="lastname">
       <br>
       <select v-model="registerData.mspid" name="mspid">
-        <option value="patient">Patient</option>
+        <option  selected disabled> 
+          Select an Option 
+      </option>
+        <option value="patient" selected>Patient</option>
         <option value="manufacturer">Manufacturer</option>
         <option value="pharmacy">Pharmacy</option>
         <option value="wholesaler1">Wholesaler1</option>

@@ -1,56 +1,44 @@
 
 <template>
   <div class="posts">
-        <p><router-link to="/">Log Out</router-link>&nbsp;</p>
-        <!-- <p>Logged in as {{  }}</p> -->
+    <p>
+    </p>
+        <router-link to="/QueryAll">QueryAll</router-link></p>
+        <router-link to="/queryWithQueryString">Query by Type</router-link>&nbsp;
+        <router-link to="/queryByKey">Query by Key</router-link>&nbsp;
+        <router-link to="/getCurrentStanding">Get Poll Standings</router-link>&nbsp;
     <h1>Cast Ballot</h1>
-        <!-- <Child :stringProp="stringMessage"></Child> -->
-<!-- <span v-if="validatedUserEmail">
-      <b>logged in as {{ validatedUserEmail }}</b>
-    </span>
-      
-          <home v-bind:validatedUserEmail="validatedUserEmail">
 
-          </home> -->
-
-
-    <input type="radio" id="one" value="Republican" v-model="picked">
+    <input type="radio" id="one" value="Republican" v-model="picked" />
     <label for="one">Donald Trump (Republican)</label>
-    <br>
-    <input type="radio" id="two" value="Democrat" v-model="picked">
+    <br />
+    <input type="radio" id="two" value="Democrat" v-model="picked" />
     <label for="two">TBA (Democratic)</label>
-    <br>
-    <input type="radio" id="two" value="Green" v-model="picked">
+    <br />
+    <input type="radio" id="two" value="Green" v-model="picked" />
     <label for="two">TBA (Green Party)</label>
-    <br>
-    <input type="radio" id="two" value="Independent" v-model="picked">
+    <br />
+    <input type="radio" id="two" value="Independent" v-model="picked" />
     <label for="two">TBA (Independent)</label>
-    <br>
-    <input type="radio" id="two" value="Libertarian" v-model="picked">
+    <br />
+    <input type="radio" id="two" value="Libertarian" v-model="picked" />
     <label for="two">TBA (Libertarian)</label>
-    <br>
-    <br>
-    
-    <span v-if="validatedUserEmail">
-      Picked:
-      <b>{{ validatedUserEmail }}</b>
-    </span>
-    <br>
-    <br>
-    <!--span><b>{{ response }}</b></span><br /-->
+    <br />
+    <br />
+
     <form v-on:submit="castBallot">
-      <br>
-      <input type="text" v-model="input.voterId" placeholder="Enter VoterId">
-      <br>
-      <input type="submit" value="Cast Vote">
-      <br>
+      <br />
+      <input type="text" v-model="input.voterId" placeholder="Enter VoterId" />
+      <br />
+      <input type="submit" value="Cast Vote" />
+      <br />
     </form>
 
-    <br>
+    <br />
     <span v-if="response">
       <b>{{ response }}</b>
     </span>
-    <br>
+    <br />
     <vue-instant-loading-spinner id="loader" ref="Spinner"></vue-instant-loading-spinner>
   </div>
 </template>
@@ -59,29 +47,34 @@
 import PostsService from "@/services/apiService";
 import VueInstantLoadingSpinner from "vue-instant-loading-spinner/src/components/VueInstantLoadingSpinner.vue";
 import Home from "./Home.vue";
+import { EventBus } from "./../main";
 
 export default {
   name: "response",
-  props: ['validatedUserEmail'],
+  props: ["emailaddress", "apiresponse", "tableheading", "reroute"],
   data() {
     return {
       input: {},
       picked: null,
-      response: null
+      response: '',
     };
   },
   components: {
     VueInstantLoadingSpinner,
     Home
   },
-  mounted: function() {
-    this.getCurrentUser();
+  mounted: async function() {
+    console.log('pushing back home')
+    //if we reached here before logging in, redirect the user to login
+    if(!this.$route.params.emailaddress){
+      this.$router.push({ name: 'Home'});
+    }
   },
   methods: {
     async castBallot() {
       await this.runSpinner();
 
-      const electionRes = await PostsService.queryWithQueryString('election');
+      const electionRes = await PostsService.queryWithQueryString("election");
 
       let electionId = electionRes.data[0].Key;
 
@@ -91,43 +84,37 @@ export default {
       console.log(this.input.voterId);
       this.response = null;
 
- 
-
       //error checking for making sure to vote for a valid party
-      if (this.picked === null ) {
-        console.log('this.picked === null')
+      if (this.picked === null) {
+        console.log("this.picked === null");
 
         let response = "You have to pick a party to vote for!";
         this.response = response;
         await this.hideSpinner();
-      
       } else if (this.input.voterId === undefined) {
-        console.log('this.voterId === undefined')
+        console.log("this.voterId === undefined");
 
         let response = "You have to enter your voterId to cast a vote!";
         this.response = response;
         await this.hideSpinner();
-
       } else {
-
         const apiResponse = await PostsService.castBallot(
           electionId,
           this.input.voterId,
           this.picked
         );
 
-        console.log('apiResponse: &&&&&&&&&&&&&&&&&&&&&&&');
+        console.log("apiResponse: &&&&&&&&&&&&&&&&&&&&&&&");
         console.log(apiResponse);
 
         if (apiResponse.data.error) {
-          this.response= apiResponse.data.error;
+          this.response = apiResponse.data.error;
           await this.hideSpinner();
         } else if (apiResponse.data.message) {
-          this.response= `Could not find voter with voterId ${this.input.voterId}
+          this.response = `Could not find voter with voterId ${this.input.voterId}
             in the state. Make sure you are entering a valid voterId`;
           await this.hideSpinner();
-        } 
-        else {
+        } else {
           let response = `Successfully recorded vote for ${this.picked} party 
             for voter with voterId ${apiResponse.data.voterId}. Thanks for 
             doing your part and voting!`;
@@ -139,12 +126,6 @@ export default {
           await this.hideSpinner();
         }
       }
-    },
-    async getCurrentUser() {
-      console.log('hello');
-      console.log(this.validatedUserEmail);
-      
-      
     },
     async runSpinner() {
       this.$refs.Spinner.show();

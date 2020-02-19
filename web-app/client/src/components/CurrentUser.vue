@@ -1,30 +1,8 @@
 <template>
-  <div class="posts">
+  <div id= 'currentUser' class="User">
     <h1>Healthcare Network</h1>
     <h3>Log in with your healthcare account</h3>
 
-    <form v-on:submit="validateUser">
-      <p>Email</p>
-      <input type="text" v-model="loginData.email" placeholder="Enter email" />
-      <p>Password</p>
-      <input type="text" v-model="loginData.pass" placeholder="Enter password" />
-      <br />
-      <br />
-      <input type="submit" value="Login" />
-      <br />
-      <br />
-      <span v-if="loginReponse">
-        <b>{{ loginReponse.data }}</b>
-      </span>
-
-      <br />
-    </form>
-
-    <br />
-    <h3>Don't have a healthcare account?</h3>
-    <h3>
-      <router-link to="/RegisterUser">Register Here</router-link>&nbsp;
-    </h3>
 
     <vue-instant-loading-spinner id="loader" ref="Spinner"></vue-instant-loading-spinner>
   </div>
@@ -34,20 +12,20 @@
 import PostsService from "@/services/apiService";
 import VueInstantLoadingSpinner from "vue-instant-loading-spinner/src/components/VueInstantLoadingSpinner.vue";
 import { EventBus } from './../main';
+// import { EventBus } from './event-bus.js';
+
 
 export default {
   name: "response",
-  props: ["emailaddress", "apiresponse", "reroute"],
   data() {
     return {
       loginData: {},
       loginReponse: {
         data: ""
       },
+      validatedUserEmail: '',
+      validatedUserMSP: ""
     };
-  },
-  components: {
-    VueInstantLoadingSpinner,
   },
   methods: {
     async validateUser() {
@@ -64,23 +42,31 @@ export default {
           this.loginData.pass
         );
 
-        console.log('api response after posts servic validate user in home.vue')
-        console.log(apiResponse);
-
         if (apiResponse.data.error || apiResponse.error) {
           console.log(apiResponse.data.error);
           this.loginReponse = apiResponse.data.error;
         } else {
-          console.log('about to push to castballot')
-          console.log(this.$route.params.emailaddress)
-          this.$router.push({ name: 'CastBallot', params: { emailaddress: apiResponse.data.email, apiresponse: apiResponse.data}});
+          this.validatedUserEmail = apiResponse.data.email;
+          console.log(this.validatedUserEmail)
+          this.validatedUserMSP = apiResponse.data.mspid;
+          let currUser = await this.getCurrentUser(this.validatedUserEmail);
+          console.log('currUser')
+          console.log(currUser)
+          // await this.getCurrentUser(this.validatedUserEmail);
+          this.$router.push("castBallot");
         }
-        // this.validatedUserEmail = apiResponse.data.email;
-        // this.validatedUserMSP = apiResponse.data.mspid;
-        // console.log(this.validatedUserEmail);
-        // this.loginReponse = apiResponse;
+        this.validatedUserEmail = apiResponse.data.email;
+        this.validatedUserMSP = apiResponse.data.mspid;
+        console.log(this.validatedUserEmail);
+        this.loginReponse = apiResponse;
         await this.hideSpinner();
       }
+    },
+    async getCurrentUser(currentUser) {
+      console.log(`currentUser in Home.vue: ${currentUser}`);
+      // this.$eventHub.$emit('getUser', currentUser);
+      EventBus.$emit('getUser', currentUser);
+      return currentUser;
     },
     async runSpinner() {
       this.$refs.Spinner.show();

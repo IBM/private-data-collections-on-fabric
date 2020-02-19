@@ -8,6 +8,8 @@ import QueryWithQueryString from '@/components/QueryWithQueryString'
 import QueryByKey from '@/components/QueryByKey'
 import GetCurrentStanding from '@/components/GetCurrentStanding'
 import RegisterUser from '@/components/RegisterUser'
+import CurrentUser from '@/components/CurrentUser'
+
 
 Vue.use(Router)
 
@@ -27,6 +29,11 @@ export default new Router({
       path: '/castBallot',
       name: 'CastBallot',
       component: CastBallot
+    },
+    {
+      path: '/currentUser',
+      name: 'CurrentUser',
+      component: CurrentUser
     },
     {
       path: '/queryAll',

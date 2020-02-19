@@ -8,8 +8,10 @@ export default {
       picked: picked
     })
   },
-  queryAll() {
-    return Api().get('queryAll')
+  queryAll(emailaddress) {
+    return Api().post('queryAll',{
+      emailaddress: emailaddress
+    })
   },
   queryByObjectType() {
     return Api().get('queryByObjectType')
@@ -41,5 +43,8 @@ export default {
   },
   getCurrentStanding() {
     return Api().get('getCurrentStanding')
+  },
+  getCurrentUser() {
+    return Api().get('getCurrentUser')
   }
 }
