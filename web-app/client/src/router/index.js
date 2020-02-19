@@ -18,42 +18,50 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: Home,
+      props: true
     },
     {
       path: '/registerUser',
       name: 'RegisterUser',
-      component: RegisterUser
+      component: RegisterUser,
+      props: true
     },
     {
       path: '/castBallot',
       name: 'CastBallot',
-      component: CastBallot
+      component: CastBallot,
+      props: true
     },
     {
       path: '/currentUser',
       name: 'CurrentUser',
-      component: CurrentUser
+      component: CurrentUser,
+      props: true
     },
     {
       path: '/queryAll',
       name: 'QueryAll',
-      component: QueryAll
+      component: QueryAll,
+      props: true
     },
     {
       path: '/queryWithQueryString',
       name: 'QueryWithQueryString',
-      component: QueryWithQueryString
+      component: QueryWithQueryString,
+      props: true
     },
     {
       path: '/queryByKey',
       name: 'QueryByKey',
-      component: QueryByKey
+      component: QueryByKey,
+      props: true
     },
     {
       path: '/getCurrentStanding',
       name: 'GetCurrentStanding',
-      component: GetCurrentStanding
+      component: GetCurrentStanding,
+      props: true
     }
   ]
 })

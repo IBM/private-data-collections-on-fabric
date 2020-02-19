@@ -29,7 +29,7 @@ app.post('/queryAll', async (req, res) => {
   console.log('req.body')
   console.log(req.body)
   console.log(req.body.emailaddress);
-  let networkObj = await network.connectToNetwork(emailaddress);
+  let networkObj = await network.connectToNetwork(req.body.emailaddress);
   let response = await network.invoke(networkObj, true, 'queryAll');
   console.log('before app.get /queryAll reponse')
   console.log(response);

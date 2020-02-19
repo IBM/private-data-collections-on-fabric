@@ -24,12 +24,12 @@ export default {
   components: {
     VueInstantLoadingSpinner
   },
-  mounted: async function() {
+mounted: async function() {
     console.log('pushing back home')
     //if we reached here before logging in, redirect the user to login
-    // if(!this.$route.params.emailaddress){
-    //   this.$router.push({ name: 'Home'});
-    // }
+    if(!this.$route.params.emailaddress){
+      this.$router.push({ name: 'Home'});
+    }
   },
   methods: {
     async queryAll() {

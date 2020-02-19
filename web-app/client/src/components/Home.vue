@@ -72,7 +72,8 @@ export default {
           this.loginReponse = apiResponse.data.error;
         } else {
           console.log('about to push to castballot')
-          console.log(this.$route.params.emailaddress)
+          console.log(apiResponse.data.email)
+          console.log(this.$route.params)
           this.$router.push({ name: 'CastBallot', params: { emailaddress: apiResponse.data.email, apiresponse: apiResponse.data}});
         }
         // this.validatedUserEmail = apiResponse.data.email;

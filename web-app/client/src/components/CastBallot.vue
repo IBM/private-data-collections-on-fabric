@@ -3,7 +3,7 @@
   <div class="posts">
     <p>
     </p>
-        <router-link to="/QueryAll">QueryAll</router-link></p>
+        <button v-on:click="goToQueryAll()">QueryAll</button>
         <router-link to="/queryWithQueryString">Query by Type</router-link>&nbsp;
         <router-link to="/queryByKey">Query by Key</router-link>&nbsp;
         <router-link to="/getCurrentStanding">Get Poll Standings</router-link>&nbsp;
@@ -61,7 +61,6 @@ export default {
   },
   components: {
     VueInstantLoadingSpinner,
-    Home
   },
   mounted: async function() {
     console.log('pushing back home')
@@ -126,6 +125,11 @@ export default {
           await this.hideSpinner();
         }
       }
+    },
+    async goToQueryAll() {
+      console.log('gotoqueryA:L')
+      console.log(this.$route.params.emailaddress)
+      this.$router.push({ name: 'QueryAll', params: { emailaddress: this.$route.params.emailaddress}});
     },
     async runSpinner() {
       this.$refs.Spinner.show();
