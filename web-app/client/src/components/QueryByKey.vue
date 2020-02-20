@@ -1,21 +1,23 @@
 <template>
   <div class="posts">
+    <button v-on:click="goHome()">Home</button>
+
     <h1>Query By Key</h1>
     <form v-on:submit="queryByKey">
-      <input type="text" v-model="input.key" placeholder="Enter Key to Query">
-      <br>
+      <input type="text" v-model="input.key" placeholder="Enter Key to Query" />
+      <br />
 
-      <input type="submit" value="Query">
-      <br>
-      <br>
+      <input type="submit" value="Query" />
+      <br />
+      <br />
       <span v-if="input">
         <b>{{ input.data }}</b>
-      </span>  
-      <br>
+      </span>
+      <br />
     </form>
 
-    <br>
-      <vue-instant-loading-spinner id='loader' ref="Spinner"></vue-instant-loading-spinner>
+    <br />
+    <vue-instant-loading-spinner id="loader" ref="Spinner"></vue-instant-loading-spinner>
   </div>
 </template>
 
@@ -53,6 +55,13 @@ export default {
         this.input = apiResponse;
         this.hideSpinner();
       }
+    },
+    async goHome() {
+      console.log(this.$route.params.emailaddress);
+      this.$router.push({
+        name: "CastBallot",
+        params: { emailaddress: this.$route.params.emailaddress }
+      });
     },
     async runSpinner() {
       this.$refs.Spinner.show();

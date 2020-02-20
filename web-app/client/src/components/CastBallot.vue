@@ -1,39 +1,9 @@
 
 <template>
   <div class="posts">
-    <p>
-    </p>
-        <button v-on:click="goToQueryAll()">QueryAll</button>
-        <router-link to="/queryWithQueryString">Query by Type</router-link>&nbsp;
-        <router-link to="/queryByKey">Query by Key</router-link>&nbsp;
-        <router-link to="/getCurrentStanding">Get Poll Standings</router-link>&nbsp;
-    <h1>Cast Ballot</h1>
-
-    <input type="radio" id="one" value="Republican" v-model="picked" />
-    <label for="one">Donald Trump (Republican)</label>
-    <br />
-    <input type="radio" id="two" value="Democrat" v-model="picked" />
-    <label for="two">TBA (Democratic)</label>
-    <br />
-    <input type="radio" id="two" value="Green" v-model="picked" />
-    <label for="two">TBA (Green Party)</label>
-    <br />
-    <input type="radio" id="two" value="Independent" v-model="picked" />
-    <label for="two">TBA (Independent)</label>
-    <br />
-    <input type="radio" id="two" value="Libertarian" v-model="picked" />
-    <label for="two">TBA (Libertarian)</label>
-    <br />
-    <br />
-
-    <form v-on:submit="castBallot">
-      <br />
-      <input type="text" v-model="input.voterId" placeholder="Enter VoterId" />
-      <br />
-      <input type="submit" value="Cast Vote" />
-      <br />
-    </form>
-
+    <button v-on:click="goToQueryAll()">QueryAll</button>
+    <button v-on:click="goToAddAsset()">AddAsset</button>
+    <h1>Healthcare Platform Home</h1>
     <br />
     <span v-if="response">
       <b>{{ response }}</b>
@@ -51,85 +21,36 @@ import { EventBus } from "./../main";
 
 export default {
   name: "response",
-  props: ["emailaddress", "apiresponse", "tableheading", "reroute"],
+  props: ["emailaddress"],
   data() {
     return {
-      input: {},
-      picked: null,
-      response: '',
+      response: ""
     };
   },
   components: {
-    VueInstantLoadingSpinner,
+    VueInstantLoadingSpinner
   },
   mounted: async function() {
-    console.log('pushing back home')
+    console.log("pushing back home");
     //if we reached here before logging in, redirect the user to login
-    if(!this.$route.params.emailaddress){
-      this.$router.push({ name: 'Home'});
+    if (!this.$route.params.emailaddress) {
+      this.$router.push({ name: "Home" });
     }
   },
   methods: {
-    async castBallot() {
-      await this.runSpinner();
-
-      const electionRes = await PostsService.queryWithQueryString("election");
-
-      let electionId = electionRes.data[0].Key;
-
-      console.log("picked: ");
-      console.log(this.picked);
-      console.log("voterId: ");
-      console.log(this.input.voterId);
-      this.response = null;
-
-      //error checking for making sure to vote for a valid party
-      if (this.picked === null) {
-        console.log("this.picked === null");
-
-        let response = "You have to pick a party to vote for!";
-        this.response = response;
-        await this.hideSpinner();
-      } else if (this.input.voterId === undefined) {
-        console.log("this.voterId === undefined");
-
-        let response = "You have to enter your voterId to cast a vote!";
-        this.response = response;
-        await this.hideSpinner();
-      } else {
-        const apiResponse = await PostsService.castBallot(
-          electionId,
-          this.input.voterId,
-          this.picked
-        );
-
-        console.log("apiResponse: &&&&&&&&&&&&&&&&&&&&&&&");
-        console.log(apiResponse);
-
-        if (apiResponse.data.error) {
-          this.response = apiResponse.data.error;
-          await this.hideSpinner();
-        } else if (apiResponse.data.message) {
-          this.response = `Could not find voter with voterId ${this.input.voterId}
-            in the state. Make sure you are entering a valid voterId`;
-          await this.hideSpinner();
-        } else {
-          let response = `Successfully recorded vote for ${this.picked} party 
-            for voter with voterId ${apiResponse.data.voterId}. Thanks for 
-            doing your part and voting!`;
-
-          this.response = response;
-
-          console.log("cast ballot");
-          console.log(this.input);
-          await this.hideSpinner();
-        }
-      }
-    },
     async goToQueryAll() {
-      console.log('gotoqueryA:L')
-      console.log(this.$route.params.emailaddress)
-      this.$router.push({ name: 'QueryAll', params: { emailaddress: this.$route.params.emailaddress}});
+      console.log(this.$route.params.emailaddress);
+      this.$router.push({
+        name: "QueryAll",
+        params: { emailaddress: this.$route.params.emailaddress }
+      });
+    },
+    async goToAddAsset() {
+      console.log(this.$route.params.emailaddress);
+      this.$router.push({
+        name: "QueryByKey",
+        params: { emailaddress: this.$route.params.emailaddress }
+      });
     },
     async runSpinner() {
       this.$refs.Spinner.show();

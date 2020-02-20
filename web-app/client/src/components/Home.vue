@@ -37,7 +37,7 @@ import { EventBus } from './../main';
 
 export default {
   name: "response",
-  props: ["emailaddress", "apiresponse", "reroute"],
+  props: ["emailaddress", "apiresponse"],
   data() {
     return {
       loginData: {},
@@ -52,9 +52,7 @@ export default {
   methods: {
     async validateUser() {
       await this.runSpinner();
-
       if (!this.loginData.email || !this.loginData.pass) {
-        console.log("!thisemail");
         let response = "You need to fill out both an email and a password";
         this.loginReponse.data = response;
         await this.hideSpinner();
@@ -63,23 +61,11 @@ export default {
           this.loginData.email,
           this.loginData.pass
         );
-
-        console.log('api response after posts servic validate user in home.vue')
-        console.log(apiResponse);
-
         if (apiResponse.data.error || apiResponse.error) {
-          console.log(apiResponse.data.error);
           this.loginReponse = apiResponse.data.error;
         } else {
-          console.log('about to push to castballot')
-          console.log(apiResponse.data.email)
-          console.log(this.$route.params)
           this.$router.push({ name: 'CastBallot', params: { emailaddress: apiResponse.data.email, apiresponse: apiResponse.data}});
         }
-        // this.validatedUserEmail = apiResponse.data.email;
-        // this.validatedUserMSP = apiResponse.data.mspid;
-        // console.log(this.validatedUserEmail);
-        // this.loginReponse = apiResponse;
         await this.hideSpinner();
       }
     },

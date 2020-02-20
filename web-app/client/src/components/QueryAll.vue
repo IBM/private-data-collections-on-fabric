@@ -2,8 +2,10 @@
   <div class="posts">
     <h1>Current State: All Key-Value Pairs in World State</h1>
     <button v-on:click="queryAll()">Query All Assets</button>
-    <div v-bind:key="carEntry.Key" v-for="carEntry in response">
-      <p>{{ carEntry.Key }} | {{ carEntry.Record }}</p>
+        <button v-on:click="goHome()">Home</button>
+
+    <div v-bind:key="Asset.Key" v-for="Asset in response">
+      <p><b>Key:</b> {{ Asset.Key }} | <b>Value:</b> {{ Asset.Record }}</p>
     </div>
     <vue-instant-loading-spinner id = 'loader' ref="Spinner"></vue-instant-loading-spinner>
   </div>
@@ -35,11 +37,8 @@ mounted: async function() {
     async queryAll() {
       this.response = null;
       this.runSpinner();
-      console.log('before postServier')
-      //figure out route.params.emailaddress
       const apiResponse = await PostsService.queryAll(this.$route.params.emailaddress);
-      console.log('inside API res')
-      console.log(apiResponse.data.data)
+      console.log(apiResponse);
       this.response = apiResponse.data;
       this.hideSpinner();
     },
@@ -48,7 +47,15 @@ mounted: async function() {
     },
     async hideSpinner() {
       this.$refs.Spinner.hide();
-    }
-  }
+    },
+    async goHome() {
+      console.log(this.$route.params.emailaddress);
+      this.$router.push({
+        name: "CastBallot",
+        params: { emailaddress: this.$route.params.emailaddress }
+      });
+    },
+  },
+
 };
 </script>
