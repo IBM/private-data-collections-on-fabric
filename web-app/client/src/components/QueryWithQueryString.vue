@@ -16,7 +16,6 @@
     <br />
     <br />
     <br />
-        <span v-if="queryResponse"></span>
         <b>{{ queryResponse.data }}</b>
     <br />
     <vue-instant-loading-spinner id="loader" ref="Spinner"></vue-instant-loading-spinner>
@@ -53,14 +52,15 @@ export default {
     }
   },
   methods: {
-    async queryByQueryString(queryString) {
+    async queryByQueryString() {
       this.response = null;
       this.runSpinner();
 
       const apiResponse = await PostsService.queryWithQueryString(this.$route.params.emailaddress,
-        this.queryString
+        this.queryString.key
       );
-      this.response = apiResponse.data;
+      console.log(apiResponse);
+      this.queryResponse = apiResponse.data.data;
 
       console.log("query by object type called");
       this.hideSpinner();

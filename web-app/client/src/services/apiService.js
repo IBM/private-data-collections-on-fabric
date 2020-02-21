@@ -16,7 +16,7 @@ export default {
   queryByObjectType() {
     return Api().get('queryByObjectType')
   },
-  queryWithQueryString(selected) {
+  queryWithQueryString(email, queryString) {
     return Api().post('queryWithQueryString', {
       email,
       queryString

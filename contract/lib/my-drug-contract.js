@@ -58,8 +58,11 @@ class MyDrugContract extends Contract {
 
   }
 
-  async readMyDrugPrivate(ctx, drugNumber) {
-    console.info('============= START : readMyDrugPrivate ===========');
+  async readMyDrugPrivate(ctx, args) {
+    console.info('============= START : readMyDrugPrivate ==========='); 
+    args = JSON.parse(args);
+    let drugNumber = args.queryString;
+    console.log(drugNumber)
     let res = {};
     const buffer = await ctx.stub.getPrivateData('collectionDrugPrivateDetails', drugNumber);
     try {
