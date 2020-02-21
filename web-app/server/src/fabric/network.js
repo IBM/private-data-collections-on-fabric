@@ -12,8 +12,6 @@ const config = JSON.parse(configJSON);
 let connection_file = config.connection_file;
 let configUserName = config.userName;
 let gatewayDiscovery = config.gatewayDiscovery;
-let appAdmin = config.appAdmin;
-let orgMSPID = config.orgMSPID;
 // connect to the connection file
 const ccpPath = path.join(process.cwd(), connection_file);
 const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
@@ -32,15 +30,16 @@ exports.connectToNetwork = async function (userName) {
     console.log(`Wallet path: ${walletPath}`);
     console.log('userName: ');
     console.log(userName);
+    
     const userExists = await wallet.exists(userName);
 
     if (!userExists) {
       // console.log('An identity for the user ' + userName + ' does not exist in the wallet');
       // console.log('Run the registerUser.js application before retrying');
-      // let response = {};
-      // response.error = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
-      // return response;
-      throw Error(`Failed to register user + ${email} + : ${error}`);
+      let response = {};
+      response.error = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
+      return response;
+      // throw Error(`User ${userName} doesn't exist`);
     }
 
     console.log('before gateway.connect: ');
@@ -94,7 +93,6 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
       } else {
 
         let response = await networkObj.contract.evaluateTransaction(func);
-        console.log(response);
         console.log(`Transaction ${func} without args has been evaluated`);
   
         await networkObj.gateway.disconnect();
@@ -122,7 +120,6 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
       } else {
         console.log('notQuery no args');
         let response = await networkObj.contract.submitTransaction(func);
-        console.log(response);
         console.log(`Transaction ${func} with args has been submitted`);
   
         await networkObj.gateway.disconnect();

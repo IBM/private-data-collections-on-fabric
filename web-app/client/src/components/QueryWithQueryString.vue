@@ -1,27 +1,25 @@
 <template>
   <div class="posts">
-    <h1>Select the type of object to query for</h1>
-    <select v-model="selected">
-      <option disabled value>Please select one</option>
-      <option>ballot</option>
-      <option>election</option>
-      <option>votableItem</option>
-      <option>voter</option>
-    </select>
-    <br>
+    <h1>Query private data</h1>
+    <form v-on:submit="queryByQueryString">
+      <input type="text" v-model="queryString.key" placeholder="query by Key" />
+      <br />
+      <input type="submit" value="Query by Key" />
+ 
+    </form>
+    <br />
 
-    <br>
+    <br />
 
-    <button v-on:click="queryByQueryString()">Query the world State</button>
+    <!-- <button v-on:click="queryByQueryString()">Query the world State</button> -->
 
-    <br>
-    <br>
-    <br>
-    <span v-if="response">
-      <b>{{ response }}</b>
-    </span>
-    <br>
-    <vue-instant-loading-spinner id='loader' ref="Spinner"></vue-instant-loading-spinner>
+    <br />
+    <br />
+    <br />
+        <span v-if="queryResponse"></span>
+        <b>{{ queryResponse.data }}</b>
+    <br />
+    <vue-instant-loading-spinner id="loader" ref="Spinner"></vue-instant-loading-spinner>
   </div>
 </template>
 
@@ -31,9 +29,14 @@ import VueInstantLoadingSpinner from "vue-instant-loading-spinner/src/components
 
 export default {
   name: "response",
+  props: ["emailaddress"],
+
   data() {
     return {
-      selected: {
+      queryString: {
+        data: ""
+      },
+      queryResponse: {
         data: ""
       },
       response: null
@@ -42,30 +45,25 @@ export default {
   components: {
     VueInstantLoadingSpinner
   },
+  mounted: async function() {
+    console.log("pushing back home");
+    //if we reached here before logging in, redirect the user to login
+    if (!this.$route.params.emailaddress) {
+      this.$router.push({ name: "Home" });
+    }
+  },
   methods: {
-    async queryByQueryString(selected) {
+    async queryByQueryString(queryString) {
       this.response = null;
       this.runSpinner();
- 
-      //check to make sure the user selected something
-      if (this.selected != 'ballot' && this.selected != 'election' 
-        && this.selected!= 'voter' && this.selected != 'votableItem') {
 
-        console.log('this . selectionesdfsdfds')
-        let result = `Please select a type of object!`;
-        this.response = result;
-        this.hideSpinner();
-
-      } else {
-        const apiResponse = await PostsService.queryWithQueryString(
-        this.selected
+      const apiResponse = await PostsService.queryWithQueryString(this.$route.params.emailaddress,
+        this.queryString
       );
       this.response = apiResponse.data;
 
       console.log("query by object type called");
       this.hideSpinner();
-      }
-      
     },
     async runSpinner() {
       this.$refs.Spinner.show();

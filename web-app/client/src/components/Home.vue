@@ -61,8 +61,10 @@ export default {
           this.loginData.email,
           this.loginData.pass
         );
+        console.log(apiResponse.data)
         if (apiResponse.data.error || apiResponse.error) {
-          this.loginReponse = apiResponse.data.error;
+          console.log('fffsdfsdfd')
+          this.loginReponse.data = apiResponse.data.error;
         } else {
           this.$router.push({ name: 'CastBallot', params: { emailaddress: apiResponse.data.email, apiresponse: apiResponse.data}});
         }

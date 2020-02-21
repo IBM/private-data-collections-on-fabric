@@ -2,16 +2,26 @@
   <div class="posts">
     <button v-on:click="goHome()">Home</button>
 
-    <h1>Query By Key</h1>
+    <h1>Add Drug</h1>
     <form v-on:submit="queryByKey">
-      <input type="text" v-model="input.key" placeholder="Enter Key to Query" />
+      <input type="text" v-model="drugNumber.key" placeholder="Enter drug number" />
+      <br>
+      <input type="text" v-model="drugName.key" placeholder="Enter drug name" />
+      <br>
+      <input type="text" v-model="activeIngredients.key" placeholder="Enter active ingredients" />
+      <br>
+      <input type="text" v-model="dosableForm.key" placeholder="Enter dosable form" />
+      <br>
+      <input type="text" v-model="owner.key" placeholder="Enter owner" />
+      <br>
+      <input type="text" v-model="price.key" placeholder="Enter price" />
+      <br>
+      <br>
+      <input type="submit" value="Add Drug" />
       <br />
-
-      <input type="submit" value="Query" />
       <br />
-      <br />
-      <span v-if="input">
-        <b>{{ input.data }}</b>
+      <span v-if="drugDataResponse">
+        <b>{{ drugDataResponse.data }}</b>
       </span>
       <br />
     </form>
@@ -23,36 +33,67 @@
 
 <script>
 import PostsService from "@/services/apiService";
-import VueInstantLoadingSpinner from 'vue-instant-loading-spinner/src/components/VueInstantLoadingSpinner.vue'
+import VueInstantLoadingSpinner from "vue-instant-loading-spinner/src/components/VueInstantLoadingSpinner.vue";
 
 export default {
   name: "response",
   data() {
     return {
-     input: {
+      drugNumber: {
         data: ""
-      }
+      },
+      drugName: {
+        data: ""
+      },
+      activeIngredients: {
+        data: ""
+      },
+      dosableForm: {
+        data: ""
+      },
+      owner: {
+        data: ""
+      },
+      price: {
+        data: ""
+      },
+      drugDataResponse: {
+        data: ""
+      },
     };
   },
-  name: 'app',
+  name: "app",
   components: {
     VueInstantLoadingSpinner
   },
+  mounted: async function() {
+    console.log("pushing back home");
+    //if we reached here before logging in, redirect the user to login
+    if (!this.$route.params.emailaddress) {
+      this.$router.push({ name: "Home" });
+    }
+  },
   methods: {
     async queryByKey() {
-        this.runSpinner();
-      console.log('this.input: ');
-      console.log(this.input);
-      if (!this.input.key) {
-        console.log('this.input$#: ');
-        let response = 'Please enter a Key to query for.';
-        this.input.data = response;
+      this.runSpinner();
+      if (!this.drugNumber.key || !this.drugName.key || !this.activeIngredients.key || !this.dosableForm.key || !this.owner.key || !this.price.key) {
+        console.log("inputs are not all filled ");
+        let response = "Please fill out all fields for the drug.";
+        this.drugDataResponse.data = response;
         this.hideSpinner();
       } else {
+        let drugData = {};
+        drugData.drugNumber = this.drugNumber.key;
+        drugData.drugName = this.drugName.key;
+        drugData.activeIngredients = this.activeIngredients.key;
+        drugData.dosableForm = this.dosableForm.key;
+        drugData.owner = this.owner.key;
+        drugData.price = this.price.key;
         this.runSpinner();
-        const apiResponse = await PostsService.queryByKey(this.input.key);
+        const apiResponse = await PostsService.queryByKey(this.$route.params.emailaddress, this.drugNumber.key, this.drugName.key, 
+          this.activeIngredients.key, this.dosableForm.key, this.owner.key, this.price.key);
         console.log(apiResponse);
-        this.input = apiResponse;
+        this.drugDataResponse.data = apiResponse;
         this.hideSpinner();
       }
     },

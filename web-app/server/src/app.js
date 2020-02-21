@@ -73,8 +73,8 @@ app.post('/castBallot', async (req, res) => {
 //query for certain objects within the world state
 app.post('/queryWithQueryString', async (req, res) => {
 
-  let networkObj = await network.connectToNetwork(appAdmin);
-  let response = await network.invoke(networkObj, true, 'queryByObjectType', req.body.selected);
+  let networkObj = await network.connectToNetwork(req.body.email);
+  let response = await network.invoke(networkObj, true, 'readMyDrugPrivate', req.body.queryString);
   let parsedResponse = await JSON.parse(response);
   res.send(parsedResponse);
 
@@ -117,7 +117,10 @@ app.post('/validateUser', async (req, res) => {
   console.log('req.body: ');
   console.log(req.body);
   let networkObj = await network.connectToNetwork(req.body.email);
-
+  if (networkObj.error) {
+    res.send(networkObj)
+  }
+  
   let invokeResponse = await network.invoke(networkObj, true, 'readMyAsset', req.body.email);
   let parsedResponse = await JSON.parse(invokeResponse);
 
@@ -142,9 +145,16 @@ app.post('/queryByKey', async (req, res) => {
   console.log('req.body: ');
   console.log(req.body);
 
-  let networkObj = await network.connectToNetwork(appAdmin);
+  let networkObj = await network.connectToNetwork(req.body.email);
+  console.log('afterNetwork obj: ');
+
+  req.body = JSON.stringify(req.body);
+  console.log('req.body');
+  console.log(req.body);
+  let args = [req.body];
+
   console.log('after network OBj');
-  let response = await network.invoke(networkObj, true, 'readMyAsset', req.body.key);
+  let response = await network.invoke(networkObj, false, 'createMyDrug', args);
   response = JSON.parse(response);
   if (response.error) {
     console.log('inside eRRRRR');

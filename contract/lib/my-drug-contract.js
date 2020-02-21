@@ -35,22 +35,24 @@ class MyDrugContract extends Contract {
     return response;
   }
 
-  async createMyDrug(ctx, drugNumber, drugName, activeIngredients, dosableForm, owner, price) {
+  async createMyDrug(ctx, args) {
     console.info('============= START : createMyDrug ===========');
+    args = JSON.parse(args);
 
     const drugPublic = {
-      drugName,
-      activeIngredients,
-      dosableForm,
-      owner,
+      drugNumber: args.drugNumber,
+      drugName: args.drugName,
+      activeIngredients: args.activeIngredients,
+      dosableForm: args.dosableForm,
+      owner: args.owner,
     };
 
     const drugPrivate = {
-      price
+      price: args.price
     };
 
-    await ctx.stub.putPrivateData('collectionDrug', drugNumber, Buffer.from(JSON.stringify(drugPublic)));
-    await ctx.stub.putPrivateData('collectionDrugPrivateDetails', drugNumber, Buffer.from(JSON.stringify(drugPrivate)));
+    await ctx.stub.putPrivateData('collectionDrug', args.drugNumber, Buffer.from(JSON.stringify(drugPublic)));
+    await ctx.stub.putPrivateData('collectionDrugPrivateDetails', args.drugNumber, Buffer.from(JSON.stringify(drugPrivate)));
     console.info('============= END : createMyDrug ===========');
     return drugPublic;
 

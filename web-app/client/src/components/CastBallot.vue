@@ -3,6 +3,7 @@
   <div class="posts">
     <button v-on:click="goToQueryAll()">QueryAll</button>
     <button v-on:click="goToAddAsset()">AddAsset</button>
+    <button v-on:click="goToQueryPrivateData()">Query Private Data</button>
     <h1>Healthcare Platform Home</h1>
     <br />
     <span v-if="response">
@@ -49,6 +50,13 @@ export default {
       console.log(this.$route.params.emailaddress);
       this.$router.push({
         name: "QueryByKey",
+        params: { emailaddress: this.$route.params.emailaddress }
+      });
+    },
+    async goToQueryPrivateData() {
+      console.log(this.$route.params.emailaddress);
+      this.$router.push({
+        name: "QueryWithQueryString",
         params: { emailaddress: this.$route.params.emailaddress }
       });
     },

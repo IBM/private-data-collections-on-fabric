@@ -18,7 +18,8 @@ export default {
   },
   queryWithQueryString(selected) {
     return Api().post('queryWithQueryString', {
-      selected: selected
+      email,
+      queryString
     }) 
   },
   RegisterUser(email, pass, confirmPass, lastName, mspid) {
@@ -36,9 +37,15 @@ export default {
       pass: pass
     }) 
   },
-  queryByKey(key) {
+  queryByKey(email, drugNumber, drugName, activeIngredients, dosableForm, owner, price) {
     return Api().post('queryByKey', {
-      key: key
+      email,
+      drugName,
+      drugNumber,
+      activeIngredients,
+      dosableForm,
+      owner,
+      price
     }) 
   },
   getCurrentStanding() {
