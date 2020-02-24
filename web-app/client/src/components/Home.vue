@@ -37,7 +37,7 @@ import { EventBus } from './../main';
 
 export default {
   name: "response",
-  props: ["emailaddress", "apiresponse"],
+  props: ["emailaddress", "apiresponse, mspid"],
   data() {
     return {
       loginData: {},
@@ -66,7 +66,8 @@ export default {
           console.log('fffsdfsdfd')
           this.loginReponse.data = apiResponse.data.error;
         } else {
-          this.$router.push({ name: 'CastBallot', params: { emailaddress: apiResponse.data.email, apiresponse: apiResponse.data}});
+          this.$router.push({ name: 'CastBallot', params: { emailaddress: apiResponse.data.email, mspid: apiResponse.data.mspid,
+            apiresponse: apiResponse.data}});
         }
         await this.hideSpinner();
       }

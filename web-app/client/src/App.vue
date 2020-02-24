@@ -2,7 +2,7 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
     <h4 v-if="$route.params.emailaddress">
-      Logged in as {{$route.params.emailaddress}}.
+      Logged in as {{$route.params.emailaddress}}, {{$route.params.mspid}} organization.
       <router-link to="/">Logout?</router-link>&nbsp;
     </h4>
     <router-view></router-view>

@@ -22,7 +22,7 @@ import { EventBus } from "./../main";
 
 export default {
   name: "response",
-  props: ["emailaddress"],
+  props: ["emailaddress, mspid"],
   data() {
     return {
       response: ""
@@ -43,21 +43,21 @@ export default {
       console.log(this.$route.params.emailaddress);
       this.$router.push({
         name: "QueryAll",
-        params: { emailaddress: this.$route.params.emailaddress }
+        params: { emailaddress: this.$route.params.emailaddress, mspid: apiResponse.data.mspid }
       });
     },
     async goToAddAsset() {
       console.log(this.$route.params.emailaddress);
       this.$router.push({
         name: "QueryByKey",
-        params: { emailaddress: this.$route.params.emailaddress }
+        params: { emailaddress: this.$route.params.emailaddress, mspid: apiResponse.data.mspid }
       });
     },
     async goToQueryPrivateData() {
       console.log(this.$route.params.emailaddress);
       this.$router.push({
         name: "QueryWithQueryString",
-        params: { emailaddress: this.$route.params.emailaddress }
+        params: { emailaddress: this.$route.params.emailaddress, mspid: apiResponse.data.mspid }
       });
     },
     async runSpinner() {

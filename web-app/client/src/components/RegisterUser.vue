@@ -16,11 +16,11 @@
         <option  selected disabled> 
           Select an Option 
       </option>
-        <option value="patient" selected>Patient</option>
-        <option value="manufacturer">Manufacturer</option>
-        <option value="pharmacy">Pharmacy</option>
-        <option value="wholesaler1">Wholesaler1</option>
-        <option value="wholesaler2">Wholesaler2</option>
+        <option value="patientmsp" selected>Patient</option>
+        <option value="manufacturermsp">Manufacturer</option>
+        <option value="pharmacymsp">Pharmacy</option>
+        <option value="w1msp">Wholesaler1</option>
+        <option value="w2msp">Wholesaler2</option>
       </select>
       <br>
       <input type="submit" value="Sign up">
@@ -65,6 +65,7 @@ export default {
       } else {
         this.registerReponse = '';
         await this.runSpinner();
+        console.log('before register USER')
         const apiResponse = await PostsService.RegisterUser(
           this.registerData.email,
           this.registerData.password,

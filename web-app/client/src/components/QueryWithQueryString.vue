@@ -16,7 +16,7 @@
     <br />
     <br />
     <br />
-        <b>{{ queryResponse.data }}</b>
+        <b>{{ queryResponse }}</b>
     <br />
     <vue-instant-loading-spinner id="loader" ref="Spinner"></vue-instant-loading-spinner>
   </div>
@@ -60,7 +60,7 @@ export default {
         this.queryString.key
       );
       console.log(apiResponse);
-      this.queryResponse = apiResponse.data.data;
+      this.queryResponse = apiResponse.data;
 
       console.log("query by object type called");
       this.hideSpinner();

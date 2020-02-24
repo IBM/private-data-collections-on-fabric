@@ -65,7 +65,6 @@ app.post('/castBallot', async (req, res) => {
   } else {
     console.log('response: ');
     console.log(response);
-    // let parsedResponse = await JSON.parse(response);
     res.send(response);
   }
 });
@@ -74,9 +73,6 @@ app.post('/castBallot', async (req, res) => {
 app.post('/queryWithQueryString', async (req, res) => {
 
   let networkObj = await network.connectToNetwork(req.body.email);
-  // let response = await network.invoke(networkObj, true, 'readMyDrugPrivate', req.body.queryString);
-  // let parsedResponse = await JSON.parse(response);
-  // res.send(parsedResponse);
   req.body = JSON.stringify(req.body);
   console.log('req.body');
   console.log(req.body);
