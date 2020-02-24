@@ -1,9 +1,8 @@
 <template>
   <div class="posts">
-            <button v-on:click="goHome()">Home</button>
+                <button v-on:click="goHome()">Home</button>
 
-    <h1>Query Drug Private Details Collection</h1>
-    
+    <h1>Query Drug Public Details Collection</h1>
     <form v-on:submit="queryByQueryString">
       <input type="text" v-model="queryString.key" placeholder="query by Key" />
       <br />
@@ -60,12 +59,11 @@ export default {
       this.queryResponse = null;
       this.runSpinner();
 
-      const apiResponse = await PostsService.queryWithQueryString(this.$route.params.emailaddress,
+      const apiResponse = await PostsService.queryPublicCollection(this.$route.params.emailaddress,
         this.queryString.key
       );
       console.log(apiResponse);
       this.queryResponse = apiResponse.data;
-
       console.log("query by object type called");
       this.hideSpinner();
     },

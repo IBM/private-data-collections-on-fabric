@@ -73,6 +73,8 @@ app.post('/castBallot', async (req, res) => {
 app.post('/queryWithQueryString', async (req, res) => {
 
   let networkObj = await network.connectToNetwork(req.body.email);
+  console.log(util.inspect(networkObj))
+  // console.log(networkObj)
   req.body = JSON.stringify(req.body);
   console.log('req.body');
   console.log(req.body);
@@ -80,6 +82,28 @@ app.post('/queryWithQueryString', async (req, res) => {
 
   console.log('after network OBj');
   let response = await network.invoke(networkObj, false, 'readMyDrugPrivate', args);
+  response = JSON.parse(response);
+  if (response.error) {
+    console.log('inside eRRRRR');
+    res.send(response.error);
+  } else {
+    console.log('inside ELSE');
+    console.log(response)
+    res.send(response);
+  }
+
+});
+
+app.post('/queryPublicCollection', async (req, res) => {
+
+  let networkObj = await network.connectToNetwork(req.body.email);
+  req.body = JSON.stringify(req.body);
+  console.log('req.body');
+  console.log(req.body);
+  let args = [req.body];
+
+  console.log('after network OBj');
+  let response = await network.invoke(networkObj, false, 'readMyDrugPublic', args);
   response = JSON.parse(response);
   if (response.error) {
     console.log('inside eRRRRR');

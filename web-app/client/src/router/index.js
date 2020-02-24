@@ -8,7 +8,7 @@ import QueryWithQueryString from '@/components/QueryWithQueryString'
 import QueryByKey from '@/components/QueryByKey'
 import GetCurrentStanding from '@/components/GetCurrentStanding'
 import RegisterUser from '@/components/RegisterUser'
-import CurrentUser from '@/components/CurrentUser'
+import QueryPublicCollection from '@/components/QueryPublicCollection'
 
 
 Vue.use(Router)
@@ -34,9 +34,9 @@ export default new Router({
       props: true
     },
     {
-      path: '/currentUser',
-      name: 'CurrentUser',
-      component: CurrentUser,
+      path: '/queryPublicCollection',
+      name: 'QueryPublicCollection',
+      component: QueryPublicCollection,
       props: true
     },
     {

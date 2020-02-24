@@ -22,6 +22,12 @@ export default {
       queryString
     }) 
   },
+  queryPublicCollection(email, queryString) {
+    return Api().post('queryPublicCollection', {
+      email,
+      queryString
+    }) 
+  },
   RegisterUser(email, pass, confirmPass, lastName, mspid) {
     return Api().post('registerUser', {
       email: email,
@@ -50,8 +56,5 @@ export default {
   },
   getCurrentStanding() {
     return Api().get('getCurrentStanding')
-  },
-  getCurrentUser() {
-    return Api().get('getCurrentUser')
   }
 }

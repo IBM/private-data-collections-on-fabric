@@ -52,7 +52,7 @@ mounted: async function() {
       console.log(this.$route.params.emailaddress);
       this.$router.push({
         name: "CastBallot",
-        params: { emailaddress: this.$route.params.emailaddress }
+        params: { emailaddress: this.$route.params.emailaddress, mspid: this.$route.params.mspid}
       });
     },
   },

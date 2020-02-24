@@ -17,6 +17,10 @@ const ccpPath = path.join(process.cwd(), connection_file);
 const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
 const ccp = JSON.parse(ccpJSON);
 
+const privateDataTransaction = 'createMyDrug';
+const privateCollectionQuery = 'readMyDrugPrivate';
+const publicCollectionQuery = 'readMyDrugPublic';
+
 
 const util = require('util');
 
@@ -77,42 +81,83 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
   try {
     console.log('inside invoke');
     console.log(`isQuery: ${isQuery}, func: ${func}, args: ${args}`);
+    console.log(privateDataTransaction)
+    if (func === privateDataTransaction) {
+      console.log('inside privDataTx')
 
-    if (isQuery === true) {
+      args = JSON.parse(args[0]);
+      args = JSON.stringify(args);
 
-      if (args) {
+      const transientDrugData = {
 
-        let response = await networkObj.contract.evaluateTransaction(func, args);
-        await networkObj.gateway.disconnect();
-        return response.toString();
-        
-      } else {
-
-        let response = await networkObj.contract.evaluateTransaction(func);
-        console.log(`Transaction ${func} without args has been evaluated`);
-        await networkObj.gateway.disconnect();
-        return response;
+        drugNumber: args.drugNumber,
+        drugName: args.drugName,
+        activeIngredients: args.activeIngredients,
+        dosableForm: args.dosableForm,
+        owner: args.owner,
+        price: args.price
 
       }
-    } else {
-      if (args) {
+      let response = await networkObj.contract.submitTransaction(func, args);
+      console.log(`Transaction ${func} with args ${args} has been submitted`);
+      await networkObj.gateway.disconnect();
+      return response;
 
+    } else if (func === privateCollectionQuery || func === publicCollectionQuery){
+
+      console.log('inside collections query')
+      try {
         args = JSON.parse(args[0]);
         args = JSON.stringify(args);
-        let response = await networkObj.contract.submitTransaction(func, args);
+        let response = await networkObj.contract.evaluateTransaction(func, args);
         console.log(`Transaction ${func} with args ${args} has been submitted`);
         await networkObj.gateway.disconnect();
         return response;
-
-      } else {
-        console.log('notQuery no args');
-        let response = await networkObj.contract.submitTransaction(func);
-        console.log(`Transaction ${func} with args has been submitted`);
-  
-        await networkObj.gateway.disconnect();
-  
-        return response;
+      } catch(error) {
+        console.log('collection query err')
+        throw Error (` : ${error}`)
       }
+
+
+    } else {
+
+      if (isQuery === true) {
+
+        if (args) {
+  
+          let response = await networkObj.contract.evaluateTransaction(func, args);
+          await networkObj.gateway.disconnect();
+          return response.toString();
+          
+        } else {
+  
+          let response = await networkObj.contract.evaluateTransaction(func);
+          console.log(`Transaction ${func} without args has been evaluated`);
+          await networkObj.gateway.disconnect();
+          return response;
+  
+        }
+      } else {
+        if (args) {
+  
+          args = JSON.parse(args[0]);
+          args = JSON.stringify(args);
+          let response = await networkObj.contract.submitTransaction(func, args);
+          console.log(`Transaction ${func} with args ${args} has been submitted`);
+          await networkObj.gateway.disconnect();
+          return response;
+  
+        } else {
+          console.log('notQuery no args');
+          let response = await networkObj.contract.submitTransaction(func);
+          console.log(`Transaction ${func} with args has been submitted`);
+    
+          await networkObj.gateway.disconnect();
+    
+          return response;
+        }
+      }
+
     }
 
   } catch (error) {
