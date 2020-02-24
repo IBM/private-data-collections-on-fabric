@@ -43,21 +43,21 @@ export default {
       console.log(this.$route.params.emailaddress);
       this.$router.push({
         name: "QueryAll",
-        params: { emailaddress: this.$route.params.emailaddress, mspid: apiResponse.data.mspid }
+        params: { emailaddress: this.$route.params.emailaddress, mspid: this.$route.params.mspid }
       });
     },
     async goToAddAsset() {
       console.log(this.$route.params.emailaddress);
       this.$router.push({
         name: "QueryByKey",
-        params: { emailaddress: this.$route.params.emailaddress, mspid: apiResponse.data.mspid }
+        params: { emailaddress: this.$route.params.emailaddress, mspid: this.$route.params.mspid }
       });
     },
     async goToQueryPrivateData() {
       console.log(this.$route.params.emailaddress);
       this.$router.push({
         name: "QueryWithQueryString",
-        params: { emailaddress: this.$route.params.emailaddress, mspid: apiResponse.data.mspid }
+        params: { emailaddress: this.$route.params.emailaddress, mspid: this.$route.params.mspid }
       });
     },
     async runSpinner() {

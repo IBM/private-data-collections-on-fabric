@@ -16,7 +16,9 @@
     <br />
     <br />
     <br />
+     <span v-if="queryResponse">
         <b>{{ queryResponse }}</b>
+      </span>
     <br />
     <vue-instant-loading-spinner id="loader" ref="Spinner"></vue-instant-loading-spinner>
   </div>
@@ -35,9 +37,7 @@ export default {
       queryString: {
         data: ""
       },
-      queryResponse: {
-        data: ""
-      },
+      queryResponse: null,
       response: null
     };
   },
@@ -54,6 +54,7 @@ export default {
   methods: {
     async queryByQueryString() {
       this.response = null;
+      this.queryResponse = null;
       this.runSpinner();
 
       const apiResponse = await PostsService.queryWithQueryString(this.$route.params.emailaddress,
