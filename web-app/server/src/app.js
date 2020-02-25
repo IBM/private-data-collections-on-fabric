@@ -82,11 +82,11 @@ app.post('/queryWithQueryString', async (req, res) => {
 
   console.log('after network OBj');
   let response = await network.invoke(networkObj, false, 'readMyDrugPrivate', args);
-  response = JSON.parse(response);
   if (response.error) {
     console.log('inside eRRRRR');
-    res.send(response.error);
+    res.send(response.error.message);
   } else {
+    response = JSON.parse(response);
     console.log('inside ELSE');
     console.log(response)
     res.send(response);

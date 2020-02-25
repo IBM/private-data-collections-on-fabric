@@ -114,52 +114,39 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
         await networkObj.gateway.disconnect();
         return response;
       } catch(error) {
-        console.log('collection query err')
-        throw Error (` : ${error}`)
+        let response = {};
+        response.error = error;
+        return response;
       }
-
-
     } else {
-
       if (isQuery === true) {
-
         if (args) {
-  
           let response = await networkObj.contract.evaluateTransaction(func, args);
           await networkObj.gateway.disconnect();
           return response.toString();
-          
         } else {
-  
           let response = await networkObj.contract.evaluateTransaction(func);
           console.log(`Transaction ${func} without args has been evaluated`);
           await networkObj.gateway.disconnect();
           return response;
-  
         }
       } else {
         if (args) {
-  
           args = JSON.parse(args[0]);
           args = JSON.stringify(args);
           let response = await networkObj.contract.submitTransaction(func, args);
           console.log(`Transaction ${func} with args ${args} has been submitted`);
           await networkObj.gateway.disconnect();
           return response;
-  
         } else {
           console.log('notQuery no args');
           let response = await networkObj.contract.submitTransaction(func);
           console.log(`Transaction ${func} with args has been submitted`);
-    
           await networkObj.gateway.disconnect();
-    
           return response;
         }
       }
-
     }
-
   } catch (error) {
     throw Error(error)
   }
