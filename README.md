@@ -491,6 +491,20 @@ Go to the Nodes tab.
   admin user to each of the respective Certificate Authorities we created on the IBM Blockchain Platform. You can find the CaUrl by clicking on each of the CA nodes, and then by clicking on the 
   gear icon. 
   ![caUrl](https://user-images.githubusercontent.com/10428517/75277614-305c1d00-57bd-11ea-99f1-1921e202f674.png)
+  - Once completed, each of the five files in the `private-data-collections-on-fabric/web-app/server/config` directory will look like the following, taking configPatient.json as an example:
+
+  ```
+  {
+  "connection_file": "ibpConnection.json",
+  "appAdmin": "admin",
+  "appAdminSecret": "adminpw",
+  "orgMSPID": "patientmsp",
+  "caUrl": "https://********.us-south.containers.appdomain.cloud:7054",
+  "userName": "patientAdmin",
+  "gatewayDiscovery": { "enabled": true, "asLocalhost": false }
+  }
+  ``` Note that my containers are located in us-south, so your URL will look different based on location. 
+  
 
 ## Step 9. Register Org Admin Users
   - go into `private-data-collections-on-fabric/web-app/server` and then run the `./enrollAllAdmin.sh` script. Your output should look like the following:
