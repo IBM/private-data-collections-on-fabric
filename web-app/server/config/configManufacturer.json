@@ -1,0 +1,9 @@
+{
+    "connection_file": "ibpConnection.json",
+    "appAdmin": "admin",
+    "appAdminSecret": "adminpw",
+    "orgMSPID": "manufacturermsp",
+    "caName": "<patientCAURL>",
+    "userName": "manufacturerAdmin",
+    "gatewayDiscovery": { "enabled": true, "asLocalhost": false }
+}

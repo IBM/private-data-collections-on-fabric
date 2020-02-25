@@ -6,11 +6,12 @@ const path = require('path');
 const fs = require('fs');
 
 //connect to the config file
-const configPath = path.join(process.cwd(), './config.json');
+const configPath = path.join(process.cwd(), './config/configManufacturer.json');
 const configJSON = fs.readFileSync(configPath, 'utf8');
 const config = JSON.parse(configJSON);
 let connection_file = config.connection_file;
 let configUserName = config.userName;
+let configAppAdmin = config.appAdmin;
 let gatewayDiscovery = config.gatewayDiscovery;
 // connect to the connection file
 const ccpPath = path.join(process.cwd(), connection_file);
@@ -43,6 +44,8 @@ exports.connectToNetwork = async function (userName) {
       return response;
       // throw Error(`User ${userName} doesn't exist`);
     }
+
+
 
     console.log('before gateway.connect: ');
 
@@ -164,6 +167,8 @@ exports.RegisterUser = async function (email, pass, confirmPass, orgMSPID) {
     const walletPath = path.join(process.cwd(), 'wallet');
     const wallet = new FileSystemWallet(walletPath);
 
+    let appAdmin;
+
     // Check to see if we've already enrolled the user.
     const userExists = await wallet.exists(email);
     if (userExists) {
@@ -172,9 +177,29 @@ exports.RegisterUser = async function (email, pass, confirmPass, orgMSPID) {
     }
 
     console.log(configUserName)
+
+    switch (orgMSPID) {
+      case 'patientmsp':
+        appAdmin = 'patientAdmin';
+        break;
+      case 'w1msp':
+        appAdmin = 'w1Admin';
+        break;
+      case 'w2msp':
+        appAdmin = 'w2Admin';
+        break;
+      case 'manufacturermsp':
+        appAdmin = 'manufacturerAdmin';
+        break;
+      case 'pharmacymsp':
+        appAdmin = 'pharmacyAdmin';
+        break;
+      default:
+        console.log('Sorry, there was an error');
+    } 
     // Create a new gateway for connecting to our peer node.
     const gateway = new Gateway();
-    await gateway.connect(ccp, { wallet, identity: configUserName, discovery: gatewayDiscovery });
+    await gateway.connect(ccp, { wallet, identity: appAdmin, discovery: gatewayDiscovery });
 
     // Get the CA client object from the gateway for interacting with the CA.
     const ca = gateway.getClient().getCertificateAuthority();

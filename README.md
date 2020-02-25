@@ -484,7 +484,9 @@ Go to the Nodes tab.
   - Choose from <b>Certificate Authority</b> dropdown, `Manufacturer CA`.
   - Download the connection profile by scrolling down and clicking <b>Download Connection Profile</b>.  This will download the connection json which we will use soon to establish connection.
   - You can click <b>Close</b> once the download completes.
-
+  - Copy and paste the contents of the downloaded file into `web-app/server/ibpConnection.json`. Our config files will use this file to communicate with the 
+  CA nodes to be able to register users to transact on the network.
+<!-- 
 * #### Create manufacturer application admin
   - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>Manufacturer CA</b>.
   - Click on <b>Register user</b>.
@@ -503,8 +505,8 @@ Go to the Nodes tab.
   - You can leave the <b>Use root affiliation</b> box checked.
   - You can leave the <b>Maximum enrollments</b> blank.
   - Under <b>Attributes</b>, click on <b>Add attribute</b>.  Give attribute as `hf.Registrar.Roles` = `*`.  This will allow this identity to act as registrar and issues identities for our app.  Click <b>Add-attribute</b>.
-  - Click <b>Register User</b>.
-
+  - Click <b>Register User</b>. -->
+<!-- 
 * #### Create w2 application admin 
   - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>w2 CA</b>.
   - Click on <b>Register user</b>.
@@ -534,12 +536,12 @@ Go to the Nodes tab.
   - You can leave the <b>Maximum enrollments</b> blank.
   - Under <b>Attributes</b>, click on <b>Add attribute</b>.  Give attribute as `hf.Registrar.Roles` = `*`.  This will allow this identity to act as registrar and issues identities for our app.  Click <b>Add-attribute</b>.
   - Click <b>Register User</b>.
-
-
+ -->
+<!-- 
  #### Update application connection
   - Copy the connection profile (connection.json) file into the <b>private-data-coollectins-on-fabric/server</b> directory. This is going to tell our client app which identities are submitting transactions, and where our nodes are physically hosted 
 
-## Step 9. Enroll App Admin Identities
+## Step 9. Enroll App Admin Identities -->
 
 * #### Enroll manufacturerApp-admin
   - First, navigate to the `server` directory.
