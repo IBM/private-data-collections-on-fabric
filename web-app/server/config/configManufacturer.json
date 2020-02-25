@@ -7,3 +7,4 @@
     "userName": "manufacturerAdmin",
     "gatewayDiscovery": { "enabled": true, "asLocalhost": false }
 }
+
