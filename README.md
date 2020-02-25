@@ -503,7 +503,8 @@ Go to the Nodes tab.
   "userName": "patientAdmin",
   "gatewayDiscovery": { "enabled": true, "asLocalhost": false }
   }
-  ``` Note that my containers are located in us-south, so your URL will look different based on location. 
+  ``` 
+  Note that my containers are located in us-south, so your URL will look different based on location. 
   
 
 ## Step 9. Register Org Admin Users
@@ -520,6 +521,31 @@ Go to the Nodes tab.
   - Nice job! You now have admin identities for each of your organizations, and you can start 
   adding registering more users.
   - You're now ready to start the application!
+
+  
+## Step 10. Run the application
+
+- In a terminal window, navigate to the directory private-data-collections-on-fabric
+
+- Install the dependencies 
+
+  ```bash
+  cd server
+  npm install
+  ```
+
+  - Start the application
+
+  ```bash
+  npm start
+  ```
+  
+# License
+
+This code pattern is licensed under the Apache Software License, Version 2.  Separate third-party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1 (DCO)](https://developercertificate.org/) and the [Apache Software License, Version 2](http://www.apache.org/licenses/LICENSE-2.0.txt).
+
+[Apache Software License (ASL) FAQ](http://www.apache.org/foundation/license-faq.html#WhatDoesItMEAN)
+
 <!-- 
 * #### Create manufacturer application admin
   - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>Manufacturer CA</b>.
@@ -576,7 +602,7 @@ Go to the Nodes tab.
   - Copy the connection profile (connection.json) file into the <b>private-data-coollectins-on-fabric/server</b> directory. This is going to tell our client app which identities are submitting transactions, and where our nodes are physically hosted 
 
 ## Step 9. Enroll App Admin Identities -->
-
+<!-- 
 * #### Enroll manufacturerApp-admin
   - First, navigate to the `server` directory.
     ```bash
@@ -710,27 +736,4 @@ Go to the Nodes tab.
   - You should see the following in the terminal:
 
     ```bash
-    msg: Successfully enrolled admin user patientApp-admin and imported it into the wallet
-  
-## Step 10. Run the application
-
-- In a terminal window, navigate to the directory private-data-collections-on-fabric
-
-- Install the dependencies 
-
-  ```bash
-  cd server
-  npm install
-  ```
-
-  - Start the application
-
-  ```bash
-  npm start
-  ```
-  
-# License
-
-This code pattern is licensed under the Apache Software License, Version 2.  Separate third-party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1 (DCO)](https://developercertificate.org/) and the [Apache Software License, Version 2](http://www.apache.org/licenses/LICENSE-2.0.txt).
-
-[Apache Software License (ASL) FAQ](http://www.apache.org/foundation/license-faq.html#WhatDoesItMEAN)
+    msg: Successfully enrolled admin user patientApp-admin and imported it into the wallet -->
