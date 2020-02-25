@@ -486,6 +486,26 @@ Go to the Nodes tab.
   - You can click <b>Close</b> once the download completes.
   - Copy and paste the contents of the downloaded file into `web-app/server/ibpConnection.json`. Our config files will use this file to communicate with the 
   CA nodes to be able to register users to transact on the network.
+  - Go into `private-data-collections-on-fabric/web-app/server/config` and then change each of the
+  five files to include the CAURL from the IBM Blockchain Platform. This will help us enroll an 
+  admin user to each of the respective Certificate Authorities we created on the IBM Blockchain Platform. You can find the CaUrl by clicking on each of the CA nodes, and then by clicking on the 
+  gear icon. 
+  ![caUrl](https://user-images.githubusercontent.com/10428517/75277614-305c1d00-57bd-11ea-99f1-1921e202f674.png)
+
+## Step 9. Register Org Admin Users
+  - go into `private-data-collections-on-fabric/web-app/server` and then run the `./enrollAllAdmin.sh` script. Your output should look like the following:
+
+  ```
+  server$ ./enrollAllAdmin.sh 
+  msg: Successfully enrolled admin user manufacturerAdmin and imported it into the wallet
+  msg: Successfully enrolled admin user w1Admin and imported it into the wallet
+  msg: Successfully enrolled admin user w2Admin and imported it into the wallet
+  msg: Successfully enrolled admin user patientAdmin and imported it into the wallet
+  msg: Successfully enrolled admin user pharmacyAdmin and imported it into the wallet
+  ```
+  - Nice job! You now have admin identities for each of your organizations, and you can start 
+  adding registering more users.
+  - You're now ready to start the application!
 <!-- 
 * #### Create manufacturer application admin
   - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>Manufacturer CA</b>.
