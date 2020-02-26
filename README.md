@@ -440,7 +440,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - Navigate to the <b>Organizations</b> tab in the left navigation and click <b>Create MSP definition</b>.
   - Enter the <b>MSP Display name</b> as `Patient MSP` and an <b>MSP ID</b> of `patientmsp`.
   - Under <b>Root Certificate Authority</b> details, specify the peer CA that we created `Patient CA` as the root CA for the organization.
-  - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `patientAdmin` and `patientAdminpw`. Then, give the Identity name, `Patientß MSP Admin`.
+  - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `patientAdmin` and `patientAdminpw`. Then, give the Identity name, `Patient MSP Admin`.
   - Click the <b>Generate</b> button to enroll this identity as the admin of your organization and export the identity to the wallet. Click <b>Export</b> to export the admin certificates to your file system. Finally click <b>Create MSP definition</b>.
 
 * #### Create the manufacturer MSP definition
@@ -599,8 +599,8 @@ Go to the Nodes tab.
   git clone https://github.com/IBM/private-data-collections-on-fabric
   ```
   - Click the <b>Smart contracts</b> tab to install the smart contract.
-  - Click <b>Install smart contract</b> to upload the medrec smart contract package file.
-  - Click on <b>Add file</b> and find your packaged smart contract <b>private-data-collection.cds</b> . It is the file in the `private-data-collections-on-fabric/chaincodePackage` directory. 
+  - Click <b>Install smart contract</b> to upload the drugContract smart contract package file.
+  - Click on <b>Add file</b> and find your packaged smart contract <b>drugContract@1.0.0.cds</b> . It is the file in the `private-data-collections-on-fabric/contract` directory. 
   - Select all peers - we need to install the contract on each peer.
   - Once the contract is uploaded, click <b>Install smart contract</b>.
 
@@ -609,7 +609,7 @@ Go to the Nodes tab.
   - On the side panel that opens, select the channel, `mychannel` to instantiate the smart contract on. Click <b>Next</b>.
   - Select the organization members to be included in the policy, `manufacturermsp`, `w1msp`, `w2msp`, `pharmacymsp, patientmsp`.  Click <b>Next</b>.
   - Select the peer to approve proposals for instantiating the smart contract. Select <b>Manufacturer Peer</b> from the drop down.
-  - Setup private data collection. Click on <b>Add file</b> and find your private data `.json` file <b>. To learn more about private data collection go to the following site [ibp-console-smart-contracts-private-data](https://cloud.ibm.com/docs/services/blockchain?topic=blockchain-ibp-console-smart-contracts#ibp-console-smart-contracts-private-data).private-data-collection.cds</b>. It is the file called `collectionsConfig.json` in the `private-data-collections-on-fabric/private-data-collections-on-fabric/server` directory. 
+  - Setup private data collection. Click on <b>Add file</b> and find your private data `.json` file <b>. To learn more about private data collection go to the following site [ibp-console-smart-contracts-private-data](https://cloud.ibm.com/docs/services/blockchain?topic=blockchain-ibp-console-smart-contracts#ibp-console-smart-contracts-private-data). It is the file called `collectionsConfig.json` in the `private-data-collections-on-fabric/privDataCollectionDefinition` directory. 
   - Give <b>Function name</b> of `Init` and leave <b>Arguments</b> blank.
   - Click <b>Instantiate</b>.
 
