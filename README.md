@@ -751,7 +751,10 @@ Go to the Nodes tab.
   npm run serve
   ```
 - Go to http://localhost:8080/ in your browser to see the application. 
-- Check the directions on how to run that app at the [top of the readme](https://github.com/IBM/private-data-collections-on-fabric#private-data-collections-on-hyperledger-fabric);
+- Check the directions on how to run that app at the [top of the readme](https://github.com/IBM/private-data-collections-on-fabric#private-data-collections-on-hyperledger-fabric)
+
+## Extra - step by step instructions to run the app
+
 - From the home page - go ahead and click on `Register` at the bottom of the page.
 - Register a manufacturer user ( one who will be able to access the private collection) details. Make sure to choose the manufacturer from the dropdown.
 - Login with the email and password from the user you registered in the previous step.
