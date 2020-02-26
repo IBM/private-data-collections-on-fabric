@@ -638,15 +638,16 @@ Go to the Nodes tab.
   - Once completed, each of the five files in the `private-data-collections-on-fabric/web-app/server/config` directory will look like the following, taking configPatient.json as an example:
 
   ```
-  {
-  "connection_file": "ibpConnection.json",
-  "appAdmin": "admin",
-  "appAdminSecret": "adminpw",
+{
+  "connection_file": "patientConnection.json",
+  "appAdmin": "patientApp-admin",
+  "appAdminSecret": "patientApp-adminpw",
   "orgMSPID": "patientmsp",
-  "caUrl": "https://********.us-south.containers.appdomain.cloud:7054",
+  "caUrl": "https://****************.us-south.containers.appdomain.cloud:7054",
   "userName": "patientAdmin",
   "gatewayDiscovery": { "enabled": true, "asLocalhost": false }
-  }
+}
+
   ``` 
   Note that my containers are located in us-south, so your URL will look different based on location. 
   
