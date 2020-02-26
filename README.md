@@ -606,7 +606,26 @@ Go to the Nodes tab.
   npm run serve
   ```
 
-# License
+- From the home page - go ahead and click on `Register` at the bottom of the page.
+- Register a manufacturer user ( one who will be able to access the private collection) details. Make sure to choose the manufacturer from the dropdown.
+- Login with the email and password from the user you registered in the previous step.
+- Click on `addAsset`. Go ahead and create a drug of your choosing, remembering the
+`drugNumber` field.
+- Once you're ready to create the drug, click on `addDrug` and wait for a confirmation message.
+- Next, click on `Home`, and then click on `Query Private Details Collection`.
+- There, query for the same `drugNumber` that you created earlier, you should have
+access to the price since you are a member of the organizations that have access to
+the private details collection.
+- Next, create a wholesaler member. This is someone who will not have access to the
+`Private details collection` which will include the price of the item. Go ahead and 
+log into the platform with your username and password. From there, click on `Query Private Details Collection` and pass in the same `drugNumber` as was created above.
+- You will see the following message: `GET_STATE failed: transaction ID: a477b81f3a5: private data matching public hash version is not available.` This means that you 
+are not part of the organization who is allowed to view this private data collection.
+- Next, still logged in as the `w1msp` or `w2msp`, click on `Query Public Details Collection`. Pass in `G786` and you will see the details of the drug that was created.
+
+Great job! You now know how to implement private data collections with the IBM Blockchain Platform! Go build something great!
+
+License
 
 This code pattern is licensed under the Apache Software License, Version 2.  Separate third-party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1 (DCO)](https://developercertificate.org/) and the [Apache Software License, Version 2](http://www.apache.org/licenses/LICENSE-2.0.txt).
 
@@ -664,8 +683,8 @@ This code pattern is licensed under the Apache Software License, Version 2.  Sep
   - Click <b>Register User</b>.
  -->
 <!-- 
- #### Update application connection
-  - Copy the connection profile (connection.json) file into the <b>private-data-coollectins-on-fabric/server</b> directory. This is going to tell our client app which identities are submitting transactions, and where our nodes are physically hosted 
+ #### Update application connectio cx `121228n
+  - Copy the connection profile (connection.json) file into the b>private-data-coollectins-on-fabric/server</b> directory. This is going to tell our client app which identities are submitting transactions, and where our nodes are physically hosted 
 
 ## Step 9. Enroll App Admin Identities -->
 <!-- 
