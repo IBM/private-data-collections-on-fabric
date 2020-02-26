@@ -21,7 +21,7 @@ var userName = config.userName;
 var orgMSPID = config.orgMSPID;
 var caURL = config.caUrl;
 
-const ccpPath = path.join(process.cwd(), connection_file);
+const ccpPath = path.join(process.cwd(), './connectionProfiles/' + connection_file);
 const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
 const connectionFile = JSON.parse(ccpJSON);
 
