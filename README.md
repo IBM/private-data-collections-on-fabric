@@ -635,7 +635,6 @@ Go to the Nodes tab.
   downloaded. From your w1Connection.json, copy and paste the certificate authority url field, and then paste that in to
   the `caURL` field `configW1.json` file in the `private-data-collections-on-fabric/web-app/server/config` directory. Do 
   that for all of the four remaining files. The gif only shows this done for w1 and w2 organizations.
-  ![caUrl](https://user-images.githubusercontent.com/10428517/75277614-305c1d00-57bd-11ea-99f1-1921e202f674.png)
   - Once completed, each of the five files in the `private-data-collections-on-fabric/web-app/server/config` directory will look like the following, taking configPatient.json as an example:
 
   ```
