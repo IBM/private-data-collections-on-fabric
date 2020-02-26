@@ -482,8 +482,12 @@ Go to the Nodes tab.
   - Under the Instantiated Smart Contract, click on `Connect with SDK` from the overflow menu on the right side of the row.
   - Choose from the dropdown for <b>MSP for connection</b>, `manufacturermsp`.
   - Choose from <b>Certificate Authority</b> dropdown, `Manufacturer CA`.
-  - Download the connection profile by scrolling down and clicking <b>Download Connection Profile</b>.  This will download the connection json which we will use soon to establish connection.
-  - You can click <b>Close</b> once the download completes.
+  - Download the connection profile by scrolling down and clicking <b>Open Connection Profile</b>. Go ahead and copy
+  and paste the whole json file into the corresponding connectionProfile. For example, for the manufacturer connection
+  profile, copy and paste the contents into `web-app/server/connectionProfiles/manufacturerConnection.json`. Do the 
+  same for the other four connection profiles, but make sure to choose the corresponding MSP and CA. For example, 
+  for the Patient connection profile, choose the patientmsp and Patient CA from the dropdowns, and then click on 
+  **Open Connection Profile** and copy and paste the contents of the opened file into `web-app/server/connectionProfiles/patientConnection.json`
   - Copy and paste the contents of the downloaded file into `web-app/server/ibpConnection.json`. Our config files will use this file to communicate with the 
   CA nodes to be able to register users to transact on the network.
   - Go into `private-data-collections-on-fabric/web-app/server/config` and then change each of the
