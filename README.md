@@ -118,7 +118,7 @@ in their private database.
 The last piece of using private data in Hyperledger Fabric is writing chaincode that will write data to the private 
 databases on the peers. This is done by using the [putPrivateData](https://hyperledger.github.io/fabric-chaincode-node/release-2.0/api/fabric-shim.ChaincodeStub.html#putPrivateData__anchor) method from the Hyperledger Fabric Node SDK. 
 
-The method is similar to the [putState]https://hyperledger.github.io/fabric-chaincode-node/release-2.0/api/fabric-shim.ChaincodeStub.html#putState__anchor) method that is commonly used in Fabric chaincode, except that 
+The method is similar to the [putState](https://hyperledger.github.io/fabric-chaincode-node/release-2.0/api/fabric-shim.ChaincodeStub.html#putState__anchor) method that is commonly used in Fabric chaincode, except that 
 this method expects an argument which specifies which private collection to write  
 the key-value pair to.
 
