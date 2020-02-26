@@ -37,7 +37,7 @@ mounted: async function() {
     async queryAll() {
       this.response = null;
       this.runSpinner();
-      const apiResponse = await PostsService.queryAll(this.$route.params.emailaddress);
+      const apiResponse = await PostsService.queryAll(this.$route.params.emailaddress, this.$route.params.mspid);
       console.log(apiResponse);
       this.response = apiResponse.data;
       this.hideSpinner();

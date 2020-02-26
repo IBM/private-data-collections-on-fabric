@@ -1,9 +1,9 @@
 {
-    "connection_file": "ibpConnection.json",
-    "appAdmin": "admin",
-    "appAdminSecret": "adminpw",
+    "connection_file": "manufacturerConnection.json",
+    "appAdmin": "manufacturerApp-admin",
+    "appAdminSecret": "manufacturerApp-adminpw",
     "orgMSPID": "manufacturermsp",
-    "caName": "<patientCAURL>",
+    "caUrl": "https://n434fde-manufacturerca0.myclusterdeletejan24-37a53622c16dc09e3d369194be33ca3e-0000.us-south.containers.appdomain.cloud:7054",
     "userName": "manufacturerAdmin",
     "gatewayDiscovery": { "enabled": true, "asLocalhost": false }
 }

@@ -20,10 +20,18 @@ const currUser = '';
 //get all assets in world state
 app.post('/queryAll', async (req, res) => {
 
-  console.log('req.body')
+  console.log('req.body queryAll')
   console.log(req.body)
-  console.log(req.body.emailaddress);
-  let networkObj = await network.connectToNetwork(req.body.emailaddress);
+  let configObj = await network.getFabricConnection(req.body.mspid);
+
+  console.log('req.body.email')
+  console.log(req.body.email)
+
+
+  let networkObj = await network.connectToNetwork(req.body.email, configObj);
+  console.log('before network obj queryALl')
+
+  console.log(networkObj)
   let response = await network.invoke(networkObj, true, 'queryAll');
   console.log('before app.get /queryAll reponse')
   console.log(response);
@@ -66,8 +74,9 @@ app.post('/castBallot', async (req, res) => {
 //query for certain objects within the world state
 app.post('/queryWithQueryString', async (req, res) => {
 
-  let networkObj = await network.connectToNetwork(req.body.email);
-  console.log(util.inspect(networkObj))
+  let configObj = await network.getFabricConnection(req.body.mspid);
+
+  let networkObj = await network.connectToNetwork(req.body.email, configObj);
   // console.log(networkObj)
   req.body = JSON.stringify(req.body);
   console.log('req.body');
@@ -89,8 +98,9 @@ app.post('/queryWithQueryString', async (req, res) => {
 });
 
 app.post('/queryPublicCollection', async (req, res) => {
+  let configObj = await network.getFabricConnection(req.body.mspid);
 
-  let networkObj = await network.connectToNetwork(req.body.email);
+  let networkObj = await network.connectToNetwork(req.body.email, configObj);
   req.body = JSON.stringify(req.body);
   console.log('req.body');
   console.log(req.body);
@@ -117,11 +127,13 @@ app.post('/RegisterUser', async (req, res) => {
 
   try {
 
-    let response = await network.RegisterUser(req.body.email, req.body.confirmPass, req.body.lastName, req.body.mspid);
+    let configObj = await network.getFabricConnection(req.body.mspid);
+
+    let response = await network.RegisterUser(req.body.email, req.body.confirmPass, req.body.lastName, configObj);
  
     console.log('response from registerUser in app.js: ');
     console.log(response);
-    let networkObj = await network.connectToNetwork(req.body.email);
+    let networkObj = await network.connectToNetwork(req.body.email, configObj);
 
     req.body = JSON.stringify(req.body);
     let args = [req.body];
@@ -144,9 +156,13 @@ app.post('/validateUser', async (req, res) => {
 
   try {
 
+    console.log(req.body);
+
+  let configObj = await network.getFabricConnection(req.body.mspid);
+
   console.log('req.body: ');
   console.log(req.body);
-  let networkObj = await network.connectToNetwork(req.body.email);
+  let networkObj = await network.connectToNetwork(req.body.email, configObj);
   if (networkObj.error) {
     res.send(networkObj)
   }
@@ -174,8 +190,9 @@ app.post('/validateUser', async (req, res) => {
 app.post('/queryByKey', async (req, res) => {
   console.log('req.body: ');
   console.log(req.body);
+  let configObj = await network.getFabricConnection(req.body.mspid);
 
-  let networkObj = await network.connectToNetwork(req.body.email);
+  let networkObj = await network.connectToNetwork(req.body.email, configObj);
   console.log('afterNetwork obj: ');
 
   req.body = JSON.stringify(req.body);

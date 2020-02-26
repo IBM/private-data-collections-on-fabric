@@ -8,24 +8,27 @@ export default {
       picked: picked
     })
   },
-  queryAll(emailaddress) {
+  queryAll(email, mspid) {
     return Api().post('queryAll',{
-      emailaddress: emailaddress
+      email,
+      mspid
     })
   },
   queryByObjectType() {
     return Api().get('queryByObjectType')
   },
-  queryWithQueryString(email, queryString) {
+  queryWithQueryString(email, queryString, mspid) {
     return Api().post('queryWithQueryString', {
       email,
-      queryString
+      queryString,
+      mspid
     }) 
   },
-  queryPublicCollection(email, queryString) {
+  queryPublicCollection(email, queryString, mspid) {
     return Api().post('queryPublicCollection', {
       email,
-      queryString
+      queryString,
+      mspid
     }) 
   },
   RegisterUser(email, pass, confirmPass, lastName, mspid) {
@@ -37,13 +40,14 @@ export default {
       mspid: mspid
     }) 
   },
-  validateUser(email, pass) {
+  validateUser(email, pass, mspid) {
     return Api().post('validateUser', {
       email: email,
-      pass: pass
+      pass: pass,
+      mspid: mspid
     }) 
   },
-  queryByKey(email, drugNumber, drugName, activeIngredients, dosableForm, owner, price) {
+  queryByKey(email, drugNumber, drugName, activeIngredients, dosableForm, owner, price, mspid) {
     return Api().post('queryByKey', {
       email,
       drugName,
@@ -51,7 +55,8 @@ export default {
       activeIngredients,
       dosableForm,
       owner,
-      price
+      price,
+      mspid
     }) 
   },
   getCurrentStanding() {

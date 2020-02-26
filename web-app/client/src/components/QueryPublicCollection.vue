@@ -60,7 +60,8 @@ export default {
       this.runSpinner();
 
       const apiResponse = await PostsService.queryPublicCollection(this.$route.params.emailaddress,
-        this.queryString.key
+        this.queryString.key,
+        this.$route.params.mspid
       );
       console.log(apiResponse);
       this.queryResponse = apiResponse.data;

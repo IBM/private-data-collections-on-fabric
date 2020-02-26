@@ -6,30 +6,31 @@ const path = require('path');
 const fs = require('fs');
 
 //connect to the config file
-const configPath = path.join(process.cwd(), './config/configManufacturer.json');
-const configJSON = fs.readFileSync(configPath, 'utf8');
-const config = JSON.parse(configJSON);
-let connection_file = config.connection_file;
-let configUserName = config.userName;
-let configAppAdmin = config.appAdmin;
-let gatewayDiscovery = config.gatewayDiscovery;
+
+// const configPath = path.join(process.cwd(), './configTest/configPatient.json');
+// const configJSON = fs.readFileSync(configPath, 'utf8');
+// const config = JSON.parse(configJSON);
+// let connection_file = config.connection_file;
+// let configUserName = config.userName;
+// let configAppAdmin = config.appAdmin;
+// let gatewayDiscovery = config.gatewayDiscovery;
 // connect to the connection file
-const ccpPath = path.join(process.cwd(), connection_file);
-const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
-const ccp = JSON.parse(ccpJSON);
+let ccpPath;
+let configPath;
+// const ccpPath = path.join(process.cwd(), connection_file);
+// const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
+// const ccp = JSON.parse(ccpJSON);
 
 const privateDataTransaction = 'createMyDrug';
 const privateCollectionQuery = 'readMyDrugPrivate';
 const publicCollectionQuery = 'readMyDrugPublic';
 
+exports.connectToNetwork = async function (userName, configObj) {
 
-const util = require('util');
-
-exports.connectToNetwork = async function (userName) {
-  
   const gateway = new Gateway();
 
   try {
+    
 
     const walletPath = path.join(process.cwd(), 'wallet');
     const wallet = new FileSystemWallet(walletPath);
@@ -45,11 +46,10 @@ exports.connectToNetwork = async function (userName) {
       // throw Error(`User ${userName} doesn't exist`);
     }
 
-
-
     console.log('before gateway.connect: ');
+    console.log(configObj.ccp.peers)
 
-    await gateway.connect(ccp, { wallet, identity: userName, discovery: gatewayDiscovery });
+    await gateway.connect(configObj.ccp, { wallet, identity: configObj.config.appAdmin, discovery: configObj.config.gatewayDiscovery });
 
     // Connect to our local fabric
     const network = await gateway.getNetwork('mychannel');
@@ -65,14 +65,14 @@ exports.connectToNetwork = async function (userName) {
       contract: contract,
       network: network,
       gateway: gateway,
-      currentUser: userName, 
+      currentUser: userName,
       mspid: gatewayUser._mspId
     };
 
     return networkObj;
 
   } catch (error) {
-    throw Error (error)
+    throw Error(error)
 
   } finally {
     console.log('Done connecting to network.');
@@ -106,7 +106,7 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
       await networkObj.gateway.disconnect();
       return response;
 
-    } else if (func === privateCollectionQuery || func === publicCollectionQuery){
+    } else if (func === privateCollectionQuery || func === publicCollectionQuery) {
 
       console.log('inside collections query')
       try {
@@ -116,7 +116,7 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
         console.log(`Transaction ${func} with args ${args} has been submitted`);
         await networkObj.gateway.disconnect();
         return response;
-      } catch(error) {
+      } catch (error) {
         let response = {};
         response.error = error;
         return response;
@@ -155,7 +155,7 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
   }
 };
 
-exports.RegisterUser = async function (email, pass, confirmPass, orgMSPID) {
+exports.RegisterUser = async function (email, pass, confirmPass, orgMSPID, configObj) {
 
   if (!email || !pass || !confirmPass || !orgMSPID) {
     throw Error('Error! You need to fill all fields before you can register!');
@@ -163,8 +163,14 @@ exports.RegisterUser = async function (email, pass, confirmPass, orgMSPID) {
 
   try {
 
+    console.log(orgMSPID)
+    let configObj = await this.getFabricConnection(orgMSPID);
+    console.log(configObj)
+
     // Create a new file system based wallet for managing identities.
     const walletPath = path.join(process.cwd(), 'wallet');
+    console.log('wallet path')
+    console.log(walletPath)
     const wallet = new FileSystemWallet(walletPath);
 
     let appAdmin;
@@ -176,30 +182,14 @@ exports.RegisterUser = async function (email, pass, confirmPass, orgMSPID) {
       a different email.`)
     }
 
-    console.log(configUserName)
+    const appAdminExists = await wallet.exists(configObj.config.appAdmin);
+    if (!appAdminExists) {
+      throw Error(`Error! An identity for the user ${appAdmin} doesnt exists.`);
+    }
 
-    switch (orgMSPID) {
-      case 'patientmsp':
-        appAdmin = 'patientAdmin';
-        break;
-      case 'w1msp':
-        appAdmin = 'w1Admin';
-        break;
-      case 'w2msp':
-        appAdmin = 'w2Admin';
-        break;
-      case 'manufacturermsp':
-        appAdmin = 'manufacturerAdmin';
-        break;
-      case 'pharmacymsp':
-        appAdmin = 'pharmacyAdmin';
-        break;
-      default:
-        console.log('Sorry, there was an error');
-    } 
     // Create a new gateway for connecting to our peer node.
     const gateway = new Gateway();
-    await gateway.connect(ccp, { wallet, identity: appAdmin, discovery: gatewayDiscovery });
+    await gateway.connect(configObj.ccp, { wallet, identity: configObj.config.appAdmin, discovery: configObj.config.gatewayDiscovery });
 
     // Get the CA client object from the gateway for interacting with the CA.
     const ca = gateway.getClient().getCertificateAuthority();
@@ -222,6 +212,47 @@ exports.RegisterUser = async function (email, pass, confirmPass, orgMSPID) {
     let response = `Successfully registered user ${email} from ${orgMSPID}. Use your email, ${email} and associated password to login above.`;
     return response;
   } catch (error) {
-    throw Error (`Failed to register user + ${email} + : ${error}`)
+    throw Error(`Failed to register user + ${email} + : ${error}`)
+  }
+};
+
+//return parsed connection profile
+exports.getFabricConnection = async function (mspid) {
+  try {
+    switch (mspid) {
+      case 'patientmsp':
+        ccpPath = path.join(process.cwd(), './connectionProfilesTest/patientConnection.json');
+        configPath = path.join(process.cwd(), './configTest/configPatient.json');
+        break;
+      case 'w1msp':
+        ccpPath = path.join(process.cwd(), './connectionProfilesTest/w1Connection.json');
+        configPath = path.join(process.cwd(), './configTest/configW1.json');
+        break;
+      case 'w2msp':
+        ccpPath = path.join(process.cwd(), './connectionProfilesTest/w2Connection.json');
+        configPath = path.join(process.cwd(), './configTest/configW2.json');
+        break;
+      case 'manufacturermsp':
+        ccpPath = path.join(process.cwd(), './connectionProfilesTest/manufacturerConnection.json');
+        configPath = path.join(process.cwd(), './configTest/configManufacturer.json');
+        break;
+      case 'pharmacymsp':
+        ccpPath = path.join(process.cwd(), './connectionProfilesTest/pharmacyConnection.json');
+        configPath = path.join(process.cwd(), './configTest/configPharmacy.json');
+        break;
+      default:
+        console.log('Sorry, there was an error');
+    }
+
+    const configJSON = await fs.readFileSync(configPath, 'utf8');
+    const config = await JSON.parse(configJSON);
+    const ccpJSON = await fs.readFileSync(ccpPath, 'utf8');
+    const ccp = await JSON.parse(ccpJSON);
+    let configObj = {};
+    configObj.config = config;
+    configObj.ccp = ccp;
+    return configObj;
+  } catch (error) {
+    throw Error(`Failed to return cpp`)
   }
 };

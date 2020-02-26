@@ -4,11 +4,11 @@
 
     <br>
     <h3>Don't have a healthcare account? Sign up below</h3>
-    <form v-on:submit="RegisterUser">
+    <form v-on:submit.prevent="RegisterUser">
       <input type="text" v-model="registerData.email" placeholder="email"><br>
-      <input type="text" v-model="registerData.password" placeholder="password">
+      <input type="password" v-model="registerData.password" placeholder="password">
       <br>
-      <input type="text" v-model="registerData.confirmPass" placeholder="confirmPassword" >
+      <input type="password" v-model="registerData.confirmPass" placeholder="confirmPassword" >
       <br>
       <input type="text" v-model="registerData.lastName" placeholder="lastname">
       <br>

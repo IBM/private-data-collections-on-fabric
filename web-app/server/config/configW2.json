@@ -1,9 +1,9 @@
 {
-  "connection_file": "ibpConnection.json",
-  "appAdmin": "admin",
-  "appAdminSecret": "adminpw",
+  "connection_file": "w2Connection.json",
+  "appAdmin": "w2App-admin",
+  "appAdminSecret": "w2App-adminpw",
   "orgMSPID": "w2msp",
-  "caUrl": "<w2CAURL>",
+  "caUrl": "https://<w2CAURL>",
   "userName": "w2Admin",
   "gatewayDiscovery": { "enabled": true, "asLocalhost": false }
 }

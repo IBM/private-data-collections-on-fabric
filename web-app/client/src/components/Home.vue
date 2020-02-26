@@ -57,9 +57,11 @@ export default {
         this.loginReponse.data = response;
         await this.hideSpinner();
       } else {
+        this.loginData.mspid = 'patientmsp'
         const apiResponse = await PostsService.validateUser(
           this.loginData.email,
-          this.loginData.pass
+          this.loginData.pass,
+          this.loginData.mspid
         );
         console.log(apiResponse.data)
         if (apiResponse.data.error || apiResponse.error) {

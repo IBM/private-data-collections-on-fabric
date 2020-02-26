@@ -1,9 +1,9 @@
 {
-  "connection_file": "ibpConnection.json",
-  "appAdmin": "admin",
-  "appAdminSecret": "adminpw",
+  "connection_file": "pharmacyConnection.json",
+  "appAdmin": "pharmacyApp-admin",
+  "appAdminSecret": "pharmacyApp-adminpw",
   "orgMSPID": "pharmacymsp",
-  "caName": "<pharmacyCAURL>",
+  "caUrl": "https://<pharmacyCAURL>",
   "userName": "pharmacyAdmin",
   "gatewayDiscovery": { "enabled": true, "asLocalhost": false }
 }

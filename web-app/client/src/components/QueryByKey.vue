@@ -92,7 +92,7 @@ export default {
         drugData.price = this.price.key;
         this.runSpinner();
         const apiResponse = await PostsService.queryByKey(this.$route.params.emailaddress, this.drugNumber.key, this.drugName.key, 
-          this.activeIngredients.key, this.dosableForm.key, this.owner.key, this.price.key);
+          this.activeIngredients.key, this.dosableForm.key, this.owner.key, this.price.key, this.$route.params.mspid);
         console.log(apiResponse);
         this.drugDataResponse.data = apiResponse;
         this.hideSpinner();

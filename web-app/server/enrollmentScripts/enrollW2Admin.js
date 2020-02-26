@@ -11,7 +11,7 @@ const path = require('path');
 const yaml = require('js-yaml')
 
 // capture network variables from config.json
-const configPath = path.join(process.cwd(), './../config/configW2.json');
+const configPath = path.join(process.cwd(), './configTest/configW2.json');
 const configJSON = fs.readFileSync(configPath, 'utf8');
 const config = JSON.parse(configJSON);
 var connection_file = config.connection_file;
@@ -37,15 +37,15 @@ async function main() {
         // Check to see if we've already enrolled the admin user.
         const adminExists = await wallet.exists(userName);
         if (adminExists) {
-            console.log('An identity for the admin user "admin" already exists in the wallet');
+            console.log(`An identity for the admin user ${userName} already exists in the wallet`);
             return;
         }
 
         // Enroll the admin user, and import the new identity into the wallet.
 
-        const enrollment = await ca.enroll({ enrollmentID: appAdmin, enrollmentSecret: appAdminSecret });
+        const enrollment = await ca.enroll({ enrollmentID: appAdmin, enrollmentSecret: appAdminSecret});
         const identity = X509WalletMixin.createIdentity(orgMSPID, enrollment.certificate, enrollment.key.toBytes());
-        wallet.import(userName, identity);
+        wallet.import(appAdmin, identity);
         console.log('msg: Successfully enrolled admin user ' + userName + ' and imported it into the wallet');
 
     } catch (error) {
