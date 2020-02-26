@@ -434,6 +434,15 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
 ## Step 3. Build a network - Create MSP Definitions
 
+![createPatientMSP](https://user-images.githubusercontent.com/10428517/75382626-b0eb4e00-588f-11ea-9bbc-4783c0edd0cf.gif)
+
+* #### Create the Patient MSP definition
+  - Navigate to the <b>Organizations</b> tab in the left navigation and click <b>Create MSP definition</b>.
+  - Enter the <b>MSP Display name</b> as `Patient MSP` and an <b>MSP ID</b> of `patientmsp`.
+  - Under <b>Root Certificate Authority</b> details, specify the peer CA that we created `Patient CA` as the root CA for the organization.
+  - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `patientAdmin` and `patientAdminpw`. Then, give the Identity name, `Patientß MSP Admin`.
+  - Click the <b>Generate</b> button to enroll this identity as the admin of your organization and export the identity to the wallet. Click <b>Export</b> to export the admin certificates to your file system. Finally click <b>Create MSP definition</b>.
+
 * #### Create the manufacturer MSP definition
   - Navigate to the <b>Organizations</b> tab in the left navigation and click <b>Create MSP definition</b>.
   - Enter the <b>MSP Display name</b> as `Manufacturer MSP` and an <b>MSP ID</b> of `manufacturermsp`.
@@ -461,14 +470,6 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - Under <b>Root Certificate Authority</b> details, specify the peer CA that we created `Pharmacy CA` as the root CA for the organization.
   - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `pharmacyAdmin` and `pharmacyAdminpw`. Then, give the Identity name, `Pharmacy MSP Admin`.
   - Click the <b>Generate</b> button to enroll this identity as the admin of your organization and export the identity to the wallet. Click <b>Export</b> to export the admin certificates to your file system. Finally click <b>Create MSP definition</b>.
-
-  * #### Create the Patient MSP definition
-  - Navigate to the <b>Organizations</b> tab in the left navigation and click <b>Create MSP definition</b>.
-  - Enter the <b>MSP Display name</b> as `Patient MSP` and an <b>MSP ID</b> of `patientmsp`.
-  - Under <b>Root Certificate Authority</b> details, specify the peer CA that we created `Patient CA` as the root CA for the organization.
-  - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `patientAdmin` and `patientAdminpw`. Then, give the Identity name, `Patientß MSP Admin`.
-  - Click the <b>Generate</b> button to enroll this identity as the admin of your organization and export the identity to the wallet. Click <b>Export</b> to export the admin certificates to your file system. Finally click <b>Create MSP definition</b>.
-
 
 ## Step 4. Build a network - Create Peers
 
