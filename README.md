@@ -609,7 +609,7 @@ Go to the Nodes tab.
   - On the side panel that opens, select the channel, `mychannel` to instantiate the smart contract on. Click <b>Next</b>.
   - Select the organization members to be included in the policy, `manufacturermsp`, `w1msp`, `w2msp`, `pharmacymsp, patientmsp`.  Click <b>Next</b>.
   - Select the peer to approve proposals for instantiating the smart contract. Select <b>Manufacturer Peer</b> from the drop down.
-  - Setup private data collection. Click on <b>Add file</b> and find your private data `.json` file <b>. To learn more about private data collection go to the following site [ibp-console-smart-contracts-private-data](https://cloud.ibm.com/docs/services/blockchain?topic=blockchain-ibp-console-smart-contracts#ibp-console-smart-contracts-private-data). It is the file called `collectionsConfig.json` in the `private-data-collections-on-fabric/privDataCollectionDefinition` directory. 
+  - Setup private data collection. Click on <b>Add file</b> and find your private data `.json` file. To learn more about private data collection go to the following site [ibp-console-smart-contracts-private-data](https://cloud.ibm.com/docs/services/blockchain?topic=blockchain-ibp-console-smart-contracts#ibp-console-smart-contracts-private-data). It is the file called `collectionsConfig.json` in the `private-data-collections-on-fabric/privDataCollectionDefinition` directory. 
   - Give <b>Function name</b> of `Init` and leave <b>Arguments</b> blank.
   - Click <b>Instantiate</b>.
 
