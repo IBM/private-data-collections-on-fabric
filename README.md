@@ -181,7 +181,7 @@ This code pattern is for developers who want to learn how to use the private dat
 9. [Enroll App Admin Identities](#step-9-Enroll-App-Admin-Identities)
 10. [Run the application](#step-10-Run-the-application)
 
-**Important Note:** This pattern is more advanced because it uses four organizations. For this reason, you will likely
+**Important Note:** This pattern is more advanced because it uses five organizations. For this reason, you will likely
 have to get a paid kubernetes cluster to run this pattern on the cloud, since a free cluster will not have the CPU/storage 
 necessary to deploy all of the pods that we need to run this pattern. There are other patterns that leverage a free
 Kubernetes cluster (and only two organizations), so if you want to try that one out first, go [here](https://github.com/IBM/blockchainbean2). 
