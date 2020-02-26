@@ -1,4 +1,4 @@
-# Private Data Collections on Hyperledger Fabric 🚧🚧🚧🚧WORK IN PROGRESS🚧🚧🚧🚧
+# Private Data Collections on Hyperledger Fabric
 🚧🚧🚧🚧In the Medical Supply Chain, there are multiple entities such as the drug manufacturers, wholesellers, pharmacies and patients. These entities share data about the pill as it moves through the chain. However, there are cases where entities want to keep some data about the pill hidden from the other entities. Consider the instance where a manufacturer have negotiated different price rates with the wholesellers. They wouldn't want the different wholesellers to be able to see the various drug rates negotiated. Having all entities on the same channel of the blockchain would inherently make every transaction between any two entities, visible to every other entity. With the introduction of private data collections, certain data parts associated with a given transaction, can be kept private from other entities.
 
 ## Intro to private data collections
