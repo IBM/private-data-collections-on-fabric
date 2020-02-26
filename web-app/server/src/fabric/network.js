@@ -4,22 +4,8 @@
 const { FileSystemWallet, Gateway, X509WalletMixin } = require('fabric-network');
 const path = require('path');
 const fs = require('fs');
-
-//connect to the config file
-
-// const configPath = path.join(process.cwd(), './configTest/configPatient.json');
-// const configJSON = fs.readFileSync(configPath, 'utf8');
-// const config = JSON.parse(configJSON);
-// let connection_file = config.connection_file;
-// let configUserName = config.userName;
-// let configAppAdmin = config.appAdmin;
-// let gatewayDiscovery = config.gatewayDiscovery;
-// connect to the connection file
 let ccpPath;
 let configPath;
-// const ccpPath = path.join(process.cwd(), connection_file);
-// const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
-// const ccp = JSON.parse(ccpJSON);
 
 const privateDataTransaction = 'createMyDrug';
 const privateCollectionQuery = 'readMyDrugPrivate';
@@ -221,24 +207,24 @@ exports.getFabricConnection = async function (mspid) {
   try {
     switch (mspid) {
       case 'patientmsp':
-        ccpPath = path.join(process.cwd(), './connectionProfilesTest/patientConnection.json');
-        configPath = path.join(process.cwd(), './configTest/configPatient.json');
+        ccpPath = path.join(process.cwd(), './connectionProfiles/patientConnection.json');
+        configPath = path.join(process.cwd(), './config/configPatient.json');
         break;
       case 'w1msp':
-        ccpPath = path.join(process.cwd(), './connectionProfilesTest/w1Connection.json');
-        configPath = path.join(process.cwd(), './configTest/configW1.json');
+        ccpPath = path.join(process.cwd(), './connectionProfiles/w1Connection.json');
+        configPath = path.join(process.cwd(), './config/configW1.json');
         break;
       case 'w2msp':
-        ccpPath = path.join(process.cwd(), './connectionProfilesTest/w2Connection.json');
-        configPath = path.join(process.cwd(), './configTest/configW2.json');
+        ccpPath = path.join(process.cwd(), './connectionProfiles/w2Connection.json');
+        configPath = path.join(process.cwd(), './config/configW2.json');
         break;
       case 'manufacturermsp':
-        ccpPath = path.join(process.cwd(), './connectionProfilesTest/manufacturerConnection.json');
-        configPath = path.join(process.cwd(), './configTest/configManufacturer.json');
+        ccpPath = path.join(process.cwd(), './connectionProfiles/manufacturerConnection.json');
+        configPath = path.join(process.cwd(), './config/configManufacturer.json');
         break;
       case 'pharmacymsp':
-        ccpPath = path.join(process.cwd(), './connectionProfilesTest/pharmacyConnection.json');
-        configPath = path.join(process.cwd(), './configTest/configPharmacy.json');
+        ccpPath = path.join(process.cwd(), './connectionProfiles/pharmacyConnection.json');
+        configPath = path.join(process.cwd(), './config/configPharmacy.json');
         break;
       default:
         console.log('Sorry, there was an error');
