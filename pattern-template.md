@@ -14,7 +14,7 @@ Follow a pill through the medical supply chain using private data collections fo
 
 ### Github repo
 
-* https://github.com/ash7594/private-data-collections-on-fabric
+* https://github.com/IBM/private-data-collections-on-fabric
 
 # Summary
 
@@ -24,8 +24,6 @@ This code pattern was built using the IBM Blockchain Platform connected to the I
 
 * [Nodejs](https://www.nodejs.org/) is an open-source, cross-platform JavaScript run-time environment that executes JavaScript code server-side.
 * [Vuejs](https://vuejs.org/) is a progressive framework for building user interfaces.
-* [Bootstrap](https://getbootstrap.com/) is a free and open-source front-end Web framework. It contains HTML and CSS-based design templates for typography, forms, buttons, navigation and other interface components, as well as optional JavaScript extensions.
-* [Docker](https://www.docker.com/) is a computer program that performs operating-system-level virtualization, also known as Containerization.
 
 # Description
 

@@ -512,6 +512,55 @@ Go to the Nodes tab.
   
 
 ## Step 9. Register Org Admin Users
+* #### Create manufacturer application admin
+  - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>Manufacturer CA</b>.
+  - Click on <b>Register user</b>.
+  - Give an <b>Enroll ID</b> and <b>Enroll Secret</b> to administer your application users, `manufacturerApp-admin` and `manufacturerApp-adminpw`.
+  - Choose `client` as <b>Type</b>.
+  - You can leave the <b>Use root affiliation</b> box checked.
+  - You can leave the <b>Maximum enrollments</b> blank.
+  - Under <b>Attributes</b>, click on <b>Add attribute</b>.  Give attribute as `hf.Registrar.Roles` = `*`.  This will allow this identity to act as registrar and issues identities for our app.  Click <b>Add-attribute</b>.
+  - Click <b>Register User</b>.
+
+* #### Create w1 application admin
+  - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>W1 CA</b>.
+  - Click on <b>Register user</b>.
+  - Give an <b>Enroll ID</b> and <b>Enroll Secret</b> to administer your application users, `w1App-admin` and `w1App-adminpw`.
+  - Choose `client` as <b>Type</b>.
+  - You can leave the <b>Use root affiliation</b> box checked.
+  - You can leave the <b>Maximum enrollments</b> blank.
+  - Under <b>Attributes</b>, click on <b>Add attribute</b>.  Give attribute as `hf.Registrar.Roles` = `*`.  This will allow this identity to act as registrar and issues identities for our app.  Click <b>Add-attribute</b>.
+  - Click <b>Register User</b>. -->
+
+* #### Create w2 application admin 
+  - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>w2 CA</b>.
+  - Click on <b>Register user</b>.
+  - Give an <b>Enroll ID</b> and <b>Enroll Secret</b> to administer your application users, `w2App-admin` and `w2App-adminpw`.
+  - Choose `client` as <b>Type</b>.
+  - You can leave the <b>Use root affiliation</b> box checked.
+  - You can leave the <b>Maximum enrollments</b> blank.
+  - Under <b>Attributes</b>, click on <b>Add attribute</b>.  Give attribute as `hf.Registrar.Roles` = `*`.  This will allow this identity to act as registrar and issues identities for our app.  Click <b>Add-attribute</b>.
+  - Click <b>Register User</b>.
+
+* #### Create pharmacy application admin
+  - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>Pharmacy CA</b>.
+  - Click on <b>Register user</b>.
+  - Give an <b>Enroll ID</b> and <b>Enroll Secret</b> to administer your application users, `pharmacyApp-admin` and `pharmacyApp-adminpw`.
+  - Choose `client` as <b>Type</b>.
+  - You can leave the <b>Use root affiliation</b> box checked.
+  - You can leave the <b>Maximum enrollments</b> blank.
+  - Under <b>Attributes</b>, click on <b>Add attribute</b>.  Give attribute as `hf.Registrar.Roles` = `*`.  This will allow this identity to act as registrar and issues identities for our app.  Click <b>Add-attribute</b>.
+  - Click <b>Register User</b>.
+
+  * #### Create patient application admin
+  - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>Patient CA</b>.
+  - Click on <b>Register user</b>.
+  - Give an <b>Enroll ID</b> and <b>Enroll Secret</b> to administer your application users, `patientApp-admin` and `patientApp-adminpw`.
+  - Choose `client` as <b>Type</b>.
+  - You can leave the <b>Use root affiliation</b> box checked.
+  - You can leave the <b>Maximum enrollments</b> blank.
+  - Under <b>Attributes</b>, click on <b>Add attribute</b>.  Give attribute as `hf.Registrar.Roles` = `*`.  This will allow this identity to act as registrar and issues identities for our app.  Click <b>Add-attribute</b>.
+  - Click <b>Register User</b>.
   - go into `private-data-collections-on-fabric/web-app/server` and then run the `./enrollAllAdmin.sh` script. Your output should look like the following:
 
   ```
@@ -529,21 +578,34 @@ Go to the Nodes tab.
   
 ## Step 10. Run the application
 
-- In a terminal window, navigate to the directory private-data-collections-on-fabric
+- In a terminal window, navigate to the directory `private-data-collections-on-fabric/web-app/`
 
-- Install the dependencies 
+- Install the server dependencies 
 
   ```bash
   cd server
   npm install
   ```
 
-  - Start the application
+  - Start the Node.js Express application
 
   ```bash
   npm start
   ```
-  
+- In a different terminal window, navigate to the directory `private-data-collections-on-fabric/web-app/`
+
+- Install the client dependencies 
+
+  ```bash
+  cd client
+  npm install
+  ```
+   - Start the Vue.js application
+
+  ```bash
+  npm run serve
+  ```
+
 # License
 
 This code pattern is licensed under the Apache Software License, Version 2.  Separate third-party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1 (DCO)](https://developercertificate.org/) and the [Apache Software License, Version 2](http://www.apache.org/licenses/LICENSE-2.0.txt).
