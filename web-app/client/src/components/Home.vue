@@ -7,7 +7,7 @@
       <p>Email</p>
       <input type="text" v-model="loginData.email" placeholder="Enter email" />
       <p>Password</p>
-      <input type="text" v-model="loginData.pass" placeholder="Enter password" />
+      <input type="password" v-model="loginData.pass" placeholder="Enter password" />
       <br />
       <br />
       <input type="submit" value="Login" />
