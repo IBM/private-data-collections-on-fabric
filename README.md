@@ -616,6 +616,8 @@ Go to the Nodes tab.
 
 ## Step 8. Connect application to the network
 
+![connectionProfileDownload](https://user-images.githubusercontent.com/10428517/75390211-bc914180-589c-11ea-8828-6c540f314182.gif)
+
 * #### Connect with sdk through connection profile
   - Under the Instantiated Smart Contract, click on `Connect with SDK` from the overflow menu on the right side of the row.
   - Choose from the dropdown for <b>MSP for connection</b>, `manufacturermsp`.
@@ -626,12 +628,13 @@ Go to the Nodes tab.
   same for the other four connection profiles, but make sure to choose the corresponding MSP and CA. For example, 
   for the Patient connection profile, choose the patientmsp and Patient CA from the dropdowns, and then click on 
   **Open Connection Profile** and copy and paste the contents of the opened file into `web-app/server/connectionProfiles/patientConnection.json`
-  - Copy and paste the contents of the downloaded file into `web-app/server/ibpConnection.json`. Our config files will use this file to communicate with the 
-  CA nodes to be able to register users to transact on the network.
-  - Go into `private-data-collections-on-fabric/web-app/server/config` and then change each of the
-  five files to include the CAURL from the IBM Blockchain Platform. This will help us enroll an 
-  admin user to each of the respective Certificate Authorities we created on the IBM Blockchain Platform. You can find the CaUrl by clicking on each of the CA nodes, and then by clicking on the 
-  gear icon. 
+
+![updateConfigs](https://user-images.githubusercontent.com/10428517/75389698-d2eacd80-589b-11ea-97e4-5a31ea598331.gif)
+
+  - Next, we need to update our config files the Certificate Authority URL from the connection profiles we just
+  downloaded. From your w1Connection.json, copy and paste the certificate authority url field, and then paste that in to
+  the `caURL` field `configW1.json` file in the `private-data-collections-on-fabric/web-app/server/config` directory. Do 
+  that for all of the four remaining files. The gif only shows this done for w1 and w2 organizations.
   ![caUrl](https://user-images.githubusercontent.com/10428517/75277614-305c1d00-57bd-11ea-99f1-1921e202f674.png)
   - Once completed, each of the five files in the `private-data-collections-on-fabric/web-app/server/config` directory will look like the following, taking configPatient.json as an example:
 
@@ -650,6 +653,7 @@ Go to the Nodes tab.
   
 
 ## Step 9. Register Org Admin Users
+![appAdmin](https://user-images.githubusercontent.com/10428517/75389688-ce261980-589b-11ea-9c4a-c512383b1492.gif)
 * #### Create manufacturer application admin
   - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your <b>Manufacturer CA</b>.
   - Click on <b>Register user</b>.
@@ -699,6 +703,9 @@ Go to the Nodes tab.
   - You can leave the <b>Maximum enrollments</b> blank.
   - Under <b>Attributes</b>, click on <b>Add attribute</b>.  Give attribute as `hf.Registrar.Roles` = `*`.  This will allow this identity to act as registrar and issues identities for our app.  Click <b>Add-attribute</b>.
   - Click <b>Register User</b>.
+
+![enrollAllAdmin](https://user-images.githubusercontent.com/10428517/75389721-dc743580-589b-11ea-83de-56277725051e.gif)
+
   - go into `private-data-collections-on-fabric/web-app/server` and then run the `./enrollAllAdmin.sh` script. Your output should look like the following:
 
   ```
