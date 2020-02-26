@@ -11,7 +11,7 @@ const path = require('path');
 const yaml = require('js-yaml')
 
 // capture network variables from config.json
-const configPath = path.join(process.cwd(), './configTest/configPatient.json');
+const configPath = path.join(process.cwd(), './config/configPatient.json');
 const configJSON = fs.readFileSync(configPath, 'utf8');
 const config = JSON.parse(configJSON);
 var connection_file = config.connection_file;
