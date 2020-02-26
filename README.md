@@ -1,6 +1,30 @@
 # Private Data Collections on Hyperledger Fabric
 In the Medical Supply Chain, there are multiple entities such as the drug manufacturers, wholesellers, pharmacies and patients. These entities share data about the pill as it moves through the chain. However, there are cases where entities want to keep some data about the pill hidden from the other entities. Consider the instance where a manufacturer have negotiated different price rates with the wholesellers. They wouldn't want the different wholesellers to be able to see the various drug rates negotiated. Having all entities on the same channel of the blockchain would inherently make every transaction between any two entities, visible to every other entity. With the introduction of private data collections, certain data parts associated with a given transaction, can be kept private from other entities.
 
+As a drug manufacturer, we will create an account on the Healthcare Platform network. We then add a drug,
+priced at $450, to the network.
+
+![addDrug1](https://user-images.githubusercontent.com/10428517/75375920-f6098300-5883-11ea-94ff-52a47b46d47f.gif)
+
+As the drug manufacturer, we can query for the drug that we created, and see the private details of 
+the transaction, such as the price.
+
+![addDrug1](https://user-images.githubusercontent.com/10428517/75375928-face3700-5883-11ea-9750-3c987c952893.gif)
+
+As a wholesaler on the network, we can create an account on the platform, and then log in. We can then try and
+query for the drug private details - but since we have made sure that wholesalers do not have access to that
+data on the network - we will get an error.
+
+![w1err](https://user-images.githubusercontent.com/10428517/75375929-fb66cd80-5883-11ea-85b7-d4a3c51d45c6.gif)
+
+Lastly, we will create an account as a patient - and then query for the drug price. Since as a patient, we need
+to know how expensive a drug is to ensure we can buy it, we should have access to the private details of the 
+transaction, such as the price. As shown below, since the user is from the patient organization, we are 
+able to see the price details.
+
+![patientQuery](https://user-images.githubusercontent.com/10428517/75375934-fc97fa80-5883-11ea-99be-1451884f7d57.gif)
+
+
 ## Intro to private data collections
 A transaction with private data is different than a typical Fabric transaction in three main ways.
 * The data is stored on a private database on the authorized peers (the peers which are listed in the 
