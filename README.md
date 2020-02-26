@@ -13,7 +13,105 @@ the transaction, such as the price.
 
 As a wholesaler on the network, we can create an account on the platform, and then log in. We can then try and
 query for the drug private details - but since we have made sure that wholesalers do not have access to that
-data on the network - we will get an error.
+data on the network - we will get an error. The file that shows this configuration is shown below. Note that 
+for `collectionDrug` all mspId's have access to this collection, but for `collectionDrugPrivateDetails`, which
+contains price info, only the patient and the manufacturers have access to this data.
+
+```
+[
+  {
+    "name": "collectionDrug",
+    "policy": {
+      "identities": [
+        {
+          "role": {
+            "name": "member",
+            "mspId": "manufacturermsp"
+          }
+        },
+        {
+          "role": {
+            "name": "member",
+            "mspId": "pharmacymsp"
+          }
+        },
+        {
+          "role": {
+            "name": "member",
+            "mspId": "patientmsp"
+          }
+        },
+        {
+          "role": {
+            "name": "member",
+            "mspId": "w1msp"
+          }
+        },
+        {
+          "role": {
+            "name": "member",
+            "mspId": "w2msp"
+          }
+        }
+      ],
+      "policy": {
+        "1-of": [
+          {
+            "signed-by": 0
+          },
+          {
+            "signed-by": 1
+          },
+          {
+            "signed-by": 2
+          },
+          {
+            "signed-by": 3
+          },
+          {
+            "signed-by": 4
+          }
+        ]
+      }
+    },
+    "requiredPeerCount": 0,
+    "maxPeerCount": 5,
+    "blockToLive": 100
+  },
+  {
+    "name": "collectionDrugPrivateDetails",
+    "policy": {
+      "identities": [
+        {
+          "role": {
+            "name": "member",
+            "mspId": "manufacturermsp"
+          }
+        },
+        {
+          "role": {
+            "name": "member",
+            "mspId": "patientmsp"
+          }
+        }
+      ],
+      "policy": {
+        "1-of": [
+          {
+            "signed-by": 0
+          },
+          {
+            "signed-by": 1
+          }
+        ]
+      }
+    },
+    "requiredPeerCount": 0,
+    "maxPeerCount": 2,
+    "blockToLive": 100
+  }
+]
+```
 
 ![w1err](https://user-images.githubusercontent.com/10428517/75375929-fb66cd80-5883-11ea-85b7-d4a3c51d45c6.gif)
 
