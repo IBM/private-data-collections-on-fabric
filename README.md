@@ -473,6 +473,16 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
 ## Step 4. Build a network - Create Peers
 
+![createPatientPeer](https://user-images.githubusercontent.com/10428517/75382655-c1032d80-588f-11ea-8477-f5c731f1b116.gif)
+
+* Create an Patient peer
+  - On the <b>Nodes</b> page, click <b>Add peer</b>.
+  - Click <b>IBM Cloud</b> under Create a new peer and <b>Next</b>.
+  - Give your peer a <b>Display name</b> of `Patient Peer`.
+  - On the next screen, select `Patient CA` as your <b>Certificate Authority</b>. Then, give the <b>Enroll ID</b> and <b>Enroll secret</b> for the peer identity that you created for your peer, `patientPeer`, and `patientPeerpw`. Then, select the <b>Administrator Certificate (from MSP)</b>, `Patient MSP`, from the drop-down list and click <b>Next</b>.
+  - The last side panel will ask you to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `Patient MSP Admin`. Click <b>Next</b>.
+  - Review the summary and click <b>Add Peer</b>.
+
 * Create an manufacturer peer
   - On the <b>Nodes</b> page, click <b>Add peer</b>.
   - Click <b>IBM Cloud</b> under Create a new peer and <b>Next</b>.
@@ -505,17 +515,11 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - The last side panel will ask you to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `Pharmacy MSP Admin`. Click <b>Next</b>.
   - Review the summary and click <b>Add Peer</b>.
 
-* Create an Patient peer
-  - On the <b>Nodes</b> page, click <b>Add peer</b>.
-  - Click <b>IBM Cloud</b> under Create a new peer and <b>Next</b>.
-  - Give your peer a <b>Display name</b> of `Patient Peer`.
-  - On the next screen, select `Patient CA` as your <b>Certificate Authority</b>. Then, give the <b>Enroll ID</b> and <b>Enroll secret</b> for the peer identity that you created for your peer, `patientPeer`, and `patientPeerpw`. Then, select the <b>Administrator Certificate (from MSP)</b>, `Patient MSP`, from the drop-down list and click <b>Next</b>.
-  - The last side panel will ask you to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `Patient MSP Admin`. Click <b>Next</b>.
-  - Review the summary and click <b>Add Peer</b>.
-
 ## Step 5. Build a network - Create Orderer
 
 Go to the Nodes tab.
+
+![createOrdererCA](https://user-images.githubusercontent.com/10428517/75383164-b72dfa00-5890-11ea-9edb-8b82d23ac450.gif)
 
 * #### Create your orderer organization CA
   - Click <b>Add Certificate Authority</b>.
@@ -530,21 +534,23 @@ Go to the Nodes tab.
   - First, we will register an admin for our organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `ordereradmin`, and <b>Enroll Secret</b> of `ordereradminpw`.  Set the <b>Type</b> for this identity as `client`. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields alone. Click <b>Next</b> and then Click <b>Register User</b>.
   - We will repeat the process to create an identity of the orderer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `orderer1`, and <b>Enroll Secret</b> of `orderer1pw`.  Set the <b>Type</b> for this identity as `peer`. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields alone. Click <b>Next</b> and then Click <b>Register User</b>.
 
-* #### Create the orderer organization MSP definition
+* #### Create the orderer organization MSP definition (check gifs for creating MSP above)
   - Navigate to the <b>Organizations</b> tab in the left navigation and click <b>Create MSP definition</b>.
   - Enter the <b>MSP Display name</b> as `Orderer MSP` and an <b>MSP ID</b> of `orderermsp`.
   - Under <b>Root Certificate Authority</b> details, specify the peer CA that we created `Orderer CA` as the root CA for the organization.
   - Give the <b>Enroll ID</b> and <b>Enroll secret</b> for your organization admin, `ordereradmin` and `ordereradminpw`. Then, give the <b>Identity name</b>, `Orderer MSP Admin`.
   - Click the <b>Generate</b> button to enroll this identity as the admin of your organization and export the identity to the wallet. Click <b>Export</b> to export the admin certificates to your file system. Finally click <b>Create MSP definition</b>.
 
-* #### Create an orderer
-  - On the <b>Nodes</b> page, click <b>Add orderering service</b>.
+* #### Create an orderer (check gifs for creating peers above)
+  - On the <b>Nodes</b> page, click <b>Add ordering service</b>.
   - Click <b>IBM Cloud</b> and proceed with <b>Next</b>.
   - Give your peer a <b>Display name</b> of `Orderer`.
   - On the next screen, select `Orderer CA` as your <b>Certificate Authority</b>. Then, give the <b>Enroll ID</b> and <b>Enroll secret</b> for the peer identity that you created for your orderer, `orderer1`, and `orderer1pw`. Then, select the <b>Administrator Certificate (from MSP)</b>, `Orderer MSP`, from the drop-down list and click <b>Next</b>.
   - Give the <b>TLS Enroll ID</b>, `admin`, and <b>TLS Enroll secret</b>, `adminpw`, the same values are the Enroll ID and Enroll secret that you gave when creating the CA.  Leave the <b>TLS CSR hostname</b> blank.
   - The last side panel will ask to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `Orderer MSP Admin`.
   - Click <b>Next</b>, Review the summary and click <b>Add Ordering Service</b>.
+
+![addConsortiumMember](https://user-images.githubusercontent.com/10428517/75382684-cd878600-588f-11ea-9e4b-b2baa49a6c6e.gif)
 
 * #### Add organizations as Consortium Member on the orderer to transact
   - Navigate to the <b>Nodes</b> tab, and click on the <b>Orderer</b> that we created.
@@ -554,6 +560,8 @@ Go to the Nodes tab.
   - Repeat the same steps, but add `W1 MSP`, `W2 MSP`, `Pharmacy MSP` and `Patient MSP` as well.
 
 ## Step 6. Build a network - Create and Join Channel
+
+![createChannel](https://user-images.githubusercontent.com/10428517/75382679-c95b6880-588f-11ea-9006-2f70aeb1bfad.gif)
 
 * #### Create the channel
   - Navigate to the <b>Channels</b> tab in the left navigation.
@@ -571,6 +579,8 @@ Go to the Nodes tab.
   - Under <b>Channel update policy</b>, Select <b>1 out of 5</b>.
   - Under <b>Creator organization</b> Select <b>Manufacturer MSP</b> under Channel creator MSP. And then select Associate available identity as `Manufacturer MSP Admin`.
   - Click <b>Create channel</b>.
+
+![joinPeer](https://user-images.githubusercontent.com/10428517/75382699-d24c3a00-588f-11ea-8a6c-e92fcf6ab4c8.gif)
 
 * #### Join your peer to the channel
   - Click <b>Join channel</b> to launch the side panels.
@@ -599,7 +609,7 @@ Go to the Nodes tab.
   - On the side panel that opens, select the channel, `mychannel` to instantiate the smart contract on. Click <b>Next</b>.
   - Select the organization members to be included in the policy, `manufacturermsp`, `w1msp`, `w2msp`, `pharmacymsp, patientmsp`.  Click <b>Next</b>.
   - Select the peer to approve proposals for instantiating the smart contract. Select <b>Manufacturer Peer</b> from the drop down.
-  - Setup private data collection. Click on <b>Add file</b> and find your private data `.json` file <b>. To learn more about private data collection go to the following site [ibp-console-smart-contracts-private-data](https://cloud.ibm.com/docs/services/blockchain?topic=blockchain-ibp-console-smart-contracts#ibp-console-smart-contracts-private-data).private-data-collection.cds</b>. It is the file called `collections_config.json` in the `private-data-collections-on-fabric/private-data-collections-on-fabric/server` directory. 
+  - Setup private data collection. Click on <b>Add file</b> and find your private data `.json` file <b>. To learn more about private data collection go to the following site [ibp-console-smart-contracts-private-data](https://cloud.ibm.com/docs/services/blockchain?topic=blockchain-ibp-console-smart-contracts#ibp-console-smart-contracts-private-data).private-data-collection.cds</b>. It is the file called `collectionsConfig.json` in the `private-data-collections-on-fabric/private-data-collections-on-fabric/server` directory. 
   - Give <b>Function name</b> of `Init` and leave <b>Arguments</b> blank.
   - Click <b>Instantiate</b>.
 
