@@ -1,14 +1,15 @@
 # Short title
 
-Private Data Collections on Hyperledger Fabric
+Private Data Collections on IBM Blockchain Platform
 
 # Long title
 
-Follow a pill through the medical supply chain using private data collections for data privacy between organizations
+Ensure patients and manufacturers can keep negotiated price details private on a healthcare platform consisting
+of patients, pharmacies, manufacturers, and wholesalers.
 
 # Author
 
-* Ashutosh Nath Agarwal <ashutosh.nath.agarwal@ibm.com>
+* Horea Porutiu <horea.porutiu@ibm.com>
 
 # URLs
 
@@ -18,7 +19,10 @@ Follow a pill through the medical supply chain using private data collections fo
 
 # Summary
 
-This code pattern was built using the IBM Blockchain Platform connected to the IBM Kebernetes Service. The application showcases using these services in the healthcare industry to follow a pill through the medical supply chain from the manufacturer of the pill to the patient. The pattern showcases the flow of the application from the point of view of the Manufacturer, Wholesaler, Pharmacy and Patient.
+This code pattern was built using the IBM Blockchain Platform connected to the IBM Kubernetes Service. Using
+the private data collections released in Hyperledger 1.2, the pattern showcases the use case of needing to hide negotiated price details from competing  
+wholesalers, while still using one channel to ensure all data between the manufacturers, wholesalers,
+pharmacies, and patients is on one ledger. This keeps certain details of transactions (such as negotiated price) private, while keeping other details publicly available to all network participants.
 
 # Technologies
 
@@ -27,9 +31,9 @@ This code pattern was built using the IBM Blockchain Platform connected to the I
 
 # Description
 
-In the Medical Supply Chain, there are multiple entities such as the drug manufacturers, wholesellers, pharmacies and patients. These entities share data about the pill as it moves through the chain. However, there are cases where entities want to keep some data about the pill hidden from the other entities. Consider the instance where a manufacturer have negotiated different price rates with the wholesellers. They wouldn't want the different wholesellers to be able to see the various drug rates negotiated. Having all entities on the same channel of the blockchain would inherently make every transaction between any two entities, visible to every other entity. With the introduction of private data collections, certain data parts associated with a given transaction, can be kept private from other entities.
+On a healthcare platform, there are multiple entities such as the drug manufacturers, wholesalers, pharmacies and patients. These entities share data about the creation of the drug. However, there are cases where entities want to keep some data about the drug hidden from the other entities. Consider the instance where a manufacturer has negotiated different price rates with the wholesalers. They wouldn't want the different wholesalers to be able to see the various drug rates negotiated. Having all entities on the same channel of the blockchain would inherently make every transaction between any two entities, visible to every other entity. With the introduction of private data collections, certain data parts associated with a given transaction, can be kept private from other entities.
 
-In this pattern, we showcase 1 manufacturer, 2 wholesalers, 1 pharmacy and 1 patient connected on the same channel on a blockchain ledger. The manufacturer generates a new drug pill, and sells it at different prices to the two wholesellers. Only the manufacturer and the patient have visibility to the two negotiated prices for this example.
+In this pattern, we showcase 1 manufacturer, 2 wholesalers, 1 pharmacy and 1 patient connected on the same channel on a blockchain ledger. The manufacturer generates a new drug, and sells it at different prices to the two wholesalers. Only the manufacturer and the patient have visibility to the price of the drug for this example.
 
 This code pattern is for developers who want to learn how to use the private data collections feature introduced into Hyperledger Fabric. When you have completed it, you will understand how to:
 
@@ -45,8 +49,8 @@ This code pattern is for developers who want to learn how to use the private dat
 1. The blockchain operator creates a IBM Kubernetes Service cluster and an IBM Blockchain Platform 2.0 service.
 1. The IBM Blockchain Platform 2.0 creates a Hyperledger Fabric network on an IBM Kubernetes Service, and the operator installs and instantiates the smart contract on the network.
 1. The Node.js application server uses the Fabric SDK to interact with the deployed network on IBM Blockchain Platform 2.0.
-1. The React UI uses the Node.js application API to interact and submit transactions to the network.
-1. The user interacts with the supply chain application web interface to update and query the blockchain ledger and state.
+1. The Vue.js UI uses the Node.js application API to interact and submit transactions to the network.
+1. The user interacts with the healthcare platform web-app to update and query the blockchain ledger and state.
 
 # Components and services
 
